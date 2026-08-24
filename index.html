@@ -2,713 +2,354 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>CardQuest</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardQuest 👑</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --bg:#070a16;
-    --panel:#11172d;
-    --panel2:#171f3b;
-    --border:#35416d;
-    --text:#ffffff;
-    --muted:#aeb8dc;
-    --gold:#ffd84d;
-    --purple:#8c55ff;
-    --blue:#36a9ff;
-    --red:#ff4d5e;
-    --green:#37e879;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:
-        radial-gradient(circle at 50% -10%,#344889 0,#10152c 35%,#050711 80%);
-    color:var(--text);
-    min-height:100vh;
-}
-
-/* HEADER */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:100;
-    background:#080b18ee;
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid #303a61;
-}
-
-.nav{
-    max-width:1400px;
-    margin:auto;
-    min-height:70px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 15px;
-    flex-wrap:wrap;
-}
-
-.logo{
-    font-size:25px;
-    font-weight:1000;
-    color:var(--gold);
-    text-shadow:0 0 20px #ffb30099;
-    margin-right:auto;
-}
-
-.nav button{
-    background:#151c36;
-    border:1px solid #303c66;
-    color:white;
-    padding:10px 13px;
-    border-radius:10px;
-    transition:.2s;
-}
-
-.nav button:hover{
-    background:#29345d;
-    transform:translateY(-2px);
-}
-
-.currency{
-    padding:10px 13px;
-    border-radius:10px;
-    background:#11172d;
-    border:1px solid #303c66;
-}
-
-/* GENERAL */
-
-.container{
-    width:min(1400px,94%);
-    margin:25px auto;
-}
-
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-h1{
-    font-size:35px;
-    margin-bottom:18px;
-}
-
-h2{
-    margin-bottom:10px;
-}
-
-h3{
-    margin-bottom:7px;
-}
-
-p{
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.panel{
-    background:linear-gradient(145deg,#121932,#0c1124);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
-    margin-bottom:20px;
-    box-shadow:0 12px 40px #0006;
-}
-
-button{
-    cursor:pointer;
-    font-weight:bold;
-}
-
-/* HOME */
-
-.hero{
-    min-height:450px;
-    border-radius:28px;
-    padding:55px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    overflow:hidden;
-    position:relative;
-
-    background:
-        radial-gradient(circle at 80% 20%,#ffd84d55,transparent 20%),
-        radial-gradient(circle at 20% 80%,#8c55ff55,transparent 25%),
-        linear-gradient(135deg,#202b63,#121936 60%,#0b1023);
-
-    border:1px solid #5263a1;
-    box-shadow:0 25px 80px #0009;
+* {
+    box-sizing: border-box;
 }
 
-.hero:after{
-    content:"";
-    position:absolute;
-    inset:-100px;
-    background:conic-gradient(
-        transparent,
-        #ffffff08,
-        transparent,
-        #8c55ff12,
-        transparent
-    );
-    animation:spin 12s linear infinite;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background: radial-gradient(circle at top, #27356b, #080b18 65%);
+    min-height: 100vh;
 }
 
-@keyframes spin{
-    to{transform:rotate(360deg)}
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(8,11,24,.95);
+    border-bottom: 1px solid #394773;
 }
 
-.hero>*{
-    position:relative;
-    z-index:2;
+nav {
+    max-width: 1400px;
+    margin: auto;
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.hero h1{
-    font-size:65px;
-    color:#fff;
-    text-shadow:0 0 30px #536fff;
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffd84d;
+    margin-right: auto;
 }
 
-.hero .subtitle{
-    font-size:21px;
-    max-width:700px;
+button {
+    background: #18213f;
+    color: white;
+    border: 1px solid #405080;
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.big-button{
-    width:max-content;
-    margin-top:25px;
-    padding:16px 28px;
-    border-radius:14px;
-    border:0;
-    background:linear-gradient(135deg,#ffd84d,#ff9c1a);
-    color:#17100a;
-    font-size:17px;
-    box-shadow:0 10px 30px #ffad2444;
+button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
 }
 
-.big-button:hover{
-    transform:translateY(-3px);
+button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
 }
 
-/* STATS */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-    gap:15px;
-}
-
-.stat{
-    padding:20px;
-    background:#171e39;
-    border:1px solid #303d68;
-    border-radius:15px;
-}
-
-.stat strong{
-    display:block;
-    color:var(--gold);
-    font-size:29px;
-    margin-bottom:5px;
-}
-
-/* CARDS */
-
-.card-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fill,minmax(180px,1fr));
-    gap:16px;
-}
-
-.card{
-    min-height:285px;
-    padding:13px;
-    border-radius:18px;
-    background:linear-gradient(145deg,#202a4c,#10162b);
-    border:2px solid #44537f;
-    box-shadow:0 12px 30px #0007;
-    transition:.25s;
-    cursor:pointer;
-    position:relative;
-    overflow:hidden;
-}
-
-.card:hover{
-    transform:translateY(-7px) scale(1.025);
-    box-shadow:0 20px 45px #000a;
-}
-
-.card-art{
-    height:130px;
-    border-radius:13px;
-    background:
-        radial-gradient(circle,#ffffff20,transparent 55%),
-        linear-gradient(135deg,#293968,#12172e);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:65px;
-    margin-bottom:10px;
-}
-
-.card-number{
-    position:absolute;
-    top:10px;
-    right:10px;
-    background:#0009;
-    padding:5px 8px;
-    border-radius:8px;
-    font-size:11px;
-}
-
-.rarity{
-    display:inline-block;
-    padding:4px 8px;
-    border-radius:7px;
-    font-size:10px;
-    margin-top:5px;
-    background:#303b60;
-}
-
-.common{border-color:#707891}
-.uncommon{border-color:#3fd17d}
-.rare{border-color:#3ea8ff}
-.epic{border-color:#a761ff}
-.legendary{
-    border-color:#ffb62d;
-    box-shadow:0 0 20px #ffae2d22;
-}
-.secret{
-    border-color:#ff4cff;
-    box-shadow:0 0 25px #ff33ff33;
+main {
+    max-width: 1350px;
+    margin: 25px auto;
+    padding: 0 15px;
 }
 
-.locked{
-    filter:grayscale(.8);
-    opacity:.65;
+.page {
+    display: none;
 }
 
-/* BATTLE */
-
-.battle-arena{
-    background:
-        radial-gradient(circle at center,#263c7025,transparent 50%),
-        #080c1b;
-    border:2px solid #394777;
-    border-radius:25px;
-    padding:25px;
-    box-shadow:0 20px 70px #0009;
-}
-
-.fighter{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:25px;
-    padding:15px;
-}
-
-.battle-card{
-    width:230px;
-    min-height:285px;
-    border-radius:22px;
-    padding:15px;
-    text-align:center;
-    background:linear-gradient(145deg,#27335d,#10162b);
-    border:3px solid #6275b3;
-    transition:.3s;
+.page.active {
+    display: block;
 }
 
-.battle-art{
-    height:145px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:80px;
+.panel {
+    background: #10172d;
+    border: 1px solid #35416b;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-.hp{
-    height:19px;
-    background:#35151d;
-    border-radius:20px;
-    overflow:hidden;
-    margin:9px 0;
+.hero {
+    padding: 55px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #26366f, #11172e);
 }
 
-.hp-fill{
-    height:100%;
-    width:100%;
-    background:linear-gradient(90deg,#2ce879,#91ff57);
-    transition:.4s;
+.hero h1 {
+    font-size: 55px;
+    margin: 0 0 10px;
 }
 
-.enemy .hp-fill{
-    background:linear-gradient(90deg,#ff3e52,#ff9b40);
+.hero p {
+    font-size: 18px;
+    color: #ccd5ff;
 }
 
-.attack-animation{
-    animation:attack .5s ease;
+.bigButton {
+    background: linear-gradient(135deg,#ffd84d,#ff9d20);
+    color: #17100a;
+    border: none;
+    font-size: 17px;
+    padding: 15px 25px;
 }
 
-@keyframes attack{
-    0%{
-        transform:translateX(0);
-    }
-    45%{
-        transform:translateX(120px)
-                   rotate(8deg)
-                   scale(1.1);
-    }
-    100%{
-        transform:translateX(0);
-    }
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 12px;
 }
 
-.enemy.attack-animation{
-    animation:enemyattack .5s ease;
+.stat {
+    background: #18213d;
+    padding: 18px;
+    border-radius: 14px;
 }
 
-@keyframes enemyattack{
-    0%{transform:translateX(0)}
-    45%{
-        transform:translateX(-120px)
-                   rotate(-8deg)
-                   scale(1.1);
-    }
-    100%{transform:translateX(0)}
+.stat b {
+    display: block;
+    color: #ffd84d;
+    font-size: 30px;
 }
 
-.battle-buttons{
-    text-align:center;
-    margin-top:20px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(190px,1fr));
+    gap: 15px;
 }
 
-.action{
-    padding:14px 22px;
-    margin:5px;
-    border-radius:12px;
-    color:white;
-    border:1px solid #46537e;
-    background:#202b4d;
+.card {
+    background: linear-gradient(145deg,#202d52,#10162a);
+    border: 2px solid #45557f;
+    border-radius: 17px;
+    padding: 12px;
+    min-height: 265px;
+    transition: .2s;
+    cursor: pointer;
 }
 
-.attack{
-    background:#cf3c4c;
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
 }
 
-.special{
-    background:#7844d8;
+.cardArt {
+    height: 125px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 65px;
+    background: radial-gradient(circle,#ffffff18,transparent),#17203b;
 }
-
-.switch{
-    background:#176d9e;
-}
-
-.action:disabled{
-    opacity:.35;
-}
-
-/* LOG */
 
-.battle-log{
-    height:130px;
-    overflow:auto;
-    background:#050811;
-    padding:13px;
-    border-radius:12px;
-    margin-top:15px;
-    color:#bfc9ed;
+.card h3 {
+    margin-bottom: 5px;
 }
 
-/* DECK */
-
-.deck{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(150px,1fr));
-    gap:12px;
+.rarity {
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 7px;
+    background: #303b60;
+    font-size: 11px;
 }
 
-.deck-slot{
-    min-height:130px;
-    background:#0b1021;
-    border:2px dashed #394875;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:10px;
+.common {
+    border-color: #68738d;
 }
-
-/* QUEST */
 
-.quest{
-    background:#161e38;
-    border:1px solid #303e6b;
-    padding:18px;
-    border-radius:15px;
-    margin:10px 0;
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-    align-items:center;
+.uncommon {
+    border-color: #35d27b;
 }
 
-.progress{
-    width:100%;
-    height:9px;
-    background:#252d4a;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:8px;
+.rare {
+    border-color: #3daaff;
 }
 
-.progress-fill{
-    height:100%;
-    background:linear-gradient(90deg,#ffd84d,#ff9e20);
-    width:0%;
+.epic {
+    border-color: #a35dff;
 }
 
-/* PASS */
-
-.pass-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fill,minmax(165px,1fr));
-    gap:12px;
+.legendary {
+    border-color: #ffb52d;
+    box-shadow: 0 0 20px #ffb52d44;
 }
 
-.reward{
-    background:#151d39;
-    border:1px solid #34416b;
-    border-radius:15px;
-    padding:20px;
-    text-align:center;
+.secret {
+    border-color: #ff4cff;
+    box-shadow: 0 0 25px #ff4cff55;
 }
 
-.reward.unlocked{
-    border-color:#ffd84d;
-    box-shadow:0 0 20px #ffd84d22;
+.deck {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 12px;
 }
 
-/* SHOP */
-
-.shop-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
+.deckSlot {
+    min-height: 130px;
+    background: #080d1c;
+    border: 2px dashed #42527d;
+    border-radius: 14px;
+    padding: 12px;
+    text-align: center;
 }
 
-.shop-item{
-    background:#151d39;
-    border:1px solid #34416b;
-    border-radius:17px;
-    padding:20px;
+.deckSlot.filled {
+    border-style: solid;
 }
 
-.buy{
-    margin-top:15px;
-    padding:11px 15px;
-    border-radius:10px;
-    background:#ffd84d;
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0 15px;
+    border-radius: 10px;
+    border: 1px solid #405080;
+    background: #080d1b;
+    color: white;
 }
-
-/* PROFILE */
 
-input,select,textarea{
-    width:100%;
-    background:#080d1d;
-    border:1px solid #35436f;
-    color:white;
-    border-radius:10px;
-    padding:12px;
-    margin:7px 0 15px;
+.battleArea {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
 }
 
-textarea{
-    min-height:100px;
-    resize:vertical;
+.fighter {
+    text-align: center;
 }
 
-/* ACHIEVEMENTS */
-
-.achievement-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
-    gap:13px;
+.battleCard {
+    max-width: 280px;
+    margin: auto;
+    padding: 15px;
+    border-radius: 20px;
+    background: #182342;
+    border: 2px solid #5b70a7;
 }
 
-.achievement{
-    padding:18px;
-    border-radius:15px;
-    background:#151d38;
-    border:1px solid #35416c;
+.battleArt {
+    height: 160px;
+    display: grid;
+    place-items: center;
+    font-size: 85px;
+    background: #111a34;
+    border-radius: 15px;
 }
 
-.achievement.done{
-    border-color:#ffd84d;
+.health {
+    height: 20px;
+    background: #3a1820;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 12px;
 }
 
-/* EVENTS */
-
-.event{
-    padding:30px;
-    border-radius:22px;
-    background:
-        linear-gradient(135deg,#3b174d,#152b56);
-    border:1px solid #8e58c8;
-    margin-bottom:20px;
+.healthBar {
+    height: 100%;
+    width: 100%;
+    background: #35e778;
+    transition: .4s;
 }
 
-.event h2{
-    font-size:30px;
+.enemyBar {
+    background: #ff5364;
 }
 
-.event-time{
-    display:inline-block;
-    background:#0006;
-    padding:7px 10px;
-    border-radius:8px;
-    margin:10px 0;
+.battleButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
-
-/* MODAL */
 
-.modal{
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:#000c;
-    z-index:500;
+.battleLog {
+    background: #050811;
+    border-radius: 10px;
+    padding: 12px;
+    height: 150px;
+    overflow-y: auto;
+    margin-top: 15px;
 }
 
-.modal-box{
-    width:min(550px,92%);
-    max-height:90vh;
-    overflow:auto;
-    background:#11172e;
-    border:1px solid #58689f;
-    border-radius:20px;
-    padding:25px;
+.roomCode {
+    color: #ffd84d;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 6px;
 }
 
-.close{
-    float:right;
-    border:0;
-    background:#303a5c;
-    color:white;
-    border-radius:8px;
-    padding:7px 10px;
+.hidden {
+    display: none;
 }
 
-/* TOAST */
-
-.toast{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    background:#141c38;
-    border:1px solid #556699;
-    padding:15px 20px;
-    border-radius:12px;
-    display:none;
-    z-index:700;
-    box-shadow:0 15px 40px #0009;
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: #141d38;
+    border: 1px solid #58699e;
+    border-radius: 12px;
+    display: none;
+    z-index: 50;
 }
-
-/* MOBILE */
-
-@media(max-width:750px){
 
-    .hero{
-        padding:30px;
-        min-height:400px;
+@media(max-width:700px) {
+    .hero h1 {
+        font-size: 38px;
     }
 
-    .hero h1{
-        font-size:43px;
+    .battleArea {
+        grid-template-columns: 1fr;
     }
 
-    .fighter{
-        flex-direction:column;
+    .deck {
+        grid-template-columns: repeat(2,1fr);
     }
-
-    .battle-card{
-        width:100%;
-    }
-
-    .nav{
-        justify-content:center;
-    }
-
-    .logo{
-        width:100%;
-        text-align:center;
-        margin-bottom:5px;
-    }
-
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
+<nav>
 
-<div class="nav">
-
-<div class="logo">
-👑 CardQuest
-</div>
+<div class="logo">👑 CardQuest</div>
 
 <button onclick="showPage('home')">🏠 Home</button>
 <button onclick="showPage('battle')">⚔️ Battle</button>
 <button onclick="showPage('deck')">🧩 Deck</button>
 <button onclick="showPage('cards')">🃏 Cards</button>
 <button onclick="showPage('packs')">🎁 Packs</button>
+<button onclick="showPage('online')">🌐 Online</button>
 <button onclick="showPage('events')">🎪 Events</button>
-<button onclick="showPage('quests')">📜 Quests</button>
-<button onclick="showPage('pass')">🏆 Pass</button>
-<button onclick="showPage('shop')">🛒 Shop</button>
 <button onclick="showPage('profile')">👤 Profile</button>
 
-<div class="currency">
-💎 <span id="gems">100</span>
-</div>
+<span>💎 <b id="gems">100</b></span>
+<span>🪙 <b id="coins">500</b></span>
 
-<div class="currency">
-🪙 <span id="coins">500</span>
-</div>
-
-</div>
-
+</nav>
 </header>
 
-
-<main class="container">
-
+<main>
 
 <!-- HOME -->
 
@@ -718,242 +359,62 @@ textarea{
 
 <h1>👑 CardQuest</h1>
 
-<p class="subtitle">
-
-Build your deck. Battle champions.
-Collect hundreds of cards.
-Discover impossible-to-find Secret Cards.
-Become the ultimate CardQuest Champion.
-
+<p>
+Collect powerful cards, build your 10-card deck,
+defeat AI champions and challenge other players.
 </p>
 
-<button
-class="big-button"
-onclick="showPage('battle')">
-
+<button class="bigButton" onclick="showPage('battle')">
 ⚔️ START BATTLE
-
 </button>
 
 </div>
 
-
 <div class="panel">
 
-<h2>📊 Your CardQuest</h2>
+<h2>📊 Your Statistics</h2>
 
 <div class="stats">
 
 <div class="stat">
-<strong id="homeLevel">1</strong>
-Level
-</div>
-
-<div class="stat">
-<strong id="homeCards">0</strong>
-Cards
-</div>
-
-<div class="stat">
-<strong id="homeWins">0</strong>
+<b id="wins">0</b>
 Wins
 </div>
 
 <div class="stat">
-<strong id="homeSecrets">0</strong>
-Secret Cards
+<b id="losses">0</b>
+Losses
 </div>
 
 <div class="stat">
-<strong id="homeStreak">0</strong>
-Win Streak
+<b id="owned">0</b>
+Cards
+</div>
+
+<div class="stat">
+<b id="deckCount">0</b>
+Deck Cards
 </div>
 
 </div>
 
 </div>
-
 
 <div class="panel">
 
-<h2>🚀 Latest Release</h2>
+<h2>🚀 Latest Update</h2>
 
-<h3>CardQuest v1.1 — The Shadow Awakens</h3>
-
-<p>
-
-🌑 Shadow Realm has opened!<br>
-👹 New Shadow Boss<br>
-🃏 New cards<br>
-🔒 New Secret Card<br>
-🎁 Shadow Event<br>
-🏆 New achievements
-
-</p>
-
-<br>
-
-<button
-class="action"
-onclick="showPage('events')">
-
-🎪 VIEW EVENT
-
-</button>
-
-</div>
-
-
-<div class="panel">
-
-<h2>🔥 Today's Featured Card</h2>
-
-<div id="featuredCard"></div>
-
-</div>
-
-</section>
-
-
-<!-- BATTLE -->
-
-<section id="battle" class="page">
-
-<h1>⚔️ Battle Arena</h1>
-
-<div class="battle-arena">
-
-<div class="fighter enemy">
-
-<div>
-
-<h2>🤖 AI Champion</h2>
-
-<p id="enemyName">
-Shadow Bot
-</p>
-
-<div class="hp">
-
-<div
-id="enemyHPBar"
-class="hp-fill">
-</div>
-
-</div>
+<p>Version 2.0</p>
 
 <p>
-❤️ <span id="enemyHP">100</span>/100
+🧩 New deck builder<br>
+⚔️ Improved battles<br>
+🃏 500+ cards<br>
+🔒 10 Secret cards<br>
+🌐 Online PvP system<br>
+🎁 Card packs<br>
+🎪 Events
 </p>
-
-</div>
-
-
-<div
-id="enemyBattleCard"
-class="battle-card enemy">
-
-<div class="battle-art">
-👹
-</div>
-
-<h2>Shadow Fang</h2>
-
-<p>⚔️ 25 ATK</p>
-
-</div>
-
-</div>
-
-
-<hr>
-
-
-<div class="fighter">
-
-<div>
-
-<h2>👑 You</h2>
-
-<div class="hp">
-
-<div
-id="playerHPBar"
-class="hp-fill">
-</div>
-
-</div>
-
-<p>
-❤️ <span id="playerHP">100</span>/100
-</p>
-
-</div>
-
-
-<div
-id="playerBattleCard"
-class="battle-card">
-
-<div class="battle-art">
-🔥
-</div>
-
-<h2>Flame Knight</h2>
-
-<p>⚔️ 25 ATK</p>
-
-</div>
-
-</div>
-
-
-<div class="battle-buttons">
-
-<button
-id="attackBtn"
-class="action attack"
-onclick="playerAttack()">
-
-⚔️ ATTACK
-
-</button>
-
-<button
-id="specialBtn"
-class="action special"
-onclick="playerSpecial()">
-
-✨ SPECIAL ABILITY
-
-</button>
-
-<button
-class="action switch"
-onclick="switchCard()">
-
-🔄 SWITCH CARD
-
-</button>
-
-<button
-class="action"
-onclick="startBattle()">
-
-🆕 NEW BATTLE
-
-</button>
-
-</div>
-
-
-<div
-id="battleLog"
-class="battle-log">
-
-⚔️ Battle ready! Choose an action.
-
-</div>
 
 </div>
 
@@ -968,49 +429,31 @@ class="battle-log">
 
 <div class="panel">
 
-<h2>Your Deck</h2>
+<h2>
+Your Deck
+<span id="deckText">0/10</span>
+</h2>
 
 <p>
-A deck contains exactly <b>10 cards</b>.
+Click a card from your collection to add it.
+Click ❌ to remove it.
 </p>
 
-<br>
-
-<div
-id="deckSlots"
-class="deck">
-</div>
+<div id="deckSlots" class="deck"></div>
 
 </div>
-
 
 <div class="panel">
 
-<h2>⚡ Deck Information</h2>
+<h2>📚 Your Collection</h2>
 
-<div class="stats">
+<input
+id="deckSearch"
+placeholder="Search cards..."
+oninput="renderDeckCollection()"
+>
 
-<div class="stat">
-<strong id="deckCount">0</strong>
-Cards
-</div>
-
-<div class="stat">
-<strong id="deckAttack">0</strong>
-Attack
-</div>
-
-<div class="stat">
-<strong id="deckHealth">0</strong>
-Health
-</div>
-
-<div class="stat">
-<strong id="deckPower">0</strong>
-Power
-</div>
-
-</div>
+<div id="deckCollection" class="grid"></div>
 
 </div>
 
@@ -1025,53 +468,27 @@ Power
 
 <div class="panel">
 
-<p>
-Collection:
-<b>
-<span id="collectionCount">0</span>/500
-</b>
-</p>
-
-<br>
-
 <input
 id="cardSearch"
+placeholder="Search cards..."
 oninput="renderCards()"
-placeholder="🔎 Search cards...">
+>
 
-<select
-id="rarityFilter"
-onchange="renderCards()">
+<select id="rarityFilter" onchange="renderCards()">
 
-<option value="All">All Rarities</option>
-<option value="Common">Common</option>
-<option value="Uncommon">Uncommon</option>
-<option value="Rare">Rare</option>
-<option value="Epic">Epic</option>
-<option value="Legendary">Legendary</option>
-<option value="Secret">Secret</option>
-
-</select>
-
-<select
-id="typeFilter"
-onchange="renderCards()">
-
-<option value="All">All Types</option>
-<option value="Flame">🔥 Flame</option>
-<option value="Aqua">💧 Aqua</option>
-<option value="Nature">🌿 Nature</option>
-<option value="Storm">⚡ Storm</option>
-<option value="Secret">🔒 Secret</option>
+<option>All</option>
+<option>Common</option>
+<option>Uncommon</option>
+<option>Rare</option>
+<option>Epic</option>
+<option>Legendary</option>
+<option>Secret</option>
 
 </select>
 
 </div>
 
-<div
-id="cardGrid"
-class="card-grid">
-</div>
+<div id="cardsGrid" class="grid"></div>
 
 </section>
 
@@ -1080,41 +497,150 @@ class="card-grid">
 
 <section id="packs" class="page">
 
-<h1>🎁 Packs</h1>
+<h1>🎁 Card Packs</h1>
 
 <div class="panel">
 
 <h2>Basic Card Pack</h2>
 
 <p>
-One pack gives exactly <b>ONE card</b>.
+Every pack gives exactly ONE card.
 </p>
 
-<p>
-Cost: 🪙 50 Coins
-</p>
-
-<button
-class="big-button"
-onclick="openPack()">
-
-🎁 OPEN PACK
-
+<button onclick="openPack()">
+🎁 Open Pack — 50 Coins
 </button>
 
 </div>
 
+</section>
+
+
+<!-- BATTLE -->
+
+<section id="battle" class="page">
+
+<h1>⚔️ AI Battle</h1>
 
 <div class="panel">
 
-<h2>🎲 Drop Rates</h2>
+<div class="battleArea">
 
-<p>Common — 60%</p>
-<p>Uncommon — 23%</p>
-<p>Rare — 10%</p>
-<p>Epic — 5%</p>
-<p>Legendary — 1.8%</p>
-<p>🔒 Secret — 0.2%</p>
+<div class="fighter">
+
+<h2>🤖 Shadow Bot</h2>
+
+<div class="battleCard" id="enemyCard"></div>
+
+<div class="health">
+<div id="enemyHealth" class="healthBar enemyBar"></div>
+</div>
+
+<p id="enemyHP">100/100 HP</p>
+
+</div>
+
+
+<div class="fighter">
+
+<h2>👑 You</h2>
+
+<div class="battleCard" id="playerCard"></div>
+
+<div class="health">
+<div id="playerHealth" class="healthBar"></div>
+</div>
+
+<p id="playerHP">100/100 HP</p>
+
+</div>
+
+</div>
+
+
+<div class="battleButtons">
+
+<button onclick="attack()">
+⚔️ Attack
+</button>
+
+<button onclick="specialAttack()">
+✨ Special Ability
+</button>
+
+<button onclick="newBattle()">
+🔄 New Battle
+</button>
+
+</div>
+
+<div id="battleLog" class="battleLog">
+⚔️ Battle ready!
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ONLINE -->
+
+<section id="online" class="page">
+
+<h1>🌐 Online PvP</h1>
+
+<div class="panel">
+
+<h2>Play With Friends</h2>
+
+<p>
+Create a room and give your friend the room code.
+</p>
+
+<button onclick="createRoom()">
+➕ Create Room
+</button>
+
+<br><br>
+
+<input
+id="joinCode"
+placeholder="ENTER ROOM CODE"
+>
+
+<button onclick="joinRoom()">
+🚪 Join Room
+</button>
+
+</div>
+
+<div id="roomPanel" class="panel hidden">
+
+<h2>Room Code</h2>
+
+<div id="roomCode" class="roomCode"></div>
+
+<p id="onlineStatus">
+Waiting for opponent...
+</p>
+
+<div class="battleButtons">
+
+<button id="onlineAttackButton"
+onclick="onlineAttack()"
+disabled>
+⚔️ Attack
+</button>
+
+<button id="onlineSpecialButton"
+onclick="onlineSpecial()"
+disabled>
+✨ Special
+</button>
+
+</div>
+
+<div id="onlineLog" class="battleLog"></div>
 
 </div>
 
@@ -1127,286 +653,32 @@ onclick="openPack()">
 
 <h1>🎪 Events</h1>
 
-<div class="event">
+<div class="panel">
 
 <h2>🌑 Shadow Invasion</h2>
 
-<span class="event-time">
-⏱️ LIMITED EVENT
-</span>
-
 <p>
-
-The Shadow Realm has opened!
-
-Defeat Shadow enemies,
-collect Shadow Tokens,
-and unlock exclusive rewards.
-
+Defeat enemies to earn Shadow Tokens.
 </p>
 
-<br>
-
-<p>
+<h3>
 🎟️ Shadow Tokens:
-<b id="shadowTokens">0</b>
-</p>
-
-<br>
-
-<button
-class="action special"
-onclick="claimEventReward()">
-
-🎁 CLAIM EVENT REWARD
-
-</button>
+<span id="tokens">0</span>
+</h3>
 
 </div>
-
-
-<div class="event">
-
-<h2>🔥 Flame Festival</h2>
-
-<p>
-A future limited-time event.
-Prepare your Flame cards!
-</p>
-
-</div>
-
-
-<div class="event">
-
-<h2>❄️ Frozen Clash</h2>
-
-<p>
-A future limited-time winter event.
-</p>
-
-</div>
-
-</section>
-
-
-<!-- QUESTS -->
-
-<section id="quests" class="page">
-
-<h1>📜 Quests</h1>
 
 <div class="panel">
 
-<div class="quest">
-
-<div>
-
-<h3>🟢 Easy — First Victory</h3>
+<h2>🔥 Weekend Challenge</h2>
 
 <p>
-Win 1 battle
+Win 5 battles to receive bonus coins.
 </p>
 
-<div class="progress">
-
-<div
-id="quest1"
-class="progress-fill">
-</div>
-
-</div>
-
-</div>
-
-<b>🪙 50</b>
-
-</div>
-
-
-<div class="quest">
-
-<div>
-
-<h3>🔵 Medium — Warrior</h3>
-
-<p>
-Win 3 battles
-</p>
-
-<div class="progress">
-
-<div
-id="quest2"
-class="progress-fill">
-</div>
-
-</div>
-
-</div>
-
-<b>💎 10</b>
-
-</div>
-
-
-<div class="quest">
-
-<div>
-
-<h3>🟣 Hard — Champion</h3>
-
-<p>
-Win 5 battles
-</p>
-
-<div class="progress">
-
-<div
-id="quest3"
-class="progress-fill">
-</div>
-
-</div>
-
-</div>
-
-<b>🪙 50</b>
-
-</div>
-
-
-<div class="quest">
-
-<div>
-
-<h3>🔴 Extreme — Card Master</h3>
-
-<p>
-Win 10 battles
-</p>
-
-<div class="progress">
-
-<div
-id="quest4"
-class="progress-fill">
-</div>
-
-</div>
-
-</div>
-
-<b>💎 10</b>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- BATTLE PASS -->
-
-<section id="pass" class="page">
-
-<h1>🏆 Battle Pass</h1>
-
-<div class="panel">
-
-<h2>Season 1 — Rise of Champions</h2>
-
-<p>
-Level:
-<b>
-<span id="passLevel">1</span>/20
-</b>
-</p>
-
-<div class="progress">
-
-<div
-id="passProgress"
-class="progress-fill">
-</div>
-
-</div>
-
-<br>
-
-<div
-id="passGrid"
-class="pass-grid">
-</div>
-
-</div>
-
-</section>
-
-
-<!-- SHOP -->
-
-<section id="shop" class="page">
-
-<h1>🛒 Shop</h1>
-
-<div class="shop-grid">
-
-<div class="shop-item">
-
-<h2>🎁 Basic Pack</h2>
-
-<p>
-One random card.
-</p>
-
-<button
-class="buy"
-onclick="buyPack()">
-
-🪙 50 Coins
-
+<button onclick="claimEventReward()">
+🏆 Claim Reward
 </button>
-
-</div>
-
-
-<div class="shop-item">
-
-<h2>🎨 Card Back</h2>
-
-<p>
-Cosmetic card back.
-</p>
-
-<button
-class="buy"
-onclick="buyCosmetic()">
-
-💎 10 Gems
-
-</button>
-
-</div>
-
-
-<div class="shop-item">
-
-<h2>👑 Champion Frame</h2>
-
-<p>
-Profile cosmetic.
-</p>
-
-<button
-class="buy"
-onclick="buyCosmetic()">
-
-💎 10 Gems
-
-</button>
-
-</div>
 
 </div>
 
@@ -1425,129 +697,19 @@ onclick="buyCosmetic()">
 
 <input
 id="username"
-placeholder="Your username">
+placeholder="Your username"
+>
 
 <label>Bio</label>
 
-<textarea
+<input
 id="bio"
-placeholder="Tell everyone about yourself..."></textarea>
+placeholder="Your CardQuest bio"
+>
 
-<label>Favorite Card</label>
-
-<select id="favoriteCard">
-</select>
-
-<button
-class="big-button"
-onclick="saveProfile()">
-
-💾 SAVE PROFILE
-
+<button onclick="saveProfile()">
+💾 Save Profile
 </button>
-
-</div>
-
-
-<div class="panel">
-
-<h2>📊 Statistics</h2>
-
-<div class="stats">
-
-<div class="stat">
-<strong id="profileWins">0</strong>
-Wins
-</div>
-
-<div class="stat">
-<strong id="profileLosses">0</strong>
-Losses
-</div>
-
-<div class="stat">
-<strong id="profileCards">0</strong>
-Cards
-</div>
-
-<div class="stat">
-<strong id="profileLevel">1</strong>
-Level
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ACHIEVEMENTS -->
-
-<section id="achievements" class="page">
-
-<h1>🏅 Achievements</h1>
-
-<div
-id="achievementGrid"
-class="achievement-grid">
-</div>
-
-</section>
-
-
-<!-- RELEASE NOTES -->
-
-<section id="updates" class="page">
-
-<h1>🚀 Release Updates</h1>
-
-<div class="panel">
-
-<h2>v1.1 — The Shadow Awakens</h2>
-
-<p>
-
-🌑 Shadow Realm<br>
-👹 Shadow Boss<br>
-🃏 New cards<br>
-🔒 Secret Card<br>
-🎪 Shadow Event<br>
-🏆 New achievements
-
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>v1.2 — Flame Festival</h2>
-
-<p>
-
-🔥 New Flame cards<br>
-🌋 Volcano Arena<br>
-👑 Flame Champion<br>
-🎁 Festival Rewards
-
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>v1.3 — Frozen Clash</h2>
-
-<p>
-
-❄️ Frozen Arena<br>
-🧊 Freeze abilities<br>
-🃏 Ice cards<br>
-👹 Ice Boss
-
-</p>
 
 </div>
 
@@ -1556,80 +718,30 @@ class="achievement-grid">
 </main>
 
 
-<!-- MODAL -->
-
-<div
-id="modal"
-class="modal">
-
-<div class="modal-box">
-
-<button
-class="close"
-onclick="closeModal()">
-
-X
-
-</button>
-
-<h2 id="modalTitle">
-CardQuest
-</h2>
-
-<br>
-
-<div id="modalContent">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- TOAST -->
-
-<div
-id="toast"
-class="toast">
-</div>
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =========================================================
-   CARDQUEST GAME ENGINE
-========================================================= */
+/* =========================
+   CARD DATABASE
+========================= */
 
-
-/* ---------- CARD DATA ---------- */
-
-const types=[
+const types = [
     "Flame",
     "Aqua",
     "Nature",
     "Storm"
 ];
 
-const emojis=[
-    "🔥",
-    "💧",
-    "🌿",
-    "⚡",
-    "❄️",
-    "🌪️",
-    "🪨",
-    "🌑",
-    "☀️",
-    "🐉",
-    "🦊",
-    "🐺",
-    "🦁",
-    "🐯",
-    "🦅",
-    "🐍"
+const emojis = [
+    "🔥","💧","🌿","⚡",
+    "❄️","🌪️","🪨","🌑",
+    "☀️","🐉","🦊","🐺",
+    "🦁","🦅"
 ];
 
-const names=[
+const names = [
     "Knight",
     "Warrior",
     "Dragon",
@@ -1641,1332 +753,1104 @@ const names=[
     "Champion",
     "Master",
     "Fang",
-    "Blade",
-    "Sentinel",
-    "Hero",
-    "Legend"
+    "Blade"
 ];
 
-const cards=[];
+const cards = [];
 
 
-/* ---------- CREATE 490 NORMAL CARDS ---------- */
+/* CREATE 490 NORMAL CARDS */
 
-for(let i=1;i<=490;i++){
-
-    const type=
-        types[(i-1)%types.length];
+for(let i = 1; i <= 490; i++){
 
     let rarity;
 
-    if(i%100===0){
-
-        rarity="Legendary";
-
-    }else if(i%20===0){
-
-        rarity="Epic";
-
-    }else if(i%7===0){
-
-        rarity="Rare";
-
-    }else if(i%3===0){
-
-        rarity="Uncommon";
-
-    }else{
-
-        rarity="Common";
-
+    if(i % 100 === 0){
+        rarity = "Legendary";
+    }
+    else if(i % 20 === 0){
+        rarity = "Epic";
+    }
+    else if(i % 7 === 0){
+        rarity = "Rare";
+    }
+    else if(i % 3 === 0){
+        rarity = "Uncommon";
+    }
+    else{
+        rarity = "Common";
     }
 
     cards.push({
 
-        id:i,
+        id: i,
 
         name:
-            type+" "+
-            names[(i-1)%names.length]+
-            " "+i,
+        types[(i-1)%4]
+        + " "
+        + names[(i-1)%names.length]
+        + " "
+        + i,
 
-        type:type,
+        type:
+        types[(i-1)%4],
 
-        rarity:rarity,
+        rarity: rarity,
 
         emoji:
-            emojis[(i-1)%emojis.length],
+        emojis[(i-1)%emojis.length],
 
         attack:
-            15+(i%35),
+        15 + (i % 35),
 
         health:
-            80+(i%50),
+        80 + (i % 50),
 
         special:
-            "Power Strike"
+        "Power Strike"
 
     });
 
 }
 
 
-/* ---------- 10 SECRET CARDS ---------- */
+/* =========================
+   10 SECRET CARDS
+========================= */
 
-const secretCards=[
+const secretCards = [
 
-    ["Void Emperor","👑",90,220],
-    ["Galaxy Dragon","🌌",95,230],
-    ["Chrono Titan","⏳",100,240],
-    ["Shadow King","👁️",105,250],
-    ["Eternal Phoenix","🔥",110,260],
-    ["Cosmic Guardian","🌠",115,270],
-    ["Infinity Beast","🐲",120,280],
-    ["Omega Knight","⚔️",125,290],
-    ["Celestial Wolf","🐺",130,300],
-    ["Ancient Overlord","☄️",140,320]
+["Void Emperor","👑",90,220],
+["Galaxy Dragon","🌌",95,230],
+["Chrono Titan","⏳",100,240],
+["Shadow King","👁️",105,250],
+["Eternal Phoenix","🔥",110,260],
+["Cosmic Guardian","🌠",115,270],
+["Infinity Beast","🐲",120,280],
+["Omega Knight","⚔️",125,290],
+["Celestial Wolf","🐺",130,300],
+["Ancient Overlord","☄️",140,320]
 
 ];
 
-secretCards.forEach((c,index)=>{
+secretCards.forEach((x,index)=>{
 
     cards.push({
 
-        id:491+index,
+        id: 491 + index,
 
-        name:c[0],
+        name: x[0],
 
-        type:"Secret",
+        type: "Secret",
 
-        rarity:"Secret",
+        rarity: "Secret",
 
-        emoji:c[1],
+        emoji: x[1],
 
-        attack:c[2],
+        attack: x[2],
 
-        health:c[3],
+        health: x[3],
 
-        special:"SECRET ABILITY"
+        special: "Secret Ability"
 
     });
 
 });
 
 
-/* ---------- SAVE DATA ---------- */
+/* =========================
+   SAVE DATA
+========================= */
 
-let state=
-JSON.parse(
+let game = JSON.parse(
     localStorage.getItem("CardQuestSave")
-)||{
-
-    coins:500,
-
-    gems:100,
-
-    collection:[],
-
-    deck:[],
-
-    wins:0,
-
-    losses:0,
-
-    streak:0,
-
-    questWins:0,
-
-    passXP:0,
-
-    shadowTokens:0,
-
-    username:"CardQuest Player",
-
-    bio:"Future CardQuest Champion!",
-
-    favorite:1
-
-};
+);
 
 
-/* ---------- SAVE ---------- */
+if(!game){
+
+    game = {
+
+        coins: 500,
+
+        gems: 100,
+
+        collection: [1,2,3,4,5],
+
+        deck: [1,2,3],
+
+        wins: 0,
+
+        losses: 0,
+
+        tokens: 0,
+
+        username: "CardQuest Player",
+
+        bio: "Future Champion!",
+
+        eventClaimed: false
+
+    };
+
+}
+
 
 function saveGame(){
 
     localStorage.setItem(
         "CardQuestSave",
-        JSON.stringify(state)
+        JSON.stringify(game)
     );
 
-    updateEverything();
+    updateUI();
 
 }
 
 
-/* ---------- NAVIGATION ---------- */
+/* =========================
+   PAGE SYSTEM
+========================= */
 
-function showPage(page){
+function showPage(id){
 
     document
     .querySelectorAll(".page")
-    .forEach(p=>
-        p.classList.remove("active")
-    );
+    .forEach(page => {
+        page.classList.remove("active");
+    });
 
-    const target=
-        document.getElementById(page);
+    document
+    .getElementById(id)
+    .classList.add("active");
 
-    if(target){
 
-        target.classList.add("active");
-
-    }
-
-    if(page==="cards")
-        renderCards();
-
-    if(page==="deck")
+    if(id === "deck"){
         renderDeck();
+    }
 
-    if(page==="profile")
-        loadProfile();
+    if(id === "cards"){
+        renderCards();
+    }
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    if(id === "profile"){
 
-}
+        document.getElementById("username").value =
+        game.username;
 
-
-/* ---------- UI UPDATE ---------- */
-
-function updateEverything(){
-
-    document.getElementById("gems")
-        .textContent=state.gems;
-
-    document.getElementById("coins")
-        .textContent=state.coins;
-
-    document.getElementById("collectionCount")
-        .textContent=state.collection.length;
-
-    document.getElementById("homeCards")
-        .textContent=state.collection.length;
-
-    document.getElementById("homeWins")
-        .textContent=state.wins;
-
-    document.getElementById("profileWins")
-        .textContent=state.wins;
-
-    document.getElementById("profileLosses")
-        .textContent=state.losses;
-
-    document.getElementById("profileCards")
-        .textContent=state.collection.length;
-
-    document.getElementById("homeStreak")
-        .textContent=state.streak;
-
-    document.getElementById("shadowTokens")
-        .textContent=state.shadowTokens;
-
-    const secrets=
-        state.collection.filter(
-            id=>cards.find(c=>c.id===id)?.rarity==="Secret"
-        ).length;
-
-    document.getElementById("homeSecrets")
-        .textContent=secrets;
-
-    const level=
-        Math.min(
-            50,
-            Math.floor(state.passXP/100)+1
-        );
-
-    document.getElementById("homeLevel")
-        .textContent=level;
-
-    document.getElementById("profileLevel")
-        .textContent=level;
-
-    document.getElementById("passLevel")
-        .textContent=Math.min(
-            20,
-            Math.floor(state.passXP/100)+1
-        );
-
-    document.getElementById("passProgress")
-        .style.width=
-        (state.passXP%100)+"%";
-
-    updateQuests();
-
-}
-
-
-/* ---------- QUESTS ---------- */
-
-function updateQuests(){
-
-    const q=state.questWins;
-
-    document.getElementById("quest1")
-        .style.width=
-        Math.min(q/1*100,100)+"%";
-
-    document.getElementById("quest2")
-        .style.width=
-        Math.min(q/3*100,100)+"%";
-
-    document.getElementById("quest3")
-        .style.width=
-        Math.min(q/5*100,100)+"%";
-
-    document.getElementById("quest4")
-        .style.width=
-        Math.min(q/10*100,100)+"%";
-
-}
-
-
-/* ---------- CARD INDEX ---------- */
-
-function renderCards(){
-
-    const grid=
-        document.getElementById("cardGrid");
-
-    const search=
-        document.getElementById("cardSearch")
-        .value
-        .toLowerCase();
-
-    const rarity=
-        document.getElementById("rarityFilter")
-        .value;
-
-    const type=
-        document.getElementById("typeFilter")
-        .value;
-
-    grid.innerHTML="";
-
-    cards
-    .filter(card=>{
-
-        if(
-            rarity!=="All" &&
-            card.rarity!==rarity
-        )
-            return false;
-
-        if(
-            type!=="All" &&
-            card.type!==type
-        )
-            return false;
-
-        if(
-            search &&
-            !card.name.toLowerCase()
-            .includes(search)
-        )
-            return false;
-
-        return true;
-
-    })
-    .forEach(card=>{
-
-        const owned=
-            state.collection
-            .includes(card.id);
-
-        const div=
-            document.createElement("div");
-
-        div.className=
-            "card "+
-            card.rarity.toLowerCase()+
-            (!owned?" locked":"");
-
-        div.innerHTML=`
-
-            <span class="card-number">
-                #${card.id}
-            </span>
-
-            <div class="card-art">
-                ${owned?card.emoji:"❓"}
-            </div>
-
-            <h3>
-                ${owned?card.name:"??? Card"}
-            </h3>
-
-            <span class="rarity">
-                ${card.rarity}
-            </span>
-
-            <p>
-
-            ${
-                owned
-
-                ?
-
-                `
-                ⚔️ ${card.attack} ATK<br>
-                ❤️ ${card.health} HP<br>
-                ✨ ${card.special}
-                `
-
-                :
-
-                "🔒 Undiscovered"
-
-            }
-
-            </p>
-        `;
-
-        if(owned){
-
-            div.onclick=()=>{
-
-                openModal(
-
-                    card.name,
-
-                    `
-
-                    <div style="
-                    text-align:center;
-                    font-size:90px;
-                    ">
-                    ${card.emoji}
-                    </div>
-
-                    <h2>
-                    ${card.name}
-                    </h2>
-
-                    <p>
-                    Type: ${card.type}
-                    </p>
-
-                    <p>
-                    Rarity: ${card.rarity}
-                    </p>
-
-                    <p>
-                    Attack: ${card.attack}
-                    </p>
-
-                    <p>
-                    Health: ${card.health}
-                    </p>
-
-                    <p>
-                    Ability: ${card.special}
-                    </p>
-
-                    `
-
-                );
-
-            };
-
-        }
-
-        grid.appendChild(div);
-
-    });
-
-}
-
-
-/* ---------- PACKS ---------- */
-
-function openPack(){
-
-    if(state.coins<50){
-
-        toast("❌ You need 50 Coins.");
-
-        return;
+        document.getElementById("bio").value =
+        game.bio;
 
     }
 
-    state.coins-=50;
+}
 
-    const roll=
-        Math.random()*100;
 
-    let rarity;
+/* =========================
+   UI
+========================= */
 
-    if(roll<0.2)
-        rarity="Secret";
+function updateUI(){
 
-    else if(roll<2)
-        rarity="Legendary";
+    document.getElementById("coins").textContent =
+    game.coins;
 
-    else if(roll<7)
-        rarity="Epic";
+    document.getElementById("gems").textContent =
+    game.gems;
 
-    else if(roll<17)
-        rarity="Rare";
+    document.getElementById("wins").textContent =
+    game.wins;
 
-    else if(roll<40)
-        rarity="Uncommon";
+    document.getElementById("losses").textContent =
+    game.losses;
 
-    else
-        rarity="Common";
+    document.getElementById("owned").textContent =
+    game.collection.length;
 
-    const possible=
-        cards.filter(
-            c=>c.rarity===rarity
-        );
+    document.getElementById("deckCount").textContent =
+    game.deck.length;
 
-    const card=
-        possible[
-            Math.floor(
-                Math.random()*possible.length
-            )
-        ];
+    document.getElementById("deckText").textContent =
+    game.deck.length + "/10";
 
-    const duplicate=
-        state.collection
-        .includes(card.id);
-
-    if(!duplicate){
-
-        state.collection.push(card.id);
-
-    }
-
-    state.passXP+=10;
-
-    if(card.rarity==="Secret"){
-
-        toast("🔒 SECRET CARD FOUND!");
-
-    }
-
-    saveGame();
-
-    openModal(
-
-        "🎁 PACK OPENED",
-
-        `
-
-        <div style="
-        text-align:center;
-        font-size:110px;
-        ">
-        ${card.emoji}
-        </div>
-
-        <h2 style="text-align:center">
-        ${card.name}
-        </h2>
-
-        <p style="text-align:center">
-        ⭐ ${card.rarity}
-        </p>
-
-        <br>
-
-        <p style="text-align:center">
-
-        ${
-            duplicate
-            ?"You already own this card!"
-            :"🎉 NEW CARD ADDED!"
-
-        }
-
-        </p>
-
-        `
-
-    );
+    document.getElementById("tokens").textContent =
+    game.tokens;
 
 }
 
 
-/* ---------- SHOP ---------- */
-
-function buyPack(){
-
-    openPack();
-
-}
-
-function buyCosmetic(){
-
-    if(state.gems<10){
-
-        toast("❌ Not enough Gems.");
-
-        return;
-
-    }
-
-    state.gems-=10;
-
-    saveGame();
-
-    toast("🎨 Cosmetic unlocked!");
-
-}
-
-
-/* ---------- BATTLE ---------- */
-
-let playerHP=100;
-
-let enemyHP=100;
-
-let playerTurn=true;
-
-let battleOver=false;
-
-
-function startBattle(){
-
-    playerHP=100;
-
-    enemyHP=100;
-
-    playerTurn=true;
-
-    battleOver=false;
-
-    document.getElementById("playerHP")
-        .textContent=100;
-
-    document.getElementById("enemyHP")
-        .textContent=100;
-
-    document.getElementById("playerHPBar")
-        .style.width="100%";
-
-    document.getElementById("enemyHPBar")
-        .style.width="100%";
-
-    document.getElementById("battleLog")
-        .innerHTML=
-        "⚔️ Battle started!";
-
-    document.getElementById("attackBtn")
-        .disabled=false;
-
-    document.getElementById("specialBtn")
-        .disabled=false;
-
-}
-
-
-function playerAttack(){
-
-    if(
-        battleOver||
-        !playerTurn
-    )
-        return;
-
-    playerTurn=false;
-
-    const damage=
-        20+
-        Math.floor(
-            Math.random()*11
-        );
-
-    animateCard(
-        "playerBattleCard"
-    );
-
-    setTimeout(()=>{
-
-        enemyHP=
-            Math.max(
-                0,
-                enemyHP-damage
-            );
-
-        updateBattle();
-
-        battleLog(
-            `🔥 You dealt ${damage} damage!`
-        );
-
-        if(enemyHP<=0){
-
-            winBattle();
-
-            return;
-
-        }
-
-        setTimeout(
-            enemyAttack,
-            800
-        );
-
-    },300);
-
-}
-
-
-function playerSpecial(){
-
-    if(
-        battleOver||
-        !playerTurn
-    )
-        return;
-
-    playerTurn=false;
-
-    const damage=
-        35+
-        Math.floor(
-            Math.random()*16
-        );
-
-    animateCard(
-        "playerBattleCard"
-    );
-
-    setTimeout(()=>{
-
-        enemyHP=
-            Math.max(
-                0,
-                enemyHP-damage
-            );
-
-        updateBattle();
-
-        battleLog(
-            `✨ SPECIAL dealt ${damage} damage!`
-        );
-
-        if(enemyHP<=0){
-
-            winBattle();
-
-            return;
-
-        }
-
-        setTimeout(
-            enemyAttack,
-            800
-        );
-
-    },300);
-
-}
-
-
-function enemyAttack(){
-
-    if(battleOver)
-        return;
-
-    animateCard(
-        "enemyBattleCard"
-    );
-
-    setTimeout(()=>{
-
-        const damage=
-            15+
-            Math.floor(
-                Math.random()*16
-            );
-
-        playerHP=
-            Math.max(
-                0,
-                playerHP-damage
-            );
-
-        updateBattle();
-
-        battleLog(
-            `👹 Enemy dealt ${damage} damage!`
-        );
-
-        if(playerHP<=0){
-
-            loseBattle();
-
-            return;
-
-        }
-
-        playerTurn=true;
-
-    },300);
-
-}
-
-
-function switchCard(){
-
-    if(battleOver||
-       !playerTurn)
-        return;
-
-    battleLog(
-        "🔄 You switched your active card!"
-    );
-
-    playerTurn=false;
-
-    setTimeout(
-        enemyAttack,
-        700
-    );
-
-}
-
-
-function animateCard(id){
-
-    const card=
-        document.getElementById(id);
-
-    card.classList.remove(
-        "attack-animation"
-    );
-
-    void card.offsetWidth;
-
-    card.classList.add(
-        "attack-animation"
-    );
-
-}
-
-
-function updateBattle(){
-
-    document.getElementById("playerHP")
-        .textContent=playerHP;
-
-    document.getElementById("enemyHP")
-        .textContent=enemyHP;
-
-    document.getElementById("playerHPBar")
-        .style.width=
-        playerHP+"%";
-
-    document.getElementById("enemyHPBar")
-        .style.width=
-        enemyHP+"%";
-
-}
-
-
-function winBattle(){
-
-    battleOver=true;
-
-    state.wins++;
-
-    state.questWins++;
-
-    state.streak++;
-
-    state.coins+=50;
-
-    state.shadowTokens+=5;
-
-    state.passXP+=25;
-
-    document.getElementById("attackBtn")
-        .disabled=true;
-
-    document.getElementById("specialBtn")
-        .disabled=true;
-
-    battleLog(
-        "🏆 VICTORY! +50 Coins +5 Shadow Tokens"
-    );
-
-    saveGame();
-
-    toast(
-        "🏆 Victory!"
-    );
-
-}
-
-
-function loseBattle(){
-
-    battleOver=true;
-
-    state.losses++;
-
-    state.streak=0;
-
-    state.passXP+=5;
-
-    document.getElementById("attackBtn")
-        .disabled=true;
-
-    document.getElementById("specialBtn")
-        .disabled=true;
-
-    battleLog(
-        "💀 Defeat! Try again."
-    );
-
-    saveGame();
-
-    toast(
-        "💀 Defeat!"
-    );
-
-}
-
-
-function battleLog(text){
-
-    const log=
-        document.getElementById(
-            "battleLog"
-        );
-
-    log.innerHTML+=
-        "<br>"+text;
-
-    log.scrollTop=
-        log.scrollHeight;
-
-}
-
-
-/* ---------- DECK ---------- */
-
-function renderDeck(){
-
-    const deck=
-        document.getElementById(
-            "deckSlots"
-        );
-
-    deck.innerHTML="";
-
-    for(let i=0;i<10;i++){
-
-        const slot=
-            document.createElement(
-                "div"
-            );
-
-        slot.className=
-            "deck-slot";
-
-        const id=
-            state.deck[i];
-
-        if(id){
-
-            const card=
-                cards.find(
-                    c=>c.id===id
-                );
-
-            slot.innerHTML=`
-
-                <div>
-
-                <div style="
-                font-size:45px
-                ">
-                ${card.emoji}
-                </div>
-
-                <b>
-                ${card.name}
-                </b>
-
-                <br>
-
-                <small>
-                ⚔️ ${card.attack}
-                ❤️ ${card.health}
-                </small>
-
-                </div>
-
-            `;
-
-        }else{
-
-            slot.innerHTML=
-                "➕<br>Empty Slot";
-
-        }
-
-        deck.appendChild(slot);
-
-    }
-
-    let attack=0;
-
-    let health=0;
-
-    state.deck.forEach(id=>{
-
-        const c=
-            cards.find(
-                x=>x.id===id
-            );
-
-        if(c){
-
-            attack+=c.attack;
-            health+=c.health;
-
-        }
-
-    });
-
-    document.getElementById("deckCount")
-        .textContent=
-        state.deck.length;
-
-    document.getElementById("deckAttack")
-        .textContent=
-        attack;
-
-    document.getElementById("deckHealth")
-        .textContent=
-        health;
-
-    document.getElementById("deckPower")
-        .textContent=
-        attack+health;
-
-}
-
-
-/* ---------- PROFILE ---------- */
-
-function loadProfile(){
-
-    document.getElementById(
-        "username"
-    ).value=
-        state.username;
-
-    document.getElementById(
-        "bio"
-    ).value=
-        state.bio;
-
-    const select=
-        document.getElementById(
-            "favoriteCard"
-        );
-
-    select.innerHTML="";
-
-    cards.slice(0,50)
-    .forEach(card=>{
-
-        const option=
-            document.createElement(
-                "option"
-            );
-
-        option.value=
-            card.id;
-
-        option.textContent=
-            card.emoji+
-            " "+
-            card.name;
-
-        if(
-            card.id===
-            state.favorite
-        )
-            option.selected=true;
-
-        select.appendChild(
-            option
-        );
-
-    });
-
-}
-
-
-function saveProfile(){
-
-    state.username=
-        document.getElementById(
-            "username"
-        ).value||
-        "CardQuest Player";
-
-    state.bio=
-        document.getElementById(
-            "bio"
-        ).value||
-        "Future CardQuest Champion!";
-
-    state.favorite=
-        Number(
-            document.getElementById(
-                "favoriteCard"
-            ).value
-        );
-
-    saveGame();
-
-    toast(
-        "✅ Profile Saved!"
-    );
-
-}
-
-
-/* ---------- EVENTS ---------- */
-
-function claimEventReward(){
-
-    if(
-        state.shadowTokens<25
-    ){
-
-        toast(
-            "❌ You need 25 Shadow Tokens."
-        );
-
-        return;
-
-    }
-
-    state.shadowTokens-=25;
-
-    state.gems+=10;
-
-    saveGame();
-
-    toast(
-        "🌑 Event reward: +10 Gems!"
-    );
-
-}
-
-
-/* ---------- MODAL ---------- */
-
-function openModal(
-    title,
-    content
-){
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent=title;
-
-    document.getElementById(
-        "modalContent"
-    ).innerHTML=content;
-
-    document.getElementById(
-        "modal"
-    ).style.display="flex";
-
-}
-
-
-function closeModal(){
-
-    document.getElementById(
-        "modal"
-    ).style.display="none";
-
-}
-
-
-/* ---------- TOAST ---------- */
+/* =========================
+   TOAST
+========================= */
 
 function toast(message){
 
-    const t=
-        document.getElementById(
-            "toast"
-        );
+    const box =
+    document.getElementById("toast");
 
-    t.textContent=
-        message;
+    box.textContent = message;
 
-    t.style.display=
-        "block";
+    box.style.display = "block";
 
     setTimeout(()=>{
-
-        t.style.display=
-            "none";
-
-    },2500);
+        box.style.display = "none";
+    },2200);
 
 }
 
 
-/* ---------- FEATURED CARD ---------- */
+/* =========================
+   CARD HTML
+========================= */
 
-function renderFeatured(){
+function cardHTML(card){
 
-    const card=
-        cards[
-            Math.floor(
-                Math.random()*cards.length
-            )
-        ];
+    return `
 
-    document.getElementById(
-        "featuredCard"
-    ).innerHTML=`
+    <div
+        class="card ${card.rarity.toLowerCase()}"
+        onclick="addCard(${card.id})"
+    >
 
-        <div class="card ${card.rarity.toLowerCase()}">
-
-            <div class="card-art">
-                ${card.emoji}
-            </div>
-
-            <h3>
-                ${card.name}
-            </h3>
-
-            <span class="rarity">
-                ${card.rarity}
-            </span>
-
-            <p>
-                ⚔️ ${card.attack} ATK<br>
-                ❤️ ${card.health} HP<br>
-                ✨ ${card.special}
-            </p>
-
+        <div class="cardArt">
+            ${card.emoji}
         </div>
+
+        <h3>
+            ${card.name}
+        </h3>
+
+        <span class="rarity">
+            ${card.rarity}
+        </span>
+
+        <p>
+            ⚔️ ${card.attack} ATK<br>
+            ❤️ ${card.health} HP<br>
+            ✨ ${card.special}
+        </p>
+
+    </div>
 
     `;
 
 }
 
 
-/* ---------- BATTLE PASS ---------- */
+/* =========================
+   DECK SYSTEM
+========================= */
 
-function renderPass(){
+function renderDeck(){
 
-    const grid=
-        document.getElementById(
-            "passGrid"
-        );
+    const slots =
+    document.getElementById("deckSlots");
 
-    grid.innerHTML="";
+    slots.innerHTML = "";
 
-    const rewards=[
 
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems",
-        "🃏 Random Card",
-        "🪙 50 Coins",
-        "💎 10 Gems"
+    for(let i=0;i<10;i++){
 
-    ];
+        const id = game.deck[i];
 
-    rewards.forEach(
-        (reward,index)=>{
+        const slot =
+        document.createElement("div");
 
-            const level=
-                index+1;
+        slot.className =
+        "deckSlot";
 
-            const div=
-                document.createElement(
-                    "div"
-                );
 
-            div.className=
-                "reward "+
-                (
-                    level<=
-                    Math.floor(
-                        state.passXP/100
-                    )
-                    ?"unlocked":""
-                );
+        if(id){
 
-            div.innerHTML=`
+            slot.classList.add("filled");
 
-                <h3>
-                Level ${level}
-                </h3>
+            const card =
+            cards.find(c=>c.id===id);
+
+
+            slot.innerHTML = `
+
+                <div style="font-size:40px">
+                    ${card.emoji}
+                </div>
+
+                <b>
+                    ${card.name}
+                </b>
 
                 <br>
 
-                <p>
-                ${reward}
-                </p>
+                ⚔️ ${card.attack}
+                ❤️ ${card.health}
+
+                <br><br>
+
+                <button
+                    onclick="event.stopPropagation(); removeCard(${card.id})"
+                >
+                    ❌ Remove
+                </button>
 
             `;
 
-            grid.appendChild(
-                div
-            );
+        }
+        else{
+
+            slot.innerHTML =
+            "➕ Empty Slot";
 
         }
+
+
+        slots.appendChild(slot);
+
+    }
+
+    renderDeckCollection();
+
+}
+
+
+function renderDeckCollection(){
+
+    const area =
+    document.getElementById("deckCollection");
+
+    const search =
+    document
+    .getElementById("deckSearch")
+    .value
+    .toLowerCase();
+
+
+    area.innerHTML = "";
+
+
+    cards
+    .filter(card =>
+        game.collection.includes(card.id)
+    )
+    .filter(card =>
+        card.name.toLowerCase().includes(search)
+    )
+    .forEach(card=>{
+
+        const wrapper =
+        document.createElement("div");
+
+        wrapper.innerHTML =
+        cardHTML(card);
+
+        area.appendChild(
+            wrapper.firstElementChild
+        );
+
+    });
+
+}
+
+
+function addCard(id){
+
+    if(game.deck.includes(id)){
+
+        toast("⚠️ Card already in deck!");
+
+        return;
+
+    }
+
+
+    if(game.deck.length >= 10){
+
+        toast("🛑 Your deck is full!");
+
+        return;
+
+    }
+
+
+    if(!game.collection.includes(id)){
+
+        toast("❌ You don't own this card!");
+
+        return;
+
+    }
+
+
+    game.deck.push(id);
+
+    saveGame();
+
+    renderDeck();
+
+    toast("🃏 Card added to deck!");
+
+}
+
+
+function removeCard(id){
+
+    game.deck =
+    game.deck.filter(cardId=>cardId !== id);
+
+    saveGame();
+
+    renderDeck();
+
+    toast("Card removed.");
+
+}
+
+
+/* =========================
+   CARD INDEX
+========================= */
+
+function renderCards(){
+
+    const area =
+    document.getElementById("cardsGrid");
+
+    const search =
+    document
+    .getElementById("cardSearch")
+    .value
+    .toLowerCase();
+
+    const rarity =
+    document
+    .getElementById("rarityFilter")
+    .value;
+
+
+    area.innerHTML = "";
+
+
+    cards
+    .filter(card =>
+        rarity === "All" ||
+        card.rarity === rarity
+    )
+    .filter(card =>
+        card.name.toLowerCase().includes(search)
+    )
+    .forEach(card=>{
+
+        const wrapper =
+        document.createElement("div");
+
+
+        if(game.collection.includes(card.id)){
+
+            wrapper.innerHTML =
+            cardHTML(card);
+
+        }
+
+        else{
+
+            wrapper.innerHTML = `
+
+            <div
+                class="card ${card.rarity.toLowerCase()}"
+                style="opacity:.5"
+            >
+
+                <div class="cardArt">
+                    ❓
+                </div>
+
+                <h3>
+                    ???
+                </h3>
+
+                <span class="rarity">
+                    ${card.rarity}
+                </span>
+
+                <p>
+                    🔒 Locked
+                </p>
+
+            </div>
+
+            `;
+
+        }
+
+
+        area.appendChild(
+            wrapper.firstElementChild
+        );
+
+    });
+
+}
+
+
+/* =========================
+   CARD PACKS
+========================= */
+
+function openPack(){
+
+    if(game.coins < 50){
+
+        toast("🪙 Not enough coins!");
+
+        return;
+
+    }
+
+
+    game.coins -= 50;
+
+
+    const random =
+    Math.random()*100;
+
+
+    let rarity;
+
+
+    if(random < 0.2){
+
+        rarity = "Secret";
+
+    }
+
+    else if(random < 2){
+
+        rarity = "Legendary";
+
+    }
+
+    else if(random < 7){
+
+        rarity = "Epic";
+
+    }
+
+    else if(random < 17){
+
+        rarity = "Rare";
+
+    }
+
+    else if(random < 40){
+
+        rarity = "Uncommon";
+
+    }
+
+    else{
+
+        rarity = "Common";
+
+    }
+
+
+    const possible =
+    cards.filter(card =>
+        card.rarity === rarity
+    );
+
+
+    const card =
+    possible[
+        Math.floor(
+            Math.random()*possible.length
+        )
+    ];
+
+
+    if(!game.collection.includes(card.id)){
+
+        game.collection.push(card.id);
+
+    }
+
+
+    saveGame();
+
+
+    toast(
+        "🎁 You received " +
+        card.emoji +
+        " " +
+        card.name
     );
 
 }
 
 
-/* ---------- INITIALIZE ---------- */
+/* =========================
+   AI BATTLE
+========================= */
 
-renderFeatured();
+let playerHP = 100;
+let enemyHP = 100;
+let battleBusy = false;
 
-renderPass();
 
-renderDeck();
+function newBattle(){
 
-loadProfile();
+    playerHP = 100;
 
-updateEverything();
+    enemyHP = 100;
 
-startBattle();
+    battleBusy = false;
+
+    updateBattle();
+
+    document.getElementById("battleLog").innerHTML =
+    "⚔️ New battle started!";
+
+}
+
+
+function updateBattle(){
+
+    const player =
+    cards.find(c =>
+        c.id === game.deck[0]
+    ) || cards[0];
+
+
+    document.getElementById("playerCard").innerHTML = `
+
+        <div class="battleArt">
+            ${player.emoji}
+        </div>
+
+        <h2>
+            ${player.name}
+        </h2>
+
+        <p>
+            ⚔️ ${player.attack}
+            ❤️ ${player.health}
+        </p>
+
+    `;
+
+
+    document.getElementById("enemyCard").innerHTML = `
+
+        <div class="battleArt">
+            👹
+        </div>
+
+        <h2>
+            Shadow Bot
+        </h2>
+
+        <p>
+            ⚔️ 25
+            ❤️ 100
+        </p>
+
+    `;
+
+
+    document.getElementById("playerHealth").style.width =
+    playerHP + "%";
+
+    document.getElementById("enemyHealth").style.width =
+    enemyHP + "%";
+
+
+    document.getElementById("playerHP").textContent =
+    playerHP + "/100 HP";
+
+    document.getElementById("enemyHP").textContent =
+    enemyHP + "/100 HP";
+
+}
+
+
+function battleMessage(message){
+
+    const log =
+    document.getElementById("battleLog");
+
+    log.innerHTML +=
+    "<br>" + message;
+
+    log.scrollTop =
+    log.scrollHeight;
+
+}
+
+
+function attack(){
+
+    if(battleBusy ||
+       playerHP <= 0 ||
+       enemyHP <= 0){
+
+        return;
+
+    }
+
+
+    battleBusy = true;
+
+
+    const damage =
+    20 + Math.floor(Math.random()*11);
+
+
+    enemyHP =
+    Math.max(0,enemyHP-damage);
+
+
+    updateBattle();
+
+
+    battleMessage(
+        "⚔️ You dealt " +
+        damage +
+        " damage!"
+    );
+
+
+    if(enemyHP === 0){
+
+        winBattle();
+
+        return;
+
+    }
+
+
+    setTimeout(()=>{
+
+        enemyAttack();
+
+    },700);
+
+}
+
+
+function specialAttack(){
+
+    if(battleBusy ||
+       playerHP <= 0 ||
+       enemyHP <= 0){
+
+        return;
+
+    }
+
+
+    battleBusy = true;
+
+
+    const damage =
+    35 + Math.floor(Math.random()*16);
+
+
+    enemyHP =
+    Math.max(0,enemyHP-damage);
+
+
+    updateBattle();
+
+
+    battleMessage(
+        "✨ SPECIAL ABILITY dealt " +
+        damage +
+        " damage!"
+    );
+
+
+    if(enemyHP === 0){
+
+        winBattle();
+
+        return;
+
+    }
+
+
+    setTimeout(()=>{
+
+        enemyAttack();
+
+    },700);
+
+}
+
+
+function enemyAttack(){
+
+    const damage =
+    15 + Math.floor(Math.random()*16);
+
+
+    playerHP =
+    Math.max(0,playerHP-damage);
+
+
+    updateBattle();
+
+
+    battleMessage(
+        "👹 Shadow Bot dealt " +
+        damage +
+        " damage!"
+    );
+
+
+    if(playerHP === 0){
+
+        game.losses++;
+
+        saveGame();
+
+        toast("💀 You lost!");
+
+        battleBusy = false;
+
+        return;
+
+    }
+
+
+    battleBusy = false;
+
+}
+
+
+function winBattle(){
+
+    game.wins++;
+
+    game.coins += 50;
+
+    game.tokens += 5;
+
+    saveGame();
+
+    toast("🏆 Victory! +50 Coins");
+
+    battleMessage(
+        "🏆 YOU WON!"
+    );
+
+    battleBusy = false;
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function saveProfile(){
+
+    game.username =
+    document.getElementById("username").value ||
+    "CardQuest Player";
+
+
+    game.bio =
+    document.getElementById("bio").value ||
+    "Future Champion!";
+
+
+    saveGame();
+
+    toast("👤 Profile saved!");
+
+}
+
+
+/* =========================
+   EVENT
+========================= */
+
+function claimEventReward(){
+
+    if(game.eventClaimed){
+
+        toast("You already claimed it!");
+
+        return;
+
+    }
+
+
+    if(game.wins < 5){
+
+        toast("You need 5 wins first!");
+
+        return;
+
+    }
+
+
+    game.coins += 50;
+
+    game.eventClaimed = true;
+
+    saveGame();
+
+    toast("🎉 Event reward: +50 Coins!");
+
+}
+
+
+/* =========================
+   SIMPLE LOCAL MULTIPLAYER
+========================= */
+
+/*
+This creates a room code locally.
+
+For TRUE internet multiplayer,
+connect this section to a backend such as
+Firebase Realtime Database.
+*/
+
+let currentRoom = null;
+
+
+function createRoom(){
+
+    currentRoom =
+    Math.random()
+    .toString(36)
+    .substring(2,7)
+    .toUpperCase();
+
+
+    document
+    .getElementById("roomPanel")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("roomCode")
+    .textContent =
+    currentRoom;
+
+
+    document
+    .getElementById("onlineStatus")
+    .textContent =
+    "⏳ Waiting for another player...";
+
+
+    toast(
+        "🌐 Room created!"
+    );
+
+}
+
+
+function joinRoom(){
+
+    const code =
+    document
+    .getElementById("joinCode")
+    .value
+    .trim()
+    .toUpperCase();
+
+
+    if(!code){
+
+        toast("Enter a room code!");
+
+        return;
+
+    }
+
+
+    currentRoom = code;
+
+
+    document
+    .getElementById("roomPanel")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("roomCode")
+    .textContent =
+    currentRoom;
+
+
+    document
+    .getElementById("onlineStatus")
+    .textContent =
+    "🟢 Joined room " + currentRoom;
+
+
+    document
+    .getElementById("onlineAttackButton")
+    .disabled = false;
+
+
+    document
+    .getElementById("onlineSpecialButton")
+    .disabled = false;
+
+
+    toast(
+        "🚪 Joined room!"
+    );
+
+}
+
+
+function onlineAttack(){
+
+    onlineLog(
+        "⚔️ " +
+        game.username +
+        " used Attack!"
+    );
+
+}
+
+
+function onlineSpecial(){
+
+    onlineLog(
+        "✨ " +
+        game.username +
+        " used Special Ability!"
+    );
+
+}
+
+
+function onlineLog(message){
+
+    const log =
+    document.getElementById("onlineLog");
+
+    log.innerHTML +=
+    "<br>" + message;
+
+    log.scrollTop =
+    log.scrollHeight;
+
+}
+
+
+/* =========================
+   START GAME
+========================= */
+
+updateUI();
+
+newBattle();
 
 </script>
 
