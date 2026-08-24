@@ -1,733 +1,3116 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>👑 CardQuest</title>
 
 <style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
 body{
- margin:0;font-family:Arial,sans-serif;color:#fff;
- background:radial-gradient(circle at 10% 0%,#30206b,transparent 35%),
- radial-gradient(circle at 90% 100%,#4d174d,transparent 35%),#070b16;
- min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 15% 10%,#43217a,transparent 35%),
+        radial-gradient(circle at 85% 80%,#123f68,transparent 35%),
+        #070b16;
 }
-button,input,select{font:inherit}
-button{cursor:pointer}
-.nav{
- position:sticky;top:0;z-index:50;padding:14px 4%;
- display:flex;align-items:center;gap:20px;flex-wrap:wrap;
- background:rgba(7,11,22,.94);backdrop-filter:blur(15px);
- border-bottom:1px solid #283452;
+
+button{
+    border:0;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
 }
-.logo{font-size:25px;font-weight:900}.logo span{color:#a67cff}
-nav{display:flex;gap:7px;flex-wrap:wrap}
-nav button,.secondary{
- background:#17213a;color:#fff;border:1px solid #30405f;
- padding:9px 13px;border-radius:10px;
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:14px 4%;
+    background:#080d18ee;
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #293957;
 }
-nav button:hover,.secondary:hover{background:#7657ff}
-main{width:min(1200px,92%);margin:auto;padding:30px 0 80px}
-.page{display:none;animation:in .3s ease}.page.active{display:block}
-@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.logo{
+    font-size:26px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#a96cff;
+}
+
+nav{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+nav button{
+    background:#17213a;
+    border:1px solid #30405e;
+    padding:9px 12px;
+    border-radius:10px;
+}
+
+nav button:hover{
+    background:#7956ff;
+}
+
+main{
+    width:min(1200px,92%);
+    margin:auto;
+    padding:30px 0 70px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+    animation:pageIn .3s ease;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
 .hero{
- min-height:430px;border-radius:30px;padding:45px;
- display:flex;align-items:center;justify-content:center;text-align:center;
- background:linear-gradient(135deg,#37246d99,#16476d66);
- border:1px solid #ffffff18;box-shadow:0 25px 80px #0008;
+    text-align:center;
+    padding:65px 20px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#452274aa,#174b6aaa);
+    border:1px solid #ffffff18;
 }
-.crown{font-size:65px;animation:float 2s infinite}
-@keyframes float{50%{transform:translateY(-10px)}}
-.hero h1{font-size:clamp(55px,9vw,100px);margin:0;
- background:linear-gradient(90deg,#fff,#a67cff,#fff);background-size:200%;
- -webkit-background-clip:text;background-clip:text;color:transparent;
- animation:shine 4s linear infinite}
-@keyframes shine{to{background-position:200%}}
-.hero h2{color:#cfc5ff}.hero p{color:#aeb8d1;line-height:1.7}
+
+.crown{
+    font-size:70px;
+    animation:float 2s infinite;
+}
+
+@keyframes float{
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+.hero h1{
+    font-size:clamp(55px,9vw,100px);
+    margin:10px 0;
+    background:linear-gradient(90deg,#fff,#b475ff,#fff);
+    background-size:200%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:shine 4s linear infinite;
+}
+
+@keyframes shine{
+    to{
+        background-position:200%;
+    }
+}
+
+.hero h2{
+    margin-bottom:15px;
+}
+
+.muted{
+    color:#94a0ba;
+}
+
 .primary{
- background:linear-gradient(135deg,#7657ff,#b44cff);color:#fff;
- padding:12px 18px;border:0;border-radius:11px;font-weight:bold;
- box-shadow:0 8px 25px #7657ff55;transition:.2s
+    background:linear-gradient(135deg,#7957ff,#c14dff);
+    padding:13px 20px;
+    border-radius:12px;
+    margin-top:10px;
 }
-.primary:hover{transform:translateY(-3px) scale(1.02)}
-.stats,.features,.profileGrid,.shopGrid,.questGrid{
- display:grid;gap:14px
+
+.secondary{
+    background:#17213a;
+    border:1px solid #354565;
+    padding:11px 16px;
+    border-radius:10px;
 }
-.stats{grid-template-columns:repeat(4,1fr);margin:25px 0}
-.stat,.feature,.panel,.profile,.quest,.shopItem{
- background:#111a30;border:1px solid #293858;border-radius:18px;padding:18px
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    margin:22px 0;
 }
-.stat{text-align:center}.stat span{font-size:28px}.stat strong{display:block;font-size:24px;margin:5px}
-.stat small,.feature p,.muted{color:#8f9bb7}
-.features{grid-template-columns:repeat(4,1fr)}
-.feature{transition:.2s}.feature:hover{transform:translateY(-5px);border-color:#896bff}
-.featureIcon{font-size:38px}
-.sectionTitle{margin-top:32px}
-.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+
+.stat{
+    background:#111a30;
+    border:1px solid #293858;
+    border-radius:17px;
+    padding:16px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:24px;
+    margin:5px;
+}
+
+.panel{
+    background:#111a30;
+    border:1px solid #293858;
+    border-radius:18px;
+    padding:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+    gap:15px;
+}
+
+.filters{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:18px 0;
+}
+
 input,select{
- background:#111a30;color:#fff;border:1px solid #30405f;
- padding:11px;border-radius:10px;outline:none
+    background:#111a30;
+    color:white;
+    border:1px solid #30405f;
+    padding:11px;
+    border-radius:10px;
 }
-input{flex:1;min-width:200px}
-.cardGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px}
+
 .card{
- min-height:280px;padding:14px;border-radius:19px;
- background:linear-gradient(160deg,#1b2745,#0d1426);
- border:2px solid #334261;transition:.2s;cursor:pointer
+    min-height:290px;
+    padding:13px;
+    border-radius:20px;
+    background:linear-gradient(160deg,#202d4d,#0d1426);
+    border:2px solid #344261;
+    transition:.2s;
+    position:relative;
+    overflow:hidden;
 }
-.card:hover{transform:translateY(-7px) scale(1.02);box-shadow:0 18px 45px #0008}
-.card.fire{border-color:#ff6848}.card.water{border-color:#4ca8ff}
-.card.nature{border-color:#63d47b}.card.electric{border-color:#ffd84d}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px #0008;
+}
+
+.card.secret{
+    border:3px solid #fff;
+    background:
+        linear-gradient(135deg,#ff0080,#7928ff,#00d4ff,#00ff88);
+    background-size:300% 300%;
+    animation:secretBG 4s infinite;
+}
+
+@keyframes secretBG{
+    0%{background-position:0 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0 50%}
+}
+
+.card.secret:after{
+    content:"SECRET";
+    position:absolute;
+    top:10px;
+    right:-30px;
+    background:white;
+    color:#7b21c8;
+    padding:5px 35px;
+    font-weight:900;
+    transform:rotate(35deg);
+}
+
+.fire{
+    border-color:#ff6045;
+}
+
+.water{
+    border-color:#4ca8ff;
+}
+
+.nature{
+    border-color:#63d47b;
+}
+
+.electric{
+    border-color:#ffd84d;
+}
+
 .art{
- height:115px;border-radius:14px;margin-bottom:12px;
- display:flex;align-items:center;justify-content:center;font-size:58px;
- background:radial-gradient(circle,#384a78,#151c31)
+    height:120px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:65px;
+    background:radial-gradient(circle,#455b89,#151d33);
+    margin-bottom:10px;
 }
-.pill{display:inline-block;background:#273452;padding:4px 8px;border-radius:20px;font-size:11px;margin:3px 2px}
-.card p{font-size:13px;color:#a3aec6;margin:7px 0}
-.deckSlots{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:20px 0}
-.slot{
- min-height:130px;border:1px dashed #485678;border-radius:15px;
- background:#10182a;display:flex;align-items:center;justify-content:center;
- flex-direction:column;text-align:center;padding:8px
+
+.secret .art{
+    background:radial-gradient(circle,#ffffff88,#28103f);
 }
-.battleGrid{display:grid;grid-template-columns:1fr .5fr 1fr;gap:18px;align-items:center}
-.battleSide{padding:20px;text-align:center;background:#111a30;border:1px solid #30405f;border-radius:20px}
+
+.pill{
+    display:inline-block;
+    background:#273452;
+    padding:4px 8px;
+    border-radius:20px;
+    font-size:11px;
+    margin:2px;
+}
+
+.rarity-common{
+    color:#fff;
+}
+
+.rarity-rare{
+    color:#55aaff;
+}
+
+.rarity-epic{
+    color:#c46cff;
+}
+
+.rarity-legendary{
+    color:#ff9b3d;
+}
+
+.rarity-mythic{
+    color:#ff4c4c;
+}
+
+.rarity-secret{
+    color:#fff;
+    text-shadow:0 0 8px #ff00ff,0 0 15px #00ffff;
+}
+
+.arena{
+    position:relative;
+    padding:22px;
+    border-radius:28px;
+    background:radial-gradient(circle at center,#283d68,#10182c 60%);
+    border:2px solid #354b75;
+    overflow:hidden;
+}
+
+.battleField{
+    display:grid;
+    grid-template-columns:1fr 100px 1fr;
+    align-items:center;
+    gap:18px;
+    min-height:430px;
+}
+
+.fighter{
+    text-align:center;
+}
+
+.fighterName{
+    font-size:23px;
+    font-weight:900;
+    margin:8px;
+}
+
+.healthOuter{
+    width:min(320px,100%);
+    height:22px;
+    margin:auto;
+    border-radius:20px;
+    background:#080d18;
+    border:2px solid #3a4763;
+    overflow:hidden;
+}
+
+.healthBar{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,#27d66d,#8cff5c);
+    transition:width .5s;
+}
+
+.healthText{
+    font-weight:bold;
+    margin:7px;
+}
+
 .battleCard{
- min-height:260px;border-radius:18px;margin-top:12px;padding:20px;
- background:linear-gradient(145deg,#26365d,#10182b);
- border:2px solid #4a597b;display:flex;flex-direction:column;
- justify-content:center;align-items:center
+    width:min(280px,100%);
+    height:320px;
+    margin:auto;
+    padding:15px;
+    border-radius:23px;
+    background:linear-gradient(145deg,#263a65,#111a30);
+    border:4px solid #63749b;
+    box-shadow:0 20px 50px #0009;
+    transition:transform .2s;
 }
-.battleIcon{font-size:70px;animation:float 2s infinite}
-.vs{text-align:center;font-size:50px;font-weight:900;color:#ff6666}
-.log{
- background:#09101f;border:1px solid #293858;border-radius:14px;
- padding:12px;min-height:130px;max-height:220px;overflow:auto;
- color:#b8c2d8;line-height:1.6;margin:18px 0
+
+.battleArt{
+    height:145px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:82px;
+    background:radial-gradient(circle,#485f8f,#11182b);
+    margin-bottom:9px;
 }
-.hand{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+
+.battleStats{
+    display:flex;
+    justify-content:space-around;
+}
+
+.vs{
+    font-size:40px;
+    font-weight:900;
+    color:#ff6666;
+}
+
+.hand{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+    margin-top:18px;
+}
+
 .hand button{
- background:#16213a;color:white;border:1px solid #344563;border-radius:13px;padding:10px
+    background:#17223b;
+    border:2px solid #344563;
+    border-radius:14px;
+    padding:8px;
 }
-.hand button:hover{transform:translateY(-4px);border-color:#9a78ff}
+
+.hand button.selected{
+    border-color:#c66cff;
+    box-shadow:0 0 20px #a14cff66;
+}
+
+.attackButton,.specialButton{
+    font-size:18px;
+    padding:14px 25px;
+    border-radius:13px;
+    margin:5px;
+}
+
+.attackButton{
+    background:linear-gradient(135deg,#ff4b4b,#ff812f);
+}
+
+.specialButton{
+    background:linear-gradient(135deg,#8b4cff,#d54cff);
+}
+
+button:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+}
+
+.playerAttack{
+    animation:playerAttack .55s ease;
+}
+
+.enemyAttack{
+    animation:enemyAttack .55s ease;
+}
+
+@keyframes playerAttack{
+    45%{transform:translateX(145px) scale(1.08)}
+    70%{transform:translateX(145px) scale(1.12)}
+}
+
+@keyframes enemyAttack{
+    45%{transform:translateX(-145px) scale(1.08)}
+    70%{transform:translateX(-145px) scale(1.12)}
+}
+
+.hit{
+    animation:shake .4s;
+}
+
+@keyframes shake{
+    20%{transform:translateX(-12px)}
+    40%{transform:translateX(12px)}
+    60%{transform:translateX(-9px)}
+    80%{transform:translateX(9px)}
+}
+
+.damage{
+    position:absolute;
+    left:50%;
+    top:38%;
+    font-size:42px;
+    font-weight:900;
+    color:#ff4747;
+    text-shadow:0 3px 10px #000;
+    animation:damage .9s forwards;
+    z-index:5;
+}
+
+@keyframes damage{
+    0%{
+        opacity:0;
+        transform:translate(-50%,0) scale(.5);
+    }
+    20%{opacity:1}
+    100%{
+        opacity:0;
+        transform:translate(-50%,-90px) scale(1.3);
+    }
+}
+
+.log{
+    background:#080e1b;
+    border:1px solid #293858;
+    border-radius:14px;
+    padding:12px;
+    min-height:90px;
+    max-height:170px;
+    overflow:auto;
+    margin-top:15px;
+}
+
+.bar{
+    height:16px;
+    background:#080d18;
+    border-radius:20px;
+    overflow:hidden;
+    border:1px solid #35405b;
+}
+
+.bar i{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#8a54ff,#d04cff);
+    transition:.4s;
+}
+
+.quest{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+    align-items:center;
+    padding:14px;
+    border-bottom:1px solid #293858;
+}
+
 .reward{
- max-width:700px;margin:25px auto;text-align:center;padding:35px;
- border-radius:25px;background:linear-gradient(135deg,#213565,#44204d);
- border:1px solid #7657ff
+    color:#ffd65a;
+    font-weight:bold;
 }
-.rewardIcon{font-size:80px;animation:float 2s infinite}
-.rewardDays{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:20px}
-.rewardDays div{background:#111a30;border:1px solid #30405f;border-radius:12px;padding:10px;font-size:12px}
-.profile{text-align:center;max-width:750px;margin:auto}
-.avatar{
- width:100px;height:100px;border-radius:50%;margin:auto;
- display:flex;align-items:center;justify-content:center;font-size:55px;
- background:linear-gradient(135deg,#7657ff,#d946ef)
+
+.passgrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:10px;
 }
-.profileGrid{grid-template-columns:repeat(3,1fr);margin-top:20px}
-.profileStat{background:#1a2540;border-radius:13px;padding:14px}
-.shopGrid{grid-template-columns:repeat(3,1fr)}
-.shopItem{text-align:center}.shopIcon{font-size:55px}
-.questGrid{grid-template-columns:repeat(2,1fr)}
-.quest{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.progress{height:8px;background:#0a1020;border-radius:20px;margin-top:10px;overflow:hidden}
-.progress div{height:100%;background:linear-gradient(90deg,#7657ff,#d946ef)}
-.badge{
- display:inline-block;padding:7px 10px;border-radius:10px;
- background:#242f4c;margin:4px
+
+.tier{
+    background:#121d34;
+    border:1px solid #344563;
+    border-radius:15px;
+    padding:13px;
+    text-align:center;
 }
+
+.tier.claimed{
+    border-color:#5cdb8a;
+}
+
+.locked{
+    opacity:.45;
+}
+
 .modal{
- position:fixed;inset:0;z-index:100;background:#000a;display:none;
- align-items:center;justify-content:center;padding:20px
+    position:fixed;
+    inset:0;
+    background:#000b;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
 }
-.modal.show{display:flex}
+
+.modal.show{
+    display:flex;
+}
+
 .modalBox{
- max-width:500px;width:100%;background:#111a30;border:1px solid #4b5b7d;
- border-radius:22px;padding:25px;box-shadow:0 30px 100px #000
+    width:min(500px,90%);
+    background:#111a30;
+    border:1px solid #45577b;
+    border-radius:22px;
+    padding:25px;
+    text-align:center;
 }
-.toast{
- position:fixed;right:20px;bottom:20px;z-index:200;
- background:#151f38;border:1px solid #7258d8;padding:14px 18px;
- border-radius:12px;display:none
+
+footer{
+    text-align:center;
+    color:#707c98;
+    padding:30px;
+    border-top:1px solid #202b45;
 }
-footer{text-align:center;padding:35px;color:#75819d;border-top:1px solid #202b45}
-@media(max-width:900px){
- .stats,.features{grid-template-columns:repeat(2,1fr)}
- .battleGrid{grid-template-columns:1fr}
- .deckSlots{grid-template-columns:repeat(3,1fr)}
- .shopGrid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){
- .stats,.features,.profileGrid,.shopGrid,.questGrid{grid-template-columns:1fr}
- .deckSlots{grid-template-columns:repeat(2,1fr)}
- .hand{grid-template-columns:repeat(2,1fr)}
- .rewardDays{grid-template-columns:repeat(2,1fr)}
- .hero{padding:25px 15px}
+
+@media(max-width:850px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .battleField{
+        grid-template-columns:1fr;
+    }
+
+    .vs{
+        margin:8px;
+    }
+
+    .hand{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header class="nav">
-<div class="logo">👑 Card<span>Quest</span></div>
+<header class="topbar">
+
+<div class="logo">
+👑 Card<span>Quest</span>
+</div>
+
 <nav>
 <button onclick="page('home')">🏠 Home</button>
 <button onclick="page('cards')">🃏 Cards</button>
 <button onclick="page('deck')">🎴 Deck</button>
 <button onclick="page('battle')">⚔️ Battle</button>
-<button onclick="page('shop')">🛒 Shop</button>
+<button onclick="page('pass')">🎫 Battle Pass</button>
 <button onclick="page('quests')">🎯 Quests</button>
-<button onclick="page('rewards')">🎁 Rewards</button>
+<button onclick="page('shop')">🛒 Shop</button>
 <button onclick="page('profile')">👤 Profile</button>
 </nav>
+
 </header>
 
 <main>
 
 <section id="home" class="page active">
+
 <div class="hero">
-<div>
+
 <div class="crown">👑</div>
+
 <h1>CardQuest</h1>
-<h2>Collect • Battle • Conquer</h2>
-<p>Build a 10-card deck, fight AI opponents, unlock 100 unique cards, earn rewards and become the ultimate CardQuest champion.</p>
-<br>
-<button class="primary" onclick="page('battle');startBattle()">⚔️ PLAY BATTLE</button>
-<button class="secondary" onclick="page('cards')">🃏 CARD INDEX</button>
-</div>
+
+<h2>COLLECT • BATTLE • CONQUER</h2>
+
+<p class="muted">
+Collect powerful cards, build your deck and defeat the AI!
+</p>
+
+<button class="primary" onclick="page('battle');startBattle()">
+⚔️ PLAY BATTLE
+</button>
+
 </div>
 
 <div class="stats">
-<div class="stat"><span>🃏</span><strong id="ownedStat">0/100</strong><small>Cards</small></div>
-<div class="stat"><span>🏆</span><strong id="winsStat">0</strong><small>Wins</small></div>
-<div class="stat"><span>💰</span><strong id="coinsStat">0</strong><small>Coins</small></div>
-<div class="stat"><span>⭐</span><strong id="levelStat">1</strong><small>Level</small></div>
+
+<div class="stat">
+🃏
+<strong id="sCards">0</strong>
+Cards
 </div>
 
-<h2 class="sectionTitle">✨ Features</h2>
-<div class="features">
-<div class="feature"><div class="featureIcon">🃏</div><h3>100 Cards</h3><p>Four elements and multiple rarities.</p></div>
-<div class="feature"><div class="featureIcon">⚔️</div><h3>AI Battles</h3><p>Fight opponents with their own decks.</p></div>
-<div class="feature"><div class="featureIcon">📦</div><h3>Card Packs</h3><p>Spend coins to discover new cards.</p></div>
-<div class="feature"><div class="featureIcon">🏆</div><h3>Achievements</h3><p>Complete challenges and earn rewards.</p></div>
+<div class="stat">
+🏆
+<strong id="sWins">0</strong>
+Wins
 </div>
+
+<div class="stat">
+💰
+<strong id="sCoins">500</strong>
+Coins
+</div>
+
+<div class="stat">
+💎
+<strong id="sGems">50</strong>
+Gems
+</div>
+
+<div class="stat">
+⭐
+<strong id="sLevel">1</strong>
+Level
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>🎁 Daily Reward</h2>
+
+<p id="dailyText">
+Your reward is ready!
+</p>
+
+<button class="primary" onclick="daily()">
+CLAIM REWARD
+</button>
+
+</div>
+
 </section>
+
 
 <section id="cards" class="page">
+
 <h1>🃏 Card Index</h1>
-<p class="muted">Discover all 100 CardQuest cards.</p>
+
+<p class="muted">
+100 cards • 5 normal rarities • 1 SECRET card
+</p>
+
 <div class="filters">
-<input id="search" placeholder="🔎 Search cards..." oninput="renderCards()">
-<select id="type" onchange="renderCards()">
-<option value="all">All Types</option><option>Fire</option><option>Water</option><option>Nature</option><option>Electric</option>
+
+<input
+id="search"
+placeholder="Search cards..."
+oninput="renderCards()"
+>
+
+<select id="filter" onchange="renderCards()">
+
+<option>All</option>
+<option>Common</option>
+<option>Rare</option>
+<option>Epic</option>
+<option>Legendary</option>
+<option>Mythic</option>
+<option>Secret</option>
+<option>Fire</option>
+<option>Water</option>
+<option>Nature</option>
+<option>Electric</option>
+
 </select>
-<select id="rarity" onchange="renderCards()">
-<option value="all">All Rarities</option><option>Common</option><option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythic</option>
-</select>
+
 </div>
-<div id="cardGrid" class="cardGrid"></div>
+
+<div class="panel" style="margin-bottom:18px">
+
+<h2>🏆 Rarities</h2>
+
+<p>
+⚪ Common &nbsp;
+🔵 Rare &nbsp;
+🟣 Epic &nbsp;
+🟠 Legendary &nbsp;
+🔴 Mythic &nbsp;
+🌈 <b>SECRET</b>
+</p>
+
+<p class="muted">
+There is only ONE Secret card in the entire CardQuest collection.
+</p>
+
+</div>
+
+<div id="cardGrid" class="grid"></div>
+
 </section>
+
 
 <section id="deck" class="page">
+
 <h1>🎴 Deck Builder</h1>
-<p class="muted">Your deck must contain exactly 10 cards.</p>
-<div id="deckSlots" class="deckSlots"></div>
-<button class="primary" onclick="page('battle');startBattle()">⚔️ Battle</button>
-<h2 class="sectionTitle">Your Collection</h2>
-<div id="deckCollection" class="cardGrid"></div>
+
+<p class="muted">
+Choose exactly 10 cards for your battle deck.
+</p>
+
+<div id="deckInfo"></div>
+
+<div id="deckGrid" class="grid"></div>
+
 </section>
+
 
 <section id="battle" class="page">
+
 <h1>⚔️ Battle Arena</h1>
-<p class="muted">Choose a card and defeat the AI's entire deck.</p>
-<div class="battleGrid">
-<div class="battleSide">
-<h2>👑 YOU</h2>
-<div id="playerCard" class="battleCard"><div class="battleIcon">🃏</div><h2>Ready?</h2></div>
+
+<div class="arena">
+
+<div style="display:flex;justify-content:space-between">
+
+<b id="turn">YOUR TURN</b>
+
+<span class="pill">
+🤖 AI BATTLE
+</span>
+
 </div>
-<div>
-<div class="vs">VS</div>
-<button class="primary" onclick="startBattle()">⚔️ NEW BATTLE</button>
+
+<div class="battleField">
+
+<div class="fighter">
+
+<div class="fighterName">
+👑 YOU
 </div>
-<div class="battleSide">
-<h2>🤖 AI</h2>
-<div id="enemyCard" class="battleCard"><div class="battleIcon">🤖</div><h2>Waiting...</h2></div>
+
+<div class="healthOuter">
+<div id="php" class="healthBar"></div>
 </div>
+
+<div id="pht" class="healthText">
+0/0
 </div>
-<h2 class="sectionTitle">📜 Battle Log</h2>
-<div id="battleLog" class="log">Start a battle.</div>
+
+<div id="pCard" class="battleCard">
+
+<div class="battleArt">
+🃏
+</div>
+
+<h2>Choose a card</h2>
+
+</div>
+
+</div>
+
+<div class="vs">
+VS
+</div>
+
+<div class="fighter">
+
+<div class="fighterName">
+🤖 AI
+</div>
+
+<div class="healthOuter">
+<div id="ehp" class="healthBar"></div>
+</div>
+
+<div id="eht" class="healthText">
+0/0
+</div>
+
+<div id="eCard" class="battleCard">
+
+<div class="battleArt">
+🤖
+</div>
+
+<h2>AI</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+id="status"
+style="text-align:center;font-size:20px;font-weight:bold"
+>
+Start a battle!
+</div>
+
+<div style="text-align:center">
+
+<button
+id="atk"
+class="attackButton"
+onclick="attack()"
+disabled
+>
+⚔️ ATTACK
+</button>
+
+<button
+id="sp"
+class="specialButton"
+onclick="special()"
+disabled
+>
+✨ SPECIAL
+</button>
+
+</div>
+
 <h2>🎴 Your Hand</h2>
+
 <div id="hand" class="hand"></div>
+
+<div id="log" class="log">
+⚔️ Battle log...
+</div>
+
+</div>
+
 </section>
 
-<section id="shop" class="page">
-<h1>🛒 Card Shop</h1>
-<p class="muted">Spend coins to open packs.</p>
-<div class="stats">
-<div class="stat"><span>💰</span><strong id="shopCoins">0</strong><small>Your Coins</small></div>
-<div class="stat"><span>🃏</span><strong id="shopCards">0</strong><small>Cards Owned</small></div>
+
+<section id="pass" class="page">
+
+<h1>🎫 Battle Pass</h1>
+
+<div class="panel">
+
+<h2>Season 1 — CardQuest Champions</h2>
+
+<p>
+Pass XP:
+<b id="passXP">0</b>
+/
+500
+</p>
+
+<div class="bar">
+<i id="passBar" style="width:0%"></i>
 </div>
-<div class="shopGrid">
-<div class="shopItem"><div class="shopIcon">📦</div><h2>Basic Pack</h2><p class="muted">3 random cards</p><h3>💰 150</h3><button class="primary" onclick="buyPack(150,3)">BUY</button></div>
-<div class="shopItem"><div class="shopIcon">💎</div><h2>Rare Pack</h2><p class="muted">5 cards with better odds</p><h3>💰 350</h3><button class="primary" onclick="buyPack(350,5)">BUY</button></div>
-<div class="shopItem"><div class="shopIcon">👑</div><h2>Legend Pack</h2><p class="muted">7 powerful cards</p><h3>💰 700</h3><button class="primary" onclick="buyPack(700,7)">BUY</button></div>
+
+<p class="muted">
+Battle and complete quests to earn Battle Pass XP.
+</p>
+
 </div>
+
+<br>
+
+<div id="passGrid" class="passgrid"></div>
+
 </section>
+
 
 <section id="quests" class="page">
-<h1>🎯 Quests & Achievements</h1>
-<div id="questList" class="questGrid"></div>
-<h2 class="sectionTitle">🏅 Achievements</h2>
-<div id="achievements"></div>
+
+<h1>🎯 Quests</h1>
+
+<div class="panel" id="questsBox"></div>
+
 </section>
 
-<section id="rewards" class="page">
-<h1 style="text-align:center">🎁 Daily Rewards</h1>
-<div class="reward">
-<div class="rewardIcon">🎁</div>
-<h2 id="rewardTitle">Daily Reward</h2>
-<p id="rewardDescription" class="muted"></p>
-<button id="claimButton" class="primary" onclick="claimReward()">🎁 CLAIM</button>
-<div class="rewardDays">
-<div>Day 1<br>💰100</div><div>Day 2<br>🃏Card</div><div>Day 3<br>💰250</div>
-<div>Day 4<br>💎Rare</div><div>Day 5<br>💰500</div><div>Day 6<br>🟣Epic</div><div>Day 7<br>👑Legend</div>
+
+<section id="shop" class="page">
+
+<h1>🛒 Shop</h1>
+
+<div class="stats">
+
+<div class="stat">
+💰
+<strong id="shopCoins">0</strong>
+Coins
 </div>
+
+<div class="stat">
+💎
+<strong id="shopGems">0</strong>
+Gems
 </div>
+
+</div>
+
+<div class="grid">
+
+<div class="panel">
+
+<h2>📦 Basic Pack</h2>
+
+<p>
+3 random cards
+</p>
+
+<button class="primary" onclick="pack(150)">
+150 Coins
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>💎 Mega Pack</h2>
+
+<p>
+5 random cards
+</p>
+
+<button class="primary" onclick="pack(5,'gems')">
+5 Gems
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>⭐ Daily Deal</h2>
+
+<p>
+1 random card
+</p>
+
+<button class="primary" onclick="deal()">
+75 Coins
+</button>
+
+</div>
+
+</div>
+
 </section>
+
 
 <section id="profile" class="page">
-<h1 style="text-align:center">👤 Player Profile</h1>
-<div class="profile">
-<div class="avatar">👑</div>
-<h2>CardQuest Champion</h2>
-<p class="muted">Build your collection and become a legend.</p>
-<div class="profileGrid">
-<div class="profileStat"><strong id="pLevel">1</strong><br><small>Level</small></div>
-<div class="profileStat"><strong id="pXP">0</strong><br><small>XP</small></div>
-<div class="profileStat"><strong id="pWins">0</strong><br><small>Wins</small></div>
-<div class="profileStat"><strong id="pLosses">0</strong><br><small>Losses</small></div>
-<div class="profileStat"><strong id="pCoins">0</strong><br><small>Coins</small></div>
-<div class="profileStat"><strong id="pCards">0</strong><br><small>Cards</small></div>
+
+<h1>👤 Profile</h1>
+
+<div class="panel">
+
+<h2>👑 CardQuest Player</h2>
+
+<p>
+Level:
+<b id="profLevel">1</b>
+</p>
+
+<div class="bar">
+<i id="xpBar" style="width:0%"></i>
 </div>
-<h3 class="sectionTitle">🏅 Achievements</h3>
-<div id="profileAchievements"></div>
-<br>
-<button class="secondary" onclick="resetGame()">♻️ Reset Progress</button>
+
+<p id="xpText"></p>
+
+<hr>
+
+<p>
+🏆 Wins:
+<b id="profWins"></b>
+</p>
+
+<p>
+💀 Losses:
+<b id="profLoss"></b>
+</p>
+
+<p>
+🔥 Best Streak:
+<b id="profStreak"></b>
+</p>
+
+<p>
+🃏 Collection:
+<b id="profCollection"></b>
+</p>
+
 </div>
+
 </section>
 
 </main>
 
-<div id="modal" class="modal">
-<div class="modalBox">
-<div id="modalContent"></div>
-<br>
-<button class="primary" onclick="closeModal()">CLOSE</button>
-</div>
-</div>
-
-<div id="toast" class="toast"></div>
-
 <footer>
-<h2>👑 CardQuest</h2>
-<p>Collect • Battle • Conquer</p>
-<p>Fan-made browser card game</p>
+👑 CardQuest • 100 Cards • 1 Secret • Progress saves automatically
 </footer>
 
-<script>
-const TYPES=["Fire","Water","Nature","Electric"];
 
-const ICONS={
- Fire:"🔥",Water:"💧",Nature:"🌿",Electric:"⚡"
+<div id="modal" class="modal">
+
+<div class="modalBox">
+
+<h1 id="modalTitle"></h1>
+
+<p id="modalText"></p>
+
+<button class="primary" onclick="closeModal()">
+OK
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   CARDQUEST
+   100 CARDS
+   4 TYPES
+   6 RARITIES
+   1 SECRET
+========================================== */
+
+const types=[
+"Fire",
+"Water",
+"Nature",
+"Electric"
+];
+
+const icons={
+Fire:"🔥",
+Water:"💧",
+Nature:"🌿",
+Electric:"⚡"
 };
+
+
+/* 100 UNIQUE CARD NAMES */
 
 const names=[
-"Embercub","Flamefang","Magmabite","Cinderclaw","Blazehorn",
-"Pyrofox","InfernoDrake","Ashfang","Scorchwing","LavaLynx",
-"Firemaw","Heatclaw","Flarehog","Burnox","Flametail",
-"Magmara","Cinderwolf","BlazeRaptor","Infernotusk","Solarclaw",
-"Pyron","Volcaro","Flamezilla","Ignisaur","Solardrake",
-"AquaTurtle","Splashfin","Wavefang","Hydrotoad","Tideclaw",
-"Bubblefin","Oceanox","Rainshark","Misturtle","Riverfang",
-"Deepjaw","Whirlpool","Coralyn","Seastinger","Aquaroc",
-"Frostfin","Tidewolf","Stormray","Dripster","Waveclaw",
-"Mariblade","Hydrofang","Oceanwing","Abyssfin","Tsunamaw",
-"LeafRex","Thornpaw","Vineclaw","Mossback","Bloomtail",
-"Grassfang","Rootox","Petalyn","Fernwolf","Leafwing",
-"Thornhorn","Vinefox","Bloomfang","Mossclaw","Wildroot",
-"Seedlingo","Forestaur","Bramblebeast","Florafang","Leafhorn",
-"Vinebeak","Rootfang","Blossomox","Junglejaw","Verdantor",
-"VoltHawk","Sparkfang","Thunderpaw","Zapfox","Boltclaw",
-"Stormcub","Shocktail","Electrowolf","Voltiger","Thunderwing",
-"Sparkhorn","Zapclaw","Boltbeak","Stormfang","Electrabite",
-"VoltRex","Shockra","Thunderox","Sparklyn","Lightningo",
-"Voltra","Zapjaw","Stormhawk","Thunderclaw","Electragon"
+
+/* FIRE 1-25 */
+
+"Embercub",
+"Flamefang",
+"Magmabite",
+"Cinderclaw",
+"Blazehorn",
+"Pyrofox",
+"InfernoDrake",
+"Ashfang",
+"Scorchwing",
+"LavaLynx",
+"Firemaw",
+"Heatclaw",
+"Flarehog",
+"Burnox",
+"Flametail",
+"Magmara",
+"Cinderwolf",
+"BlazeRaptor",
+"Infernotusk",
+"Solarclaw",
+"Pyron",
+"Volcaro",
+"Flamezilla",
+"Ignisaur",
+"Solardrake",
+
+/* WATER 26-50 */
+
+"AquaTurtle",
+"Splashfin",
+"Wavefang",
+"Hydrotoad",
+"Tideclaw",
+"Bubblefin",
+"Oceanox",
+"Rainshark",
+"Misturtle",
+"Riverfang",
+"Deepjaw",
+"Whirlpool",
+"Coralyn",
+"Seastinger",
+"Aquaroc",
+"Frostfin",
+"Tidewolf",
+"Stormray",
+"Dripster",
+"Waveclaw",
+"Mariblade",
+"Hydrofang",
+"Oceanwing",
+"Abyssfin",
+"Tsunamaw",
+
+/* NATURE 51-75 */
+
+"LeafRex",
+"Thornpaw",
+"Vineclaw",
+"Mossback",
+"Bloomtail",
+"Grassfang",
+"Rootox",
+"Petalyn",
+"Fernwolf",
+"Leafwing",
+"Thornhorn",
+"Vinefox",
+"Bloomfang",
+"Mossclaw",
+"Wildroot",
+"Seedlingo",
+"Forestaur",
+"Bramblebeast",
+"Florafang",
+"Leafhorn",
+"Vinebeak",
+"Rootfang",
+"Blossomox",
+"Junglejaw",
+"Verdantor",
+
+/* ELECTRIC 76-100 */
+
+"VoltHawk",
+"Sparkfang",
+"Thunderpaw",
+"Zapfox",
+"Boltclaw",
+"Stormcub",
+"Shocktail",
+"Electrowolf",
+"Voltiger",
+"Thunderwing",
+"Sparkhorn",
+"Zapclaw",
+"Boltbeak",
+"Stormfang",
+"Electrabite",
+"VoltRex",
+"Shockra",
+"Thunderox",
+"Sparklyn",
+"Lightningo",
+"Voltra",
+"Zapjaw",
+"Stormhawk",
+"Thunderclaw",
+
+/* THE ONE SECRET CARD */
+
+"VOID KING"
+
 ];
 
-const abilities=[
-"Quick Strike","Power Blast","Guard","Recover",
-"Element Burst","Critical Hit","Energy Shield","Wild Fury"
-];
 
-const cards=names.map((name,i)=>{
- const type=TYPES[Math.floor(i/25)];
- const rarity=i%25===24?"Mythic":
-   i%25>=20?"Legendary":
-   i%25>=14?"Epic":
-   i%25>=7?"Rare":"Common";
- const bonus={Common:0,Rare:10,Epic:25,Legendary:45,Mythic:75}[rarity];
- return {
-  id:i+1,name,type,rarity,
-  hp:70+(i%8)*8+bonus,
-  attack:12+(i%7)*3+Math.floor(bonus/3),
-  defense:8+(i%6)*3+Math.floor(bonus/5),
-  ability:abilities[i%abilities.length]
- };
-});
+/* SPECIAL ABILITIES */
 
-let data=JSON.parse(localStorage.getItem("cardQuestMax"))||{
- owned:[1,2,3,4,26,27,28,51,52,53],
- deck:[1,2,3,4,26,27,28,51,52,53],
- coins:500,wins:0,losses:0,xp:0,level:1,
- streak:0,lastReward:"",
- quests:{battle:0,collect:10,coins:0}
+const specials={
+
+Fire:[
+"Flame Burst",
+"Burning Strike",
+"Meteor Punch",
+"Inferno Wave",
+"Dragon Flame"
+],
+
+Water:[
+"Tidal Crash",
+"Water Shield",
+"Hydro Blast",
+"Ocean Surge",
+"Whirlpool"
+],
+
+Nature:[
+"Nature Heal",
+"Thorn Trap",
+"Vine Smash",
+"Forest Fury",
+"Leaf Storm"
+],
+
+Electric:[
+"Lightning Strike",
+"Static Shock",
+"Thunder Blast",
+"Volt Rush",
+"Chain Lightning"
+]
+
 };
 
-function save(){
- localStorage.setItem("cardQuestMax",JSON.stringify(data));
- update();
+
+/* ==========================================
+   CREATE ALL CARDS
+========================================== */
+
+const cards=names.map((name,i)=>{
+
+let type=types[Math.floor(i/25)];
+
+let rarity;
+
+/*
+THE 100TH CARD IS THE ONLY SECRET.
+*/
+
+if(i===99){
+
+rarity="Secret";
+
+}else if(i%25===24){
+
+rarity="Mythic";
+
+}else if(i%25>=20){
+
+rarity="Legendary";
+
+}else if(i%25>=14){
+
+rarity="Epic";
+
+}else if(i%25>=7){
+
+rarity="Rare";
+
+}else{
+
+rarity="Common";
+
 }
 
-function update(){
- document.getElementById("ownedStat").textContent=data.owned.length+"/100";
- document.getElementById("winsStat").textContent=data.wins;
- document.getElementById("coinsStat").textContent=data.coins;
- document.getElementById("levelStat").textContent=data.level;
- document.getElementById("shopCoins").textContent=data.coins;
- document.getElementById("shopCards").textContent=data.owned.length;
 
- document.getElementById("pLevel").textContent=data.level;
- document.getElementById("pXP").textContent=data.xp;
- document.getElementById("pWins").textContent=data.wins;
- document.getElementById("pLosses").textContent=data.losses;
- document.getElementById("pCoins").textContent=data.coins;
- document.getElementById("pCards").textContent=data.owned.length;
+/* RARITY POWER */
 
- updateReward();
- renderQuests();
+let bonus={
+Common:0,
+Rare:10,
+Epic:25,
+Legendary:45,
+Mythic:75,
+Secret:200
+}[rarity];
+
+
+/* SECRET CARD SPECIAL */
+
+let specialAbility;
+
+if(rarity==="Secret"){
+
+specialAbility="Void Obliteration";
+
+}else{
+
+specialAbility=specials[type][i%5];
+
 }
+
+
+/* SECRET CARD STATS */
+
+let hp=
+100+
+(i%7)*8+
+bonus;
+
+let attack=
+15+
+(i%8)*3+
+Math.floor(bonus/3);
+
+let defense=
+8+
+(i%6)*3+
+Math.floor(bonus/5);
+
+
+if(rarity==="Secret"){
+
+hp=500;
+attack=120;
+defense=90;
+
+}
+
+
+return{
+
+id:i+1,
+name:name,
+type:type,
+rarity:rarity,
+hp:hp,
+attack:attack,
+defense:defense,
+special:specialAbility
+
+};
+
+});
+
+
+/* ==========================================
+   SAVE DATA
+========================================== */
+
+let save=
+JSON.parse(
+localStorage.getItem("cardQuestSave")
+)||{
+
+coins:500,
+gems:50,
+wins:0,
+losses:0,
+level:1,
+xp:0,
+streak:0,
+best:0,
+
+/*
+Starter cards
+*/
+
+owned:[
+1,2,3,4,
+26,27,28,
+51,52,53,
+76
+],
+
+deck:[
+1,2,3,4,
+26,27,28,
+51,52,53,
+76
+],
+
+pass:0,
+
+claimed:[],
+
+quests:{
+wins:0,
+cards:0,
+coins:0
+},
+
+daily:""
+
+};
+
+
+/* Make sure old saves get new fields */
+
+if(!save.quests){
+
+save.quests={
+wins:0,
+cards:0,
+coins:0
+};
+
+}
+
+if(!save.claimed){
+
+save.claimed=[];
+
+}
+
+if(!save.deck){
+
+save.deck=[];
+
+}
+
+if(!save.owned){
+
+save.owned=[];
+
+}
+
+
+/* ==========================================
+   SAVE GAME
+========================================== */
+
+function saveGame(){
+
+localStorage.setItem(
+"cardQuestSave",
+JSON.stringify(save)
+);
+
+updateUI();
+
+}
+
+
+/* ==========================================
+   PAGE SYSTEM
+========================================== */
 
 function page(id){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- if(id==="cards")renderCards();
- if(id==="deck")renderDeck();
- if(id==="profile")renderAchievements();
- window.scrollTo({top:0,behavior:"smooth"});
+
+document
+.querySelectorAll(".page")
+.forEach(x=>{
+x.classList.remove("active");
+});
+
+document
+.getElementById(id)
+.classList.add("active");
+
+if(id==="cards")
+renderCards();
+
+if(id==="deck")
+renderDeck();
+
+if(id==="pass")
+renderPass();
+
+if(id==="quests")
+renderQuests();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
 }
 
-function cardHTML(c){
- const owned=data.owned.includes(c.id);
- return `
- <div class="card ${c.type.toLowerCase()}" onclick="cardInfo(${c.id})">
-  <div class="art">${owned?ICONS[c.type]:"❓"}</div>
-  <h3>#${String(c.id).padStart(3,"0")} ${owned?c.name:"Unknown"}</h3>
-  <span class="pill">${owned?c.type:"LOCKED"}</span>
-  <span class="pill">${c.rarity}</span>
-  <p>❤️ ${owned?c.hp:"??"} &nbsp; ⚔️ ${owned?c.attack:"??"}</p>
-  <p>🛡️ ${owned?c.defense:"??"}</p>
-  <p>✨ ${owned?c.ability:"???"}</p>
- </div>`;
+
+/* ==========================================
+   UPDATE UI
+========================================== */
+
+function updateUI(){
+
+document.getElementById("sCards").textContent=
+save.owned.length+"/100";
+
+document.getElementById("sWins").textContent=
+save.wins;
+
+document.getElementById("sCoins").textContent=
+save.coins;
+
+document.getElementById("sGems").textContent=
+save.gems;
+
+document.getElementById("sLevel").textContent=
+save.level;
+
+document.getElementById("shopCoins").textContent=
+save.coins;
+
+document.getElementById("shopGems").textContent=
+save.gems;
+
+document.getElementById("profLevel").textContent=
+save.level;
+
+document.getElementById("profWins").textContent=
+save.wins;
+
+document.getElementById("profLoss").textContent=
+save.losses;
+
+document.getElementById("profStreak").textContent=
+save.best;
+
+document.getElementById("profCollection").textContent=
+save.owned.length+"/100";
+
+
+let needed=save.level*100;
+
+document.getElementById("xpText").textContent=
+save.xp+
+" / "+
+needed+
+" XP";
+
+document.getElementById("xpBar").style.width=
+Math.min(
+100,
+save.xp/needed*100
+)+"%";
+
+
+document.getElementById("passXP").textContent=
+save.pass%500;
+
+document.getElementById("passBar").style.width=
+Math.min(
+100,
+(save.pass%500)/5
+)+"%";
+
+
+let today=
+new Date().toDateString();
+
+if(save.daily===today){
+
+document.getElementById("dailyText").textContent=
+"✅ You already claimed today's reward!";
+
+}else{
+
+document.getElementById("dailyText").textContent=
+"🎁 Your daily reward is ready!";
+
 }
+
+renderPass();
+renderQuests();
+
+}
+
+
+/* ==========================================
+   CARD INDEX
+========================================== */
 
 function renderCards(){
- const q=(document.getElementById("search").value||"").toLowerCase();
- const type=document.getElementById("type").value;
- const rarity=document.getElementById("rarity").value;
- document.getElementById("cardGrid").innerHTML=cards.filter(c=>
-  c.name.toLowerCase().includes(q)&&
-  (type==="all"||c.type===type)&&
-  (rarity==="all"||c.rarity===rarity)
- ).map(cardHTML).join("");
+
+let searchText=
+(
+document.getElementById("search").value||""
+).toLowerCase();
+
+let filterValue=
+document.getElementById("filter").value;
+
+
+document.getElementById("cardGrid").innerHTML=
+
+cards
+.filter(card=>{
+
+let searchMatch=
+card.name
+.toLowerCase()
+.includes(searchText);
+
+let filterMatch=
+filterValue==="All"
+||
+card.type===filterValue
+||
+card.rarity===filterValue;
+
+return searchMatch&&filterMatch;
+
+})
+.map(card=>{
+
+let owned=
+save.owned.includes(card.id);
+
+let rarityClass=
+"rarity-"+
+card.rarity.toLowerCase();
+
+
+return`
+
+<div class="card
+${card.type.toLowerCase()}
+${card.rarity==="Secret"?"secret":""}">
+
+<div class="art">
+
+${
+card.rarity==="Secret"&&!owned
+?
+"❓"
+:
+icons[card.type]
 }
 
-function cardInfo(id){
- const c=cards[id-1],owned=data.owned.includes(id);
- document.getElementById("modalContent").innerHTML=`
- <h2>${owned?ICONS[c.type]:"❓"} ${owned?c.name:"Unknown Card"}</h2>
- <p class="muted">${c.rarity} • ${c.type}</p>
- <hr>
- <p>❤️ HP: ${owned?c.hp:"??"}</p>
- <p>⚔️ Attack: ${owned?c.attack:"??"}</p>
- <p>🛡️ Defense: ${owned?c.defense:"??"}</p>
- <p>✨ Ability: ${owned?c.ability:"Locked"}</p>`;
- document.getElementById("modal").classList.add("show");
+</div>
+
+<h3>
+
+${
+card.rarity==="Secret"&&!owned
+?
+"???"
+:
+card.name
 }
 
-function closeModal(){document.getElementById("modal").classList.remove("show")}
+</h3>
+
+<span class="pill ${rarityClass}">
+${card.rarity}
+</span>
+
+<span class="pill">
+${card.type}
+</span>
+
+${
+owned
+
+?
+
+`
+
+<p>
+❤️ ${card.hp}
+⚔️ ${card.attack}
+🛡️ ${card.defense}
+</p>
+
+<p>
+✨ ${card.special}
+</p>
+
+`
+
+:
+
+`
+
+<p>
+🔒 Locked
+</p>
+
+${
+card.rarity==="Secret"
+?
+"<p>🌈 The ONE Secret Card</p>"
+:
+"<p>Unlock this card from battles or packs.</p>"
+}
+
+`
+
+}
+
+</div>
+
+`;
+
+})
+.join("");
+
+}
+
+
+/* ==========================================
+   DECK BUILDER
+========================================== */
 
 function renderDeck(){
- document.getElementById("deckSlots").innerHTML=Array.from({length:10},(_,i)=>{
-  const c=cards.find(x=>x.id===data.deck[i]);
-  return c?
-  `<div class="slot"><b>Slot ${i+1}</b><span style="font-size:35px">${ICONS[c.type]}</span><small>${c.name}</small><button class="secondary" onclick="removeDeck(${c.id})">Remove</button></div>`:
-  `<div class="slot"><b>Slot ${i+1}</b><span class="muted">Empty</span></div>`;
- }).join("");
 
- document.getElementById("deckCollection").innerHTML=
- cards.filter(c=>data.owned.includes(c.id)).map(c=>`
- <div class="card ${c.type.toLowerCase()}" onclick="toggleDeck(${c.id})">
-  <div class="art">${ICONS[c.type]}</div>
-  <h3>${c.name}</h3>
-  <p>❤️ ${c.hp} ⚔️ ${c.attack}</p>
-  <p>${data.deck.includes(c.id)?"✅ In Deck":"➕ Add to Deck"}</p>
- </div>`).join("");
+document.getElementById("deckInfo").innerHTML=`
+
+<div class="panel">
+
+<h2>
+🎴 ${save.deck.length}/10 Cards
+</h2>
+
+<p class="muted">
+Click a card to add or remove it.
+</p>
+
+</div>
+
+<br>
+
+`;
+
+
+document.getElementById("deckGrid").innerHTML=
+
+cards
+.filter(card=>
+save.owned.includes(card.id)
+)
+.map(card=>`
+
+<div
+class="card
+${card.type.toLowerCase()}
+${card.rarity==="Secret"?"secret":""}"
+onclick="toggleDeck(${card.id})"
+>
+
+<div class="art">
+${icons[card.type]}
+</div>
+
+<h3>
+${card.name}
+</h3>
+
+<span class="pill">
+${card.rarity}
+</span>
+
+<p>
+❤️ ${card.hp}
+⚔️ ${card.attack}
+🛡️ ${card.defense}
+</p>
+
+<p>
+✨ ${card.special}
+</p>
+
+<b>
+${
+save.deck.includes(card.id)
+?
+"✅ IN DECK"
+:
+"➕ ADD"
 }
+</b>
+
+</div>
+
+`)
+.join("");
+
+}
+
 
 function toggleDeck(id){
- if(data.deck.includes(id)){removeDeck(id);return}
- if(data.deck.length>=10){toast("⚠️ Deck already has 10 cards!");return}
- data.deck.push(id);save();renderDeck();
+
+if(save.deck.includes(id)){
+
+save.deck=
+save.deck.filter(x=>x!==id);
+
+}else{
+
+if(save.deck.length>=10){
+
+alert(
+"Your deck already has 10 cards!"
+);
+
+return;
+
 }
 
-function removeDeck(id){
- data.deck=data.deck.filter(x=>x!==id);
- save();renderDeck();
+save.deck.push(id);
+
 }
+
+saveGame();
+
+renderDeck();
+
+}
+
+
+/* ==========================================
+   BATTLE VARIABLES
+========================================== */
 
 let battle=null;
 
+
+/* ==========================================
+   START BATTLE
+========================================== */
+
 function startBattle(){
- if(data.deck.length!==10){
-  toast("⚠️ You need exactly 10 cards in your deck!");
-  page("deck");return;
- }
- battle={
-  player:data.deck.map(id=>({...cards[id-1],currentHP:cards[id-1].hp})),
-  enemy:[...cards].sort(()=>Math.random()-.5).slice(0,10).map(c=>({...c,currentHP:c.hp})),
-  pi:0,ei:0,active:true
- };
- document.getElementById("battleLog").innerHTML="⚔️ Battle started! Choose your card.";
- updateBattle();
+
+if(save.deck.length!==10){
+
+page("deck");
+
+alert(
+"Your deck needs exactly 10 cards!"
+);
+
+return;
+
 }
 
-function updateBattle(){
- if(!battle)return;
- const p=battle.player[battle.pi],e=battle.enemy[battle.ei];
- document.getElementById("playerCard").innerHTML=`
- <div class="battleIcon">${ICONS[p.type]}</div>
- <h2>${p.name}</h2><p>❤️ ${Math.max(0,p.currentHP)}/${p.hp}</p>
- <p>⚔️ ${p.attack} &nbsp; 🛡️ ${p.defense}</p><p>✨ ${p.ability}</p>`;
- document.getElementById("enemyCard").innerHTML=`
- <div class="battleIcon">${ICONS[e.type]}</div>
- <h2>${e.name}</h2><p>❤️ ${Math.max(0,e.currentHP)}/${e.hp}</p>
- <p>⚔️ ${e.attack} &nbsp; 🛡️ ${e.defense}</p><p>✨ ${e.ability}</p>`;
- document.getElementById("hand").innerHTML=battle.player.map((c,i)=>`
- <button onclick="chooseCard(${i})" ${c.currentHP<=0?"disabled":""}>
- ${ICONS[c.type]}<br><b>${c.name}</b><br>❤️ ${Math.max(0,c.currentHP)}
- </button>`).join("");
+
+battle={
+
+player:save.deck.map(
+id=>({
+
+...cards[id-1],
+currentHP:cards[id-1].hp
+
+})
+),
+
+enemy:[...cards]
+.sort(
+()=>Math.random()-.5
+)
+.slice(0,10)
+.map(card=>({
+
+...card,
+currentHP:card.hp
+
+})),
+
+playerIndex:0,
+enemyIndex:0,
+busy:false,
+active:true
+
+};
+
+
+renderBattle();
+
+clearLog();
+
+addLog(
+"⚔️ Battle started!"
+);
+
+addLog(
+"Choose a card and attack!"
+);
+
 }
 
-function multiplier(a,d){
- if(a==="Fire"&&d==="Nature")return 1.35;
- if(a==="Nature"&&d==="Water")return 1.35;
- if(a==="Water"&&d==="Fire")return 1.35;
- if(a==="Electric"&&d==="Water")return 1.35;
- return 1;
-}
 
-function battleLog(t){
- const l=document.getElementById("battleLog");
- l.innerHTML+=`<div>${t}</div>`;
- l.scrollTop=l.scrollHeight;
-}
+/* ==========================================
+   ACTIVE CARDS
+========================================== */
 
-function chooseCard(i){
- if(!battle||!battle.active)return;
- if(battle.player[i].currentHP<=0)return;
- battle.pi=i;updateBattle();playerAttack();
-}
+function playerCard(){
 
-function playerAttack(){
- const p=battle.player[battle.pi],e=battle.enemy[battle.ei];
- const dmg=Math.max(1,Math.round(p.attack*multiplier(p.type,e.type)-e.defense*.3));
- e.currentHP-=dmg;
- battleLog(`⚔️ ${p.name} dealt <b>${dmg}</b> damage!`);
- if(e.currentHP<=0){
-  battleLog(`💥 ${e.name} defeated!`);
-  battle.ei++;
-  if(battle.ei>=10){win();return}
-  updateBattle();return;
- }
- updateBattle();
- setTimeout(enemyAttack,700);
-}
-
-function enemyAttack(){
- if(!battle||!battle.active)return;
- const p=battle.player[battle.pi],e=battle.enemy[battle.ei];
- const dmg=Math.max(1,Math.round(e.attack*multiplier(e.type,p.type)-p.defense*.3));
- p.currentHP-=dmg;
- battleLog(`🤖 ${e.name} dealt <b>${dmg}</b> damage!`);
- if(p.currentHP<=0){
-  battleLog(`💥 ${p.name} defeated!`);
-  battle.pi++;
-  if(battle.pi>=10){lose();return}
- }
- updateBattle();
-}
-
-function unlockRandom(filter=()=>true){
- const available=cards.filter(c=>!data.owned.includes(c.id)&&filter(c));
- if(!available.length)return null;
- const c=available[Math.floor(Math.random()*available.length)];
- data.owned.push(c.id);return c;
-}
-
-function win(){
- battle.active=false;
- data.wins++;
- data.coins+=100;
- data.xp+=60;
- data.quests.battle++;
- const c=unlockRandom();
- battleLog("🏆 <b>VICTORY!</b>");
- battleLog("💰 +100 Coins");
- battleLog("⭐ +60 XP");
- if(c)battleLog(`🃏 New card unlocked: ${c.name}`);
- levelCheck();save();achievementCheck();
-}
-
-function lose(){
- battle.active=false;
- data.losses++;
- data.coins=Math.max(0,data.coins-20);
- battleLog("💀 <b>DEFEAT!</b>");
- battleLog("💰 -20 Coins");
- save();
-}
-
-function levelCheck(){
- const need=data.level*100;
- if(data.xp>=need){
-  data.xp-=need;
-  data.level++;
-  data.coins+=100;
-  toast(`🎉 LEVEL ${data.level}! +100 Coins`);
- }
-}
-
-function buyPack(cost,count){
- if(data.coins<cost){toast("❌ Not enough coins!");return}
- data.coins-=cost;
- let got=[];
- for(let i=0;i<count;i++){
-  const c=unlockRandom();
-  if(c)got.push(c.name);
- }
- data.quests.coins+=cost;
- save();
- showResult("📦 PACK OPENED!",got.length?got.join("<br>"):"You already own every card!");
-}
-
-function showResult(title,text){
- document.getElementById("modalContent").innerHTML=`<h2>${title}</h2><br><p>${text}</p>`;
- document.getElementById("modal").classList.add("show");
-}
-
-function updateReward(){
- const today=new Date().toISOString().slice(0,10);
- const claimed=data.lastReward===today;
- const day=(data.streak%7)+1;
- const rewards=["💰 100 Coins","🃏 Random Card","💰 250 Coins","💎 Rare Card","💰 500 Coins","🟣 Epic Card","👑 Legendary Card"];
- document.getElementById("rewardTitle").textContent=`Day ${day}`;
- document.getElementById("rewardDescription").textContent=claimed?"✅ Already claimed today!":rewards[day-1];
- document.getElementById("claimButton").disabled=claimed;
- document.getElementById("claimButton").textContent=claimed?"✅ CLAIMED":"🎁 CLAIM";
-}
-
-function claimReward(){
- const today=new Date().toISOString().slice(0,10);
- if(data.lastReward===today)return;
- data.lastReward=today;
- data.streak++;
- const day=(data.streak-1)%7+1;
- let text="";
- if(day===1){data.coins+=100;text="💰 +100 Coins"}
- if(day===2){const c=unlockRandom();text=c?`🃏 ${c.name}`:"All cards collected!"}
- if(day===3){data.coins+=250;text="💰 +250 Coins"}
- if(day===4){const c=unlockRandom(c=>c.rarity==="Rare");text=c?`💎 ${c.name}`:"No Rare cards left!"}
- if(day===5){data.coins+=500;text="💰 +500 Coins"}
- if(day===6){const c=unlockRandom(c=>c.rarity==="Epic");text=c?`🟣 ${c.name}`:"No Epic cards left!"}
- if(day===7){const c=unlockRandom(c=>c.rarity==="Legendary");text=c?`👑 ${c.name}`:"No Legendary cards left!"}
- save();showResult("🎁 DAILY REWARD",text);
-}
-
-const questDefinitions=[
- ["battle","⚔️ Warrior","Win 3 battles",3,()=>data.wins,100],
- ["collect","🃏 Collector","Collect 25 cards",25,()=>data.owned.length,250],
- ["coins","💰 Shopper","Spend 1000 coins",1000,()=>data.quests.coins,200],
- ["level","⭐ Rising Star","Reach Level 5",5,()=>data.level,500]
+return battle.player[
+battle.playerIndex
 ];
 
+}
+
+
+function enemyCard(){
+
+return battle.enemy[
+battle.enemyIndex
+];
+
+}
+
+
+/* ==========================================
+   BATTLE CARD HTML
+========================================== */
+
+function battleCardHTML(card){
+
+return`
+
+<div class="battleArt">
+${icons[card.type]}
+</div>
+
+<span class="pill">
+${card.rarity}
+</span>
+
+<h2>
+${card.name}
+</h2>
+
+<div class="battleStats">
+
+<span>
+⚔️ ${card.attack}
+</span>
+
+<span>
+🛡️ ${card.defense}
+</span>
+
+</div>
+
+<p>
+❤️ ${Math.max(
+0,
+Math.round(card.currentHP)
+)}
+/
+${card.hp}
+</p>
+
+<p>
+✨ ${card.special}
+</p>
+
+`;
+
+}
+
+
+/* ==========================================
+   RENDER BATTLE
+========================================== */
+
+function renderBattle(){
+
+if(!battle)
+return;
+
+let p=playerCard();
+let e=enemyCard();
+
+
+document.getElementById("php").style.width=
+Math.max(
+0,
+p.currentHP/p.hp*100
+)+"%";
+
+document.getElementById("ehp").style.width=
+Math.max(
+0,
+e.currentHP/e.hp*100
+)+"%";
+
+
+document.getElementById("pht").textContent=
+Math.max(
+0,
+Math.round(p.currentHP)
+)+"/"+p.hp;
+
+document.getElementById("eht").textContent=
+Math.max(
+0,
+Math.round(e.currentHP)
+)+"/"+e.hp;
+
+
+document.getElementById("pCard").innerHTML=
+battleCardHTML(p);
+
+document.getElementById("eCard").innerHTML=
+battleCardHTML(e);
+
+
+renderHand();
+
+
+document.getElementById("atk").disabled=
+battle.busy;
+
+document.getElementById("sp").disabled=
+battle.busy;
+
+document.getElementById("sp").textContent=
+"✨ "+p.special;
+
+}
+
+
+/* ==========================================
+   BATTLE HAND
+========================================== */
+
+function renderHand(){
+
+if(!battle){
+
+document.getElementById("hand").innerHTML="";
+
+return;
+
+}
+
+
+document.getElementById("hand").innerHTML=
+
+battle.player
+.map((card,index)=>`
+
+<button
+class="${
+index===battle.playerIndex
+?
+"selected"
+:
+""
+}"
+onclick="chooseCard(${index})"
+>
+
+${icons[card.type]}
+
+<br>
+
+${card.name}
+
+<br>
+
+❤️
+${Math.max(
+0,
+Math.round(card.currentHP)
+)}
+
+</button>
+
+`)
+.join("");
+
+}
+
+
+function chooseCard(index){
+
+if(
+!battle||
+battle.busy||
+battle.player[index].currentHP<=0
+)
+return;
+
+battle.playerIndex=index;
+
+renderBattle();
+
+document.getElementById("status").textContent=
+"Ready! Choose ATTACK or SPECIAL.";
+
+}
+
+
+/* ==========================================
+   TYPE ADVANTAGES
+========================================== */
+
+function multiplier(attacker,defender){
+
+if(
+(attacker==="Fire"&&defender==="Nature")||
+(attacker==="Nature"&&defender==="Water")||
+(attacker==="Water"&&defender==="Fire")||
+(attacker==="Electric"&&defender==="Water")
+){
+
+return 1.5;
+
+}
+
+return 1;
+
+}
+
+
+/* ==========================================
+   DAMAGE ANIMATION
+========================================== */
+
+function damageEffect(element,damage){
+
+element.classList.remove("hit");
+
+void element.offsetWidth;
+
+element.classList.add("hit");
+
+
+let text=document.createElement("div");
+
+text.className="damage";
+
+text.textContent="-"+damage;
+
+element.appendChild(text);
+
+setTimeout(
+()=>{
+text.remove();
+},
+900
+);
+
+}
+
+
+/* ==========================================
+   NORMAL ATTACK
+========================================== */
+
+function attack(){
+
+if(!battle||battle.busy)
+return;
+
+battle.busy=true;
+
+let attacker=playerCard();
+let defender=enemyCard();
+
+let damage=Math.max(
+1,
+Math.round(
+attacker.attack*
+multiplier(
+attacker.type,
+defender.type
+)-
+defender.defense*.25
+)
+);
+
+
+document.getElementById("pCard")
+.classList.add("playerAttack");
+
+
+setTimeout(()=>{
+
+damageEffect(
+document.getElementById("eCard"),
+damage
+);
+
+defender.currentHP-=damage;
+
+renderBattle();
+
+addLog(
+`⚔️ ${attacker.name} dealt <b>${damage}</b> damage.`
+);
+
+
+if(defender.currentHP<=0){
+
+enemyDefeated();
+
+return;
+
+}
+
+
+setTimeout(
+enemyTurn,
+800
+);
+
+},300);
+
+}
+
+
+/* ==========================================
+   SPECIAL ATTACK
+========================================== */
+
+function special(){
+
+if(!battle||battle.busy)
+return;
+
+battle.busy=true;
+
+let attacker=playerCard();
+let defender=enemyCard();
+
+let damage=Math.round(
+attacker.attack*1.8
+);
+
+
+if(attacker.type==="Fire")
+damage+=12;
+
+if(attacker.type==="Electric")
+damage+=20;
+
+
+if(attacker.type==="Nature"){
+
+attacker.currentHP=
+Math.min(
+attacker.hp,
+attacker.currentHP+30
+);
+
+addLog(
+"🌿 Nature Heal restored 30 HP!"
+);
+
+}
+
+
+if(attacker.type==="Water"){
+
+attacker.currentHP=
+Math.min(
+attacker.hp,
+attacker.currentHP+25
+);
+
+addLog(
+"💧 Water Shield restored 25 HP!"
+);
+
+}
+
+
+/* SECRET POWER */
+
+if(attacker.rarity==="Secret"){
+
+damage=999;
+
+addLog(
+"🌈 SECRET POWER ACTIVATED!"
+);
+
+}
+
+
+setTimeout(()=>{
+
+damageEffect(
+document.getElementById("eCard"),
+damage
+);
+
+defender.currentHP-=damage;
+
+renderBattle();
+
+addLog(
+`✨ ${attacker.name} used ${attacker.special} for <b>${damage}</b> damage!`
+);
+
+
+if(defender.currentHP<=0){
+
+enemyDefeated();
+
+return;
+
+}
+
+
+setTimeout(
+enemyTurn,
+850
+);
+
+},400);
+
+}
+
+
+/* ==========================================
+   AI TURN
+========================================== */
+
+function enemyTurn(){
+
+if(!battle||!battle.active)
+return;
+
+document.getElementById("turn").textContent=
+"🤖 AI TURN";
+
+
+let attacker=enemyCard();
+let defender=playerCard();
+
+
+let damage=Math.max(
+1,
+Math.round(
+attacker.attack*
+multiplier(
+attacker.type,
+defender.type
+)-
+defender.defense*.25
+)
+);
+
+
+document.getElementById("eCard")
+.classList.add("enemyAttack");
+
+
+setTimeout(()=>{
+
+damageEffect(
+document.getElementById("pCard"),
+damage
+);
+
+defender.currentHP-=damage;
+
+renderBattle();
+
+addLog(
+`🤖 ${attacker.name} attacked for <b>${damage}</b>.`
+);
+
+
+if(defender.currentHP<=0){
+
+playerDefeated();
+
+return;
+
+}
+
+
+battle.busy=false;
+
+document.getElementById("turn").textContent=
+"YOUR TURN";
+
+renderBattle();
+
+},400);
+
+}
+
+
+/* ==========================================
+   DEFEATED CARDS
+========================================== */
+
+function enemyDefeated(){
+
+addLog(
+`💥 ${enemyCard().name} was defeated!`
+);
+
+battle.enemyIndex++;
+
+
+if(battle.enemyIndex>=10){
+
+winBattle();
+
+return;
+
+}
+
+
+battle.busy=false;
+
+document.getElementById("turn").textContent=
+"YOUR TURN";
+
+renderBattle();
+
+addLog(
+`🤖 AI sends ${enemyCard().name}!`
+);
+
+}
+
+
+function playerDefeated(){
+
+addLog(
+`💀 ${playerCard().name} was defeated!`
+);
+
+battle.playerIndex++;
+
+
+if(battle.playerIndex>=10){
+
+loseBattle();
+
+return;
+
+}
+
+
+battle.busy=false;
+
+document.getElementById("turn").textContent=
+"YOUR TURN";
+
+renderBattle();
+
+addLog(
+`👑 You send ${playerCard().name}!`
+);
+
+}
+
+
+/* ==========================================
+   XP
+========================================== */
+
+function gainXP(amount){
+
+save.xp+=amount;
+
+save.pass+=amount;
+
+
+let needed=save.level*100;
+
+
+while(save.xp>=needed){
+
+save.xp-=needed;
+
+save.level++;
+
+save.coins+=100;
+
+addLog(
+"⭐ LEVEL UP! +100 Coins!"
+);
+
+needed=save.level*100;
+
+}
+
+}
+
+
+/* ==========================================
+   WIN
+========================================== */
+
+function winBattle(){
+
+battle.active=false;
+
+save.wins++;
+
+save.streak++;
+
+save.best=Math.max(
+save.best,
+save.streak
+);
+
+save.coins+=100;
+
+save.quests.wins++;
+
+gainXP(50);
+
+save.quests.coins+=100;
+
+
+/* RANDOM CARD REWARD */
+
+let available=
+cards.filter(
+card=>!save.owned.includes(card.id)
+);
+
+
+if(available.length){
+
+let card=
+available[
+Math.floor(
+Math.random()*available.length
+)
+];
+
+save.owned.push(card.id);
+
+save.quests.cards++;
+
+addLog(
+`🃏 NEW CARD UNLOCKED: ${card.name}!`
+);
+
+}
+
+
+/* SECRET MESSAGE */
+
+if(
+available.some(card=>card.rarity==="Secret")&&
+save.owned.includes(100)
+){
+
+addLog(
+"🌈 YOU FOUND THE SECRET CARD!"
+);
+
+}
+
+
+saveGame();
+
+
+document.getElementById("status").textContent=
+"🏆 VICTORY! +100 COINS";
+
+document.getElementById("atk").disabled=true;
+document.getElementById("sp").disabled=true;
+
+
+showModal(
+"🏆 VICTORY!",
+"Congratulations! You won the battle and earned rewards."
+);
+
+}
+
+
+/* ==========================================
+   LOSS
+========================================== */
+
+function loseBattle(){
+
+battle.active=false;
+
+save.losses++;
+
+save.streak=0;
+
+save.coins=
+Math.max(
+0,
+save.coins-20
+);
+
+saveGame();
+
+
+document.getElementById("status").textContent=
+"💀 DEFEAT";
+
+document.getElementById("atk").disabled=true;
+document.getElementById("sp").disabled=true;
+
+
+showModal(
+"💀 DEFEAT",
+"Your cards were defeated. Try another battle!"
+);
+
+}
+
+
+/* ==========================================
+   BATTLE LOG
+========================================== */
+
+function clearLog(){
+
+document.getElementById("log").innerHTML="";
+
+}
+
+
+function addLog(message){
+
+let log=
+document.getElementById("log");
+
+log.innerHTML+=
+`<div>${message}</div>`;
+
+log.scrollTop=
+log.scrollHeight;
+
+}
+
+
+/* ==========================================
+   DAILY REWARD
+========================================== */
+
+function daily(){
+
+let today=
+new Date().toDateString();
+
+
+if(save.daily===today){
+
+alert(
+"You already claimed today's reward!"
+);
+
+return;
+
+}
+
+
+save.daily=today;
+
+save.coins+=100;
+
+save.gems+=2;
+
+save.pass+=20;
+
+saveGame();
+
+
+showModal(
+"🎁 DAILY REWARD",
+"+100 Coins • +2 Gems • +20 Battle Pass XP"
+);
+
+}
+
+
+/* ==========================================
+   PACKS
+========================================== */
+
+function pack(cost,type){
+
+if(type==="gems"){
+
+if(save.gems<cost){
+
+alert(
+"Not enough gems!"
+);
+
+return;
+
+}
+
+save.gems-=cost;
+
+}else{
+
+if(save.coins<cost){
+
+alert(
+"Not enough coins!"
+);
+
+return;
+
+}
+
+save.coins-=cost;
+
+}
+
+
+let amount=
+type==="gems"
+?
+5
+:
+3;
+
+
+let obtained=[];
+
+
+for(
+let i=0;
+i<amount;
+i++
+){
+
+let card=
+cards[
+Math.floor(
+Math.random()*cards.length
+)
+];
+
+
+if(
+!save.owned.includes(card.id)
+){
+
+save.owned.push(card.id);
+
+save.quests.cards++;
+
+}
+
+
+obtained.push(
+card.rarity==="Secret"
+?
+"🌈 SECRET: "+card.name
+:
+card.name
+);
+
+}
+
+
+saveGame();
+
+
+showModal(
+"📦 PACK OPENED",
+obtained.join(" • ")
+);
+
+}
+
+
+/* ==========================================
+   SHOP DEAL
+========================================== */
+
+function deal(){
+
+if(save.coins<75){
+
+alert(
+"Not enough coins!"
+);
+
+return;
+
+}
+
+
+save.coins-=75;
+
+
+let card=
+cards[
+Math.floor(
+Math.random()*cards.length
+)
+];
+
+
+if(!save.owned.includes(card.id)){
+
+save.owned.push(card.id);
+
+save.quests.cards++;
+
+}
+
+
+saveGame();
+
+
+showModal(
+"⭐ DAILY DEAL",
+card.rarity==="Secret"
+?
+"🌈 SECRET CARD: "+card.name+"!"
+:
+card.name+" added to your collection!"
+);
+
+}
+
+
+/* ==========================================
+   BATTLE PASS
+========================================== */
+
+function renderPass(){
+
+let html="";
+
+
+for(
+let i=1;
+i<=50;
+i++
+){
+
+let required=i*10;
+
+let unlocked=
+save.pass>=required;
+
+let claimed=
+save.claimed.includes(i);
+
+
+let reward;
+
+if(i%5===0){
+
+reward="💎 5 Gems";
+
+}else if(i%3===0){
+
+reward="🃏 Random Card";
+
+}else{
+
+reward=
+"💰 "+
+(50+i*5)+
+" Coins";
+
+}
+
+
+html+=`
+
+<div class="tier
+${unlocked?"":"locked"}
+${claimed?"claimed":""}">
+
+<h3>
+Tier ${i}
+</h3>
+
+<p>
+${reward}
+</p>
+
+${
+unlocked&&!claimed
+
+?
+
+`
+
+<button
+class="primary"
+onclick="claimTier(${i})"
+>
+CLAIM
+</button>
+
+`
+
+:
+
+claimed
+
+?
+
+"✅ CLAIMED"
+
+:
+
+`
+🔒 ${required} XP
+`
+
+}
+
+</div>
+
+`;
+
+}
+
+
+document.getElementById("passGrid").innerHTML=
+html;
+
+}
+
+
+/* ==========================================
+   CLAIM PASS
+========================================== */
+
+function claimTier(level){
+
+let required=level*10;
+
+
+if(
+save.pass<required||
+save.claimed.includes(level)
+)
+return;
+
+
+save.claimed.push(level);
+
+
+if(level%5===0){
+
+save.gems+=5;
+
+}else if(level%3===0){
+
+let card=
+cards[
+Math.floor(
+Math.random()*cards.length
+)
+];
+
+if(!save.owned.includes(card.id)){
+
+save.owned.push(card.id);
+
+save.quests.cards++;
+
+}
+
+}else{
+
+save.coins+=
+50+
+level*5;
+
+}
+
+
+saveGame();
+
+
+showModal(
+"🎫 REWARD CLAIMED",
+"Battle Pass Tier "+
+level+
+" reward added!"
+);
+
+}
+
+
+/* ==========================================
+   QUESTS
+========================================== */
+
 function renderQuests(){
- document.getElementById("questList").innerHTML=questDefinitions.map(q=>{
-  const value=Math.min(q[4](),q[3]);
-  const done=value>=q[3];
-  return `<div class="quest">
-  <div><h3>${q[1]}</h3><p class="muted">${q[2]}</p>
-  <div class="progress"><div style="width:${value/q[3]*100}%"></div></div>
-  <small>${value}/${q[3]}</small></div>
-  <b>${done?"✅ DONE":"🎁 "+q[5]}</b></div>`;
- }).join("");
+
+let quests=[
+
+[
+"wins",
+"⚔️ Win 3 battles",
+3,
+100
+],
+
+[
+"cards",
+"🃏 Collect 5 new cards",
+5,
+150
+],
+
+[
+"coins",
+"💰 Earn 500 coins",
+500,
+200
+]
+
+];
+
+
+document.getElementById("questsBox").innerHTML=
+
+quests
+.map(q=>`
+
+<div class="quest">
+
+<div>
+
+<b>
+${q[1]}
+</b>
+
+<div class="bar">
+
+<i
+style="
+width:
+${Math.min(
+100,
+save.quests[q[0]]
+/
+q[2]
+*
+100
+)}%
+"
+></i>
+
+</div>
+
+<small>
+${save.quests[q[0]]}
+/
+${q[2]}
+</small>
+
+</div>
+
+<span class="reward">
++${q[3]} Coins
+</span>
+
+</div>
+
+`)
+.join("");
+
 }
 
-function achievementCheck(){
- const achievements=[
-  [data.wins>=1,"⚔️ First Victory"],
-  [data.wins>=10,"🏆 Veteran"],
-  [data.owned.length>=25,"🃏 Collector"],
-  [data.owned.length>=50,"💎 Master Collector"],
-  [data.owned.length>=100,"👑 Card Legend"],
-  [data.level>=5,"⭐ Level 5"],
-  [data.level>=10,"🔥 Level 10"]
- ];
- data.achievements=achievements.filter(x=>x[0]).map(x=>x[1]);
- save();
- renderAchievements();
+
+/* ==========================================
+   MODAL
+========================================== */
+
+function showModal(title,text){
+
+document.getElementById("modalTitle").textContent=
+title;
+
+document.getElementById("modalText").textContent=
+text;
+
+document.getElementById("modal").classList.add("show");
+
 }
 
-function renderAchievements(){
- const list=data.achievements||[];
- const html=list.length?list.map(x=>`<span class="badge">${x}</span>`).join(""):"<span class='muted'>No achievements yet.</span>";
- document.getElementById("achievements").innerHTML=html;
- document.getElementById("profileAchievements").innerHTML=html;
+
+function closeModal(){
+
+document.getElementById("modal").classList.remove("show");
+
 }
 
-function toast(text){
- const t=document.getElementById("toast");
- t.textContent=text;t.style.display="block";
- setTimeout(()=>t.style.display="none",2500);
-}
 
-function resetGame(){
- if(!confirm("Reset all CardQuest progress?"))return;
- localStorage.removeItem("cardQuestMax");
- location.reload();
-}
+/* ==========================================
+   START
+========================================== */
+
+updateUI();
 
 renderCards();
+
 renderDeck();
-renderAchievements();
-update();
-console.log("👑 CardQuest loaded — 100 cards!");
+
 </script>
 
 </body>
 </html>
-```
