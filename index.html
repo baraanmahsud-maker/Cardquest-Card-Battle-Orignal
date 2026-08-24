@@ -2,327 +2,431 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardQuest 👑</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>👑 CardQuest</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+:root{
+ --bg:#070b18;
+ --panel:#111a31;
+ --panel2:#182441;
+ --line:#354979;
+ --gold:#ffd84d;
+ --blue:#53a7ff;
+ --green:#45e38b;
+ --red:#ff5267;
+ --purple:#b36cff;
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: white;
-    background: radial-gradient(circle at top, #27356b, #080b18 65%);
-    min-height: 100vh;
+body{
+ margin:0;
+ min-height:100vh;
+ font-family:Arial,sans-serif;
+ color:white;
+ background:
+ radial-gradient(circle at 50% -10%,#344b91 0,#101832 35%,#070b18 75%);
 }
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: rgba(8,11,24,.95);
-    border-bottom: 1px solid #394773;
+button{
+ border:1px solid #4b6095;
+ background:#182441;
+ color:white;
+ padding:10px 15px;
+ border-radius:10px;
+ cursor:pointer;
+ font-weight:bold;
+ transition:.15s;
 }
-
-nav {
-    max-width: 1400px;
-    margin: auto;
-    padding: 12px;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
+button:hover{transform:translateY(-2px);filter:brightness(1.2)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+header{
+ position:sticky;
+ top:0;
+ z-index:100;
+ background:#070b18ee;
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid #30416e;
 }
-
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-    color: #ffd84d;
-    margin-right: auto;
+nav{
+ max-width:1500px;
+ margin:auto;
+ display:flex;
+ gap:7px;
+ align-items:center;
+ flex-wrap:wrap;
+ padding:10px;
 }
-
-button {
-    background: #18213f;
-    color: white;
-    border: 1px solid #405080;
-    border-radius: 10px;
-    padding: 10px 14px;
-    cursor: pointer;
-    font-weight: bold;
+.logo{
+ color:var(--gold);
+ font-size:24px;
+ font-weight:900;
+ margin-right:auto;
 }
-
-button:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.2);
+.currency{
+ background:#111a31;
+ padding:8px 12px;
+ border-radius:9px;
 }
-
-button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
+main{max-width:1450px;margin:auto;padding:22px}
+.page{display:none}
+.page.active{display:block}
+.panel{
+ background:linear-gradient(145deg,#121c35,#0c1328);
+ border:1px solid var(--line);
+ border-radius:18px;
+ padding:20px;
+ margin-bottom:18px;
+ box-shadow:0 10px 35px #0005;
 }
-
-main {
-    max-width: 1350px;
-    margin: 25px auto;
-    padding: 0 15px;
+.hero{
+ padding:55px 35px;
+ border-radius:25px;
+ background:
+ radial-gradient(circle at 80% 20%,#7e54ff44,transparent 30%),
+ linear-gradient(135deg,#263b80,#10172e);
+ overflow:hidden;
 }
-
-.page {
-    display: none;
+.hero h1{font-size:60px;margin:0 0 10px}
+.hero p{font-size:19px;color:#cbd5ff;max-width:750px}
+.big{
+ font-size:18px;
+ padding:15px 25px;
+ background:linear-gradient(135deg,#ffd84d,#ff9a25);
+ color:#17100a;
+ border:0;
 }
-
-.page.active {
-    display: block;
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(185px,1fr));
+ gap:15px;
 }
-
-.panel {
-    background: #10172d;
-    border: 1px solid #35416b;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 20px;
+.stats{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:12px;
 }
-
-.hero {
-    padding: 55px;
-    border-radius: 25px;
-    background: linear-gradient(135deg, #26366f, #11172e);
+.stat{
+ background:#182441;
+ padding:16px;
+ border-radius:13px;
+ border:1px solid #34466f;
 }
-
-.hero h1 {
-    font-size: 55px;
-    margin: 0 0 10px;
+.stat b{
+ display:block;
+ color:var(--gold);
+ font-size:28px;
 }
-
-.hero p {
-    font-size: 18px;
-    color: #ccd5ff;
+input,select{
+ width:100%;
+ padding:12px;
+ border-radius:10px;
+ background:#080e1e;
+ color:white;
+ border:1px solid #41537e;
+ margin:5px 0 14px;
 }
-
-.bigButton {
-    background: linear-gradient(135deg,#ffd84d,#ff9d20);
-    color: #17100a;
-    border: none;
-    font-size: 17px;
-    padding: 15px 25px;
+.card{
+ min-height:275px;
+ padding:12px;
+ border-radius:18px;
+ background:linear-gradient(145deg,#202e52,#0e1529);
+ border:2px solid #596b94;
+ transition:.2s;
+ cursor:pointer;
+ position:relative;
+ overflow:hidden;
 }
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
-    gap: 12px;
+.card:hover{
+ transform:translateY(-6px) scale(1.02);
+ box-shadow:0 15px 35px #0008;
 }
-
-.stat {
-    background: #18213d;
-    padding: 18px;
-    border-radius: 14px;
+.card.common{border-color:#68738d}
+.card.uncommon{border-color:#35d27b}
+.card.rare{border-color:#42a8ff;box-shadow:0 0 14px #42a8ff33}
+.card.epic{border-color:#a65cff;box-shadow:0 0 18px #a65cff44}
+.card.legendary{border-color:#ffb52d;box-shadow:0 0 25px #ffb52d55}
+.card.secret{
+ border-color:#ff4dff;
+ box-shadow:0 0 30px #ff4dff66;
+ animation:secretGlow 2s infinite alternate;
 }
-
-.stat b {
-    display: block;
-    color: #ffd84d;
-    font-size: 30px;
+@keyframes secretGlow{
+ from{box-shadow:0 0 12px #ff4dff33}
+ to{box-shadow:0 0 35px #ff4dff99}
 }
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(190px,1fr));
-    gap: 15px;
+.cardArt{
+ height:125px;
+ border-radius:13px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:
+ radial-gradient(circle,#ffffff18,transparent 60%),
+ #121d39;
+ position:relative;
+ overflow:hidden;
 }
-
-.card {
-    background: linear-gradient(145deg,#202d52,#10162a);
-    border: 2px solid #45557f;
-    border-radius: 17px;
-    padding: 12px;
-    min-height: 265px;
-    transition: .2s;
-    cursor: pointer;
+.character{
+ width:75px;
+ height:95px;
+ position:relative;
+ animation:float 2.5s ease-in-out infinite;
 }
-
-.card:hover {
-    transform: translateY(-6px) scale(1.02);
+@keyframes float{
+ 50%{transform:translateY(-5px)}
 }
-
-.cardArt {
-    height: 125px;
-    border-radius: 12px;
-    display: grid;
-    place-items: center;
-    font-size: 65px;
-    background: radial-gradient(circle,#ffffff18,transparent),#17203b;
+.head{
+ width:50px;
+ height:50px;
+ border-radius:50%;
+ background:#f0b27a;
+ position:absolute;
+ left:12px;
+ top:5px;
+ border:3px solid #161b30;
 }
-
-.card h3 {
-    margin-bottom: 5px;
+.eye{
+ position:absolute;
+ width:7px;
+ height:9px;
+ background:#101522;
+ border-radius:50%;
+ top:22px;
 }
-
-.rarity {
-    display: inline-block;
-    padding: 4px 7px;
-    border-radius: 7px;
-    background: #303b60;
-    font-size: 11px;
+.eye.a{left:23px}.eye.b{left:39px}
+.body{
+ width:55px;
+ height:45px;
+ border-radius:16px 16px 8px 8px;
+ background:var(--char,#4e80ff);
+ position:absolute;
+ top:51px;
+ left:10px;
+ border:3px solid #161b30;
 }
-
-.common {
-    border-color: #68738d;
+.leg{
+ width:13px;
+ height:25px;
+ background:#20283c;
+ position:absolute;
+ top:87px;
+ border-radius:5px;
 }
-
-.uncommon {
-    border-color: #35d27b;
+.leg.a{left:17px}.leg.b{left:45px}
+.weapon{
+ position:absolute;
+ width:7px;
+ height:58px;
+ background:#dbe8ff;
+ right:-2px;
+ top:38px;
+ transform:rotate(35deg);
+ border-radius:4px;
 }
-
-.rare {
-    border-color: #3daaff;
+.flame{
+ position:absolute;
+ width:20px;
+ height:20px;
+ border-radius:50%;
+ background:#ff633d;
+ filter:blur(2px);
+ right:4px;
+ top:0;
 }
-
-.epic {
-    border-color: #a35dff;
+.card h3{margin:9px 0 4px}
+.rarity{
+ display:inline-block;
+ font-size:11px;
+ padding:4px 7px;
+ background:#303c61;
+ border-radius:7px;
 }
-
-.legendary {
-    border-color: #ffb52d;
-    box-shadow: 0 0 20px #ffb52d44;
+.deck{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:12px;
 }
-
-.secret {
-    border-color: #ff4cff;
-    box-shadow: 0 0 25px #ff4cff55;
+.deckSlot{
+ min-height:145px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ background:#080d1c;
+ border:2px dashed #43547e;
+ border-radius:14px;
+ text-align:center;
 }
-
-.deck {
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 12px;
+.deckSlot.filled{border-style:solid}
+.battleTop{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ flex-wrap:wrap;
 }
-
-.deckSlot {
-    min-height: 130px;
-    background: #080d1c;
-    border: 2px dashed #42527d;
-    border-radius: 14px;
-    padding: 12px;
-    text-align: center;
+.round{
+ color:var(--gold);
+ font-size:22px;
+ font-weight:bold;
 }
-
-.deckSlot.filled {
-    border-style: solid;
+.battleArea{
+ display:grid;
+ grid-template-columns:1fr 1.2fr 1fr;
+ gap:15px;
+ align-items:center;
 }
-
-input,
-select {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0 15px;
-    border-radius: 10px;
-    border: 1px solid #405080;
-    background: #080d1b;
-    color: white;
+.fighter{text-align:center}
+.battleCard{
+ max-width:330px;
+ margin:auto;
+ padding:18px;
+ border-radius:22px;
+ background:#172341;
+ border:2px solid #536b9e;
+ transition:.15s;
 }
-
-.battleArea {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+.battleCard.hit{
+ animation:hit .3s;
 }
-
-.fighter {
-    text-align: center;
+@keyframes hit{
+ 25%{transform:translateX(-15px) rotate(-3deg)}
+ 50%{transform:translateX(15px) rotate(3deg)}
+ 100%{transform:none}
 }
-
-.battleCard {
-    max-width: 280px;
-    margin: auto;
-    padding: 15px;
-    border-radius: 20px;
-    background: #182342;
-    border: 2px solid #5b70a7;
+.battleArt{
+ height:210px;
+ border-radius:18px;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ background:#0d1630;
 }
-
-.battleArt {
-    height: 160px;
-    display: grid;
-    place-items: center;
-    font-size: 85px;
-    background: #111a34;
-    border-radius: 15px;
+.battleCharacter{
+ transform:scale(1.5);
 }
-
-.health {
-    height: 20px;
-    background: #3a1820;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 12px;
+.health{
+ height:23px;
+ background:#391620;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:12px;
+ border:1px solid #6d3342;
 }
-
-.healthBar {
-    height: 100%;
-    width: 100%;
-    background: #35e778;
-    transition: .4s;
+.healthBar{
+ height:100%;
+ width:100%;
+ background:linear-gradient(90deg,#27c967,#64f39a);
+ transition:.35s;
 }
-
-.enemyBar {
-    background: #ff5364;
+.enemyBar{background:linear-gradient(90deg,#e5324e,#ff7080)}
+.battleButtons{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ margin:18px 0;
 }
-
-.battleButtons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 20px;
+.attackBtn{
+ background:linear-gradient(135deg,#ff5365,#bd243a);
+ border:0;
+ font-size:17px;
 }
-
-.battleLog {
-    background: #050811;
-    border-radius: 10px;
-    padding: 12px;
-    height: 150px;
-    overflow-y: auto;
-    margin-top: 15px;
+.specialBtn{
+ background:linear-gradient(135deg,#b56aff,#6932ce);
+ border:0;
+ font-size:17px;
 }
-
-.roomCode {
-    color: #ffd84d;
-    font-size: 32px;
-    font-weight: bold;
-    letter-spacing: 6px;
+.battleLog{
+ height:150px;
+ overflow:auto;
+ background:#050811;
+ border-radius:12px;
+ padding:13px;
+ line-height:1.6;
 }
-
-.hidden {
-    display: none;
+.damage{
+ position:fixed;
+ pointer-events:none;
+ z-index:999;
+ font-size:34px;
+ font-weight:900;
+ color:#ff5365;
+ text-shadow:0 3px 8px black;
+ animation:damage 1s forwards;
 }
-
-.toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 15px 20px;
-    background: #141d38;
-    border: 1px solid #58699e;
-    border-radius: 12px;
-    display: none;
-    z-index: 50;
+@keyframes damage{
+ 0%{transform:translateY(0) scale(.7);opacity:0}
+ 20%{opacity:1}
+ 100%{transform:translateY(-100px) scale(1.3);opacity:0}
 }
-
-@media(max-width:700px) {
-    .hero h1 {
-        font-size: 38px;
-    }
-
-    .battleArea {
-        grid-template-columns: 1fr;
-    }
-
-    .deck {
-        grid-template-columns: repeat(2,1fr);
-    }
+.progress{
+ height:17px;
+ background:#080d1c;
+ border-radius:20px;
+ overflow:hidden;
+}
+.progress div{
+ height:100%;
+ background:linear-gradient(90deg,#4b8dff,#b36cff);
+ transition:.4s;
+}
+.pack{
+ padding:22px;
+ border:1px solid #465b91;
+ border-radius:18px;
+ background:linear-gradient(145deg,#1a2748,#0d152b);
+}
+.packIcon{font-size:65px}
+.quest{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ background:#182441;
+ padding:15px;
+ margin:9px 0;
+ border-radius:12px;
+}
+.badge{
+ display:inline-block;
+ padding:7px 10px;
+ border-radius:10px;
+ background:#28375e;
+}
+.toast{
+ position:fixed;
+ right:20px;
+ bottom:20px;
+ z-index:1000;
+ background:#121c35;
+ border:1px solid #596d9d;
+ padding:15px 20px;
+ border-radius:13px;
+ display:none;
+}
+.modal{
+ position:fixed;
+ inset:0;
+ background:#000b;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:500;
+ padding:20px;
+}
+.modalBox{
+ max-width:550px;
+ width:100%;
+ background:#111a31;
+ border:1px solid #526796;
+ border-radius:20px;
+ padding:25px;
+ text-align:center;
+}
+@media(max-width:850px){
+ .battleArea{grid-template-columns:1fr}
+ .deck{grid-template-columns:repeat(2,1fr)}
+ .hero h1{font-size:40px}
 }
 </style>
 </head>
@@ -331,21 +435,21 @@ select {
 
 <header>
 <nav>
-
 <div class="logo">👑 CardQuest</div>
 
-<button onclick="showPage('home')">🏠 Home</button>
-<button onclick="showPage('battle')">⚔️ Battle</button>
-<button onclick="showPage('deck')">🧩 Deck</button>
-<button onclick="showPage('cards')">🃏 Cards</button>
-<button onclick="showPage('packs')">🎁 Packs</button>
-<button onclick="showPage('online')">🌐 Online</button>
-<button onclick="showPage('events')">🎪 Events</button>
-<button onclick="showPage('profile')">👤 Profile</button>
+<button onclick="page('home')">🏠</button>
+<button onclick="page('battle')">⚔️ Battle</button>
+<button onclick="page('deck')">🧩 Deck</button>
+<button onclick="page('cards')">📚 Index</button>
+<button onclick="page('packs')">🎁 Packs</button>
+<button onclick="page('quests')">📜 Quests</button>
+<button onclick="page('pass')">🏆 Pass</button>
+<button onclick="page('shop')">🛒 Shop</button>
+<button onclick="page('events')">🎪 Events</button>
+<button onclick="page('profile')">👤 Profile</button>
 
-<span>💎 <b id="gems">100</b></span>
-<span>🪙 <b id="coins">500</b></span>
-
+<span class="currency">💎 <b id="gems">100</b></span>
+<span class="currency">🪙 <b id="coins">500</b></span>
 </nav>
 </header>
 
@@ -356,23 +460,21 @@ select {
 <section id="home" class="page active">
 
 <div class="hero">
-
 <h1>👑 CardQuest</h1>
 
 <p>
-Collect powerful cards, build your 10-card deck,
-defeat AI champions and challenge other players.
+Collect cards. Build your ultimate 10-card deck.
+Fight through 10 enemies in every Battle Run,
+defeat bosses and become the ultimate CardQuest champion.
 </p>
 
-<button class="bigButton" onclick="showPage('battle')">
-⚔️ START BATTLE
+<button class="big" onclick="page('battle');startRun()">
+⚔️ START 10-FIGHT RUN
 </button>
-
 </div>
 
 <div class="panel">
-
-<h2>📊 Your Statistics</h2>
+<h2>📊 Your Stats</h2>
 
 <div class="stats">
 
@@ -387,35 +489,124 @@ Losses
 </div>
 
 <div class="stat">
+<b id="level">1</b>
+Level
+</div>
+
+<div class="stat">
+<b id="streak">0</b>
+Win Streak
+</div>
+
+<div class="stat">
 <b id="owned">0</b>
 Cards
 </div>
 
 <div class="stat">
 <b id="deckCount">0</b>
-Deck Cards
+Deck
 </div>
 
+</div>
+</div>
+
+<div class="panel">
+<h2>🔥 Current Progress</h2>
+
+<p>XP: <b id="xpText">0 / 100</b></p>
+<div class="progress">
+<div id="xpBar" style="width:0%"></div>
+</div>
+</div>
+
+<div class="panel">
+<h2>🎁 Daily Reward</h2>
+<p>Come back every day for free rewards.</p>
+<button onclick="dailyReward()">🎁 Claim Daily Reward</button>
+</div>
+
+</section>
+
+
+<!-- BATTLE -->
+
+<section id="battle" class="page">
+
+<div class="battleTop">
+<h1>⚔️ Battle Run</h1>
+<div class="round" id="roundText">Fight 1 / 10</div>
+</div>
+
+<div class="panel">
+
+<div class="battleArea">
+
+<div class="fighter">
+
+<h2 id="enemyName">Training Bot</h2>
+
+<div class="battleCard" id="enemyBattleCard"></div>
+
+<div class="health">
+<div id="enemyHealth" class="healthBar enemyBar"></div>
+</div>
+
+<p id="enemyHP">100 / 100 HP</p>
+
+</div>
+
+<div style="text-align:center">
+<h1>VS</h1>
+<p id="battleMessage">Choose your attack!</p>
+</div>
+
+<div class="fighter">
+
+<h2 id="playerName">You</h2>
+
+<div class="battleCard" id="playerBattleCard"></div>
+
+<div class="health">
+<div id="playerHealth" class="healthBar"></div>
+</div>
+
+<p id="playerHP">100 / 100 HP</p>
+
+</div>
+
+</div>
+
+<div class="battleButtons">
+
+<button class="attackBtn" onclick="playerAttack()">
+⚔️ ATTACK
+</button>
+
+<button class="specialBtn" onclick="playerSpecial()">
+✨ SPECIAL
+</button>
+
+<button onclick="startRun()">
+🔄 NEW RUN
+</button>
+
+<button onclick="toggleSound()">
+🔊 SOUND
+</button>
+
+</div>
+
+<div class="battleLog" id="battleLog">
+⚔️ Battle ready!
 </div>
 
 </div>
 
 <div class="panel">
-
-<h2>🚀 Latest Update</h2>
-
-<p>Version 2.0</p>
-
-<p>
-🧩 New deck builder<br>
-⚔️ Improved battles<br>
-🃏 500+ cards<br>
-🔒 10 Secret cards<br>
-🌐 Online PvP system<br>
-🎁 Card packs<br>
-🎪 Events
-</p>
-
+<h2>🏆 Run Rewards</h2>
+<p>Each victory gives coins, XP and Battle Pass progress.</p>
+<p>Fight 10/10 gives a <b>Boss Chest</b>.</p>
 </div>
 
 </section>
@@ -429,53 +620,38 @@ Deck Cards
 
 <div class="panel">
 
-<h2>
-Your Deck
-<span id="deckText">0/10</span>
-</h2>
-
-<p>
-Click a card from your collection to add it.
-Click ❌ to remove it.
-</p>
+<h2>Your Deck <span id="deckText">0 / 10</span></h2>
 
 <div id="deckSlots" class="deck"></div>
 
 </div>
 
 <div class="panel">
+<h2>📚 Collection</h2>
 
-<h2>📚 Your Collection</h2>
-
-<input
-id="deckSearch"
-placeholder="Search cards..."
-oninput="renderDeckCollection()"
->
+<input id="deckSearch"
+placeholder="Search your cards..."
+oninput="renderDeckCollection()">
 
 <div id="deckCollection" class="grid"></div>
-
 </div>
 
 </section>
 
 
-<!-- CARDS -->
+<!-- INDEX -->
 
 <section id="cards" class="page">
 
-<h1>🃏 Card Index</h1>
+<h1>📚 Card Index</h1>
 
 <div class="panel">
 
-<input
-id="cardSearch"
-placeholder="Search cards..."
-oninput="renderCards()"
->
+<input id="cardSearch"
+placeholder="Search 500 cards..."
+oninput="renderCards()">
 
 <select id="rarityFilter" onchange="renderCards()">
-
 <option>All</option>
 <option>Common</option>
 <option>Uncommon</option>
@@ -483,7 +659,6 @@ oninput="renderCards()"
 <option>Epic</option>
 <option>Legendary</option>
 <option>Secret</option>
-
 </select>
 
 </div>
@@ -499,148 +674,196 @@ oninput="renderCards()"
 
 <h1>🎁 Card Packs</h1>
 
-<div class="panel">
+<div class="grid">
 
-<h2>Basic Card Pack</h2>
-
-<p>
-Every pack gives exactly ONE card.
-</p>
-
-<button onclick="openPack()">
-🎁 Open Pack — 50 Coins
-</button>
-
-</div>
-
-</section>
-
-
-<!-- BATTLE -->
-
-<section id="battle" class="page">
-
-<h1>⚔️ AI Battle</h1>
-
-<div class="panel">
-
-<div class="battleArea">
-
-<div class="fighter">
-
-<h2>🤖 Shadow Bot</h2>
-
-<div class="battleCard" id="enemyCard"></div>
-
-<div class="health">
-<div id="enemyHealth" class="healthBar enemyBar"></div>
-</div>
-
-<p id="enemyHP">100/100 HP</p>
-
-</div>
-
-
-<div class="fighter">
-
-<h2>👑 You</h2>
-
-<div class="battleCard" id="playerCard"></div>
-
-<div class="health">
-<div id="playerHealth" class="healthBar"></div>
-</div>
-
-<p id="playerHP">100/100 HP</p>
-
-</div>
-
-</div>
-
-
-<div class="battleButtons">
-
-<button onclick="attack()">
-⚔️ Attack
-</button>
-
-<button onclick="specialAttack()">
-✨ Special Ability
-</button>
-
-<button onclick="newBattle()">
-🔄 New Battle
-</button>
-
-</div>
-
-<div id="battleLog" class="battleLog">
-⚔️ Battle ready!
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ONLINE -->
-
-<section id="online" class="page">
-
-<h1>🌐 Online PvP</h1>
-
-<div class="panel">
-
-<h2>Play With Friends</h2>
-
-<p>
-Create a room and give your friend the room code.
-</p>
-
-<button onclick="createRoom()">
-➕ Create Room
-</button>
-
+<div class="pack">
+<div class="packIcon">🥉</div>
+<h2>Bronze Pack</h2>
+<p>Basic pack.</p>
+<b>50 Coins</b>
 <br><br>
+<button onclick="openPack(0)">OPEN</button>
+</div>
 
-<input
-id="joinCode"
-placeholder="ENTER ROOM CODE"
->
+<div class="pack">
+<div class="packIcon">🥈</div>
+<h2>Silver Pack</h2>
+<p>Better rare chances.</p>
+<b>100 Coins</b>
+<br><br>
+<button onclick="openPack(1)">OPEN</button>
+</div>
 
-<button onclick="joinRoom()">
-🚪 Join Room
-</button>
+<div class="pack">
+<div class="packIcon">🥇</div>
+<h2>Gold Pack</h2>
+<p>Great epic chances.</p>
+<b>200 Coins</b>
+<br><br>
+<button onclick="openPack(2)">OPEN</button>
+</div>
+
+<div class="pack">
+<div class="packIcon">💎</div>
+<h2>Diamond Pack</h2>
+<p>Very high rarity.</p>
+<b>400 Coins</b>
+<br><br>
+<button onclick="openPack(3)">OPEN</button>
+</div>
+
+<div class="pack">
+<div class="packIcon">🌌</div>
+<h2>Mythic Pack</h2>
+<p>Best chance at Secret cards.</p>
+<b>800 Coins</b>
+<br><br>
+<button onclick="openPack(4)">OPEN</button>
+</div>
 
 </div>
 
-<div id="roomPanel" class="panel hidden">
+</section>
 
-<h2>Room Code</h2>
 
-<div id="roomCode" class="roomCode"></div>
+<!-- QUESTS -->
 
-<p id="onlineStatus">
-Waiting for opponent...
-</p>
+<section id="quests" class="page">
 
-<div class="battleButtons">
+<h1>📜 Quests</h1>
 
-<button id="onlineAttackButton"
-onclick="onlineAttack()"
-disabled>
-⚔️ Attack
-</button>
+<div class="panel">
 
-<button id="onlineSpecialButton"
-onclick="onlineSpecial()"
-disabled>
-✨ Special
-</button>
+<div class="quest">
+<div>
+<b>🟢 Easy — First Strike</b>
+<br>Win 1 battle.
+</div>
+<button onclick="claimQuest(0)">Claim</button>
+</div>
+
+<div class="quest">
+<div>
+<b>🔵 Medium — Warrior</b>
+<br>Win 5 battles.
+</div>
+<button onclick="claimQuest(1)">Claim</button>
+</div>
+
+<div class="quest">
+<div>
+<b>🟣 Hard — Champion</b>
+<br>Win 10 battles.
+</div>
+<button onclick="claimQuest(2)">Claim</button>
+</div>
+
+<div class="quest">
+<div>
+<b>🟠 Extreme — Card Master</b>
+<br>Collect 25 cards.
+</div>
+<button onclick="claimQuest(3)">Claim</button>
+</div>
+
+<div class="quest">
+<div>
+<b>🔴 Legendary — Secret Hunter</b>
+<br>Find a Secret card.
+</div>
+<button onclick="claimQuest(4)">Claim</button>
+</div>
+
+</div>
+</section>
+
+
+<!-- BATTLE PASS -->
+
+<section id="pass" class="page">
+
+<h1>🏆 CardQuest Battle Pass</h1>
+
+<div class="panel">
+
+<h2>Season 1 — Rise of Champions</h2>
+
+<p>Battle Pass XP: <b id="passXP">0</b></p>
+
+<div class="progress">
+<div id="passBar" style="width:0%"></div>
+</div>
 
 </div>
 
-<div id="onlineLog" class="battleLog"></div>
+<div class="grid">
+
+<div class="panel">
+<h2>Level 1</h2>
+<p>🎁 10 Coins</p>
+<button onclick="claimPass(1)">Claim</button>
+</div>
+
+<div class="panel">
+<h2>Level 2</h2>
+<p>💎 10 Gems</p>
+<button onclick="claimPass(2)">Claim</button>
+</div>
+
+<div class="panel">
+<h2>Level 3</h2>
+<p>🎁 Random Card</p>
+<button onclick="claimPass(3)">Claim</button>
+</div>
+
+<div class="panel">
+<h2>Level 4</h2>
+<p>🪙 50 Coins</p>
+<button onclick="claimPass(4)">Claim</button>
+</div>
+
+<div class="panel">
+<h2>Level 5</h2>
+<p>🎁 Random Card</p>
+<button onclick="claimPass(5)">Claim</button>
+</div>
+
+<div class="panel">
+<h2>Level 6</h2>
+<p>💎 10 Gems</p>
+<button onclick="claimPass(6)">Claim</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SHOP -->
+
+<section id="shop" class="page">
+
+<h1>🛒 Shop</h1>
+
+<div class="grid">
+
+<div class="panel">
+<h2>💰 Coin Bundle</h2>
+<p>10 Gems → 100 Coins</p>
+<button onclick="buyCoins()">BUY</button>
+</div>
+
+<div class="panel">
+<h2>🎁 Mystery Reward</h2>
+<p>100 Coins → Random reward</p>
+<button onclick="mysteryReward()">BUY</button>
+</div>
+
+<div class="panel">
+<h2>🔥 Battle Boost</h2>
+<p>50 Coins → +1 Battle Pass level XP</p>
+<button onclick="buyBoost()">BUY</button>
+</div>
 
 </div>
 
@@ -654,32 +877,16 @@ disabled>
 <h1>🎪 Events</h1>
 
 <div class="panel">
-
 <h2>🌑 Shadow Invasion</h2>
-
-<p>
-Defeat enemies to earn Shadow Tokens.
-</p>
-
-<h3>
-🎟️ Shadow Tokens:
-<span id="tokens">0</span>
-</h3>
-
+<p>Earn Shadow Tokens by winning battles.</p>
+<h2>🎟️ <span id="tokens">0</span> Tokens</h2>
+<button onclick="eventReward()">Claim Event Reward — 50 Tokens</button>
 </div>
 
 <div class="panel">
-
-<h2>🔥 Weekend Challenge</h2>
-
-<p>
-Win 5 battles to receive bonus coins.
-</p>
-
-<button onclick="claimEventReward()">
-🏆 Claim Reward
-</button>
-
+<h2>🔥 Weekend Boss Rush</h2>
+<p>Reach fight 10 to earn a bonus.</p>
+<button onclick="bossReward()">Claim Boss Reward</button>
 </div>
 
 </section>
@@ -694,1163 +901,1237 @@ Win 5 battles to receive bonus coins.
 <div class="panel">
 
 <label>Username</label>
-
-<input
-id="username"
-placeholder="Your username"
->
+<input id="username">
 
 <label>Bio</label>
+<input id="bio">
 
-<input
-id="bio"
-placeholder="Your CardQuest bio"
->
+<label>Favorite Card</label>
+<input id="favorite">
 
-<button onclick="saveProfile()">
-💾 Save Profile
-</button>
+<button onclick="saveProfile()">💾 SAVE PROFILE</button>
 
+</div>
+
+<div class="panel">
+<h2>🏅 Rank</h2>
+<h1 id="rank">Bronze I</h1>
+<p>Win battles to increase your rank.</p>
 </div>
 
 </section>
 
 </main>
 
-
 <div id="toast" class="toast"></div>
-
 
 <script>
 
-/* =========================
-   CARD DATABASE
-========================= */
+/* =====================================================
+   CARDQUEST ENGINE
+===================================================== */
 
-const types = [
-    "Flame",
-    "Aqua",
-    "Nature",
-    "Storm"
+const TYPES=["Flame","Aqua","Nature","Storm"];
+
+const NAMES=[
+"Knight","Warrior","Dragon","Guardian",
+"Wizard","Beast","Ranger","Spirit",
+"Champion","Master","Fang","Blade",
+"Samurai","Hunter","Titan","Mage"
 ];
 
-const emojis = [
-    "🔥","💧","🌿","⚡",
-    "❄️","🌪️","🪨","🌑",
-    "☀️","🐉","🦊","🐺",
-    "🦁","🦅"
-];
+const cards=[];
 
-const names = [
-    "Knight",
-    "Warrior",
-    "Dragon",
-    "Guardian",
-    "Wizard",
-    "Beast",
-    "Ranger",
-    "Spirit",
-    "Champion",
-    "Master",
-    "Fang",
-    "Blade"
-];
+/* 490 normal cards */
 
-const cards = [];
+for(let i=1;i<=490;i++){
 
+ let rarity="Common";
 
-/* CREATE 490 NORMAL CARDS */
+ if(i%100===0) rarity="Legendary";
+ else if(i%20===0) rarity="Epic";
+ else if(i%7===0) rarity="Rare";
+ else if(i%3===0) rarity="Uncommon";
 
-for(let i = 1; i <= 490; i++){
-
-    let rarity;
-
-    if(i % 100 === 0){
-        rarity = "Legendary";
-    }
-    else if(i % 20 === 0){
-        rarity = "Epic";
-    }
-    else if(i % 7 === 0){
-        rarity = "Rare";
-    }
-    else if(i % 3 === 0){
-        rarity = "Uncommon";
-    }
-    else{
-        rarity = "Common";
-    }
-
-    cards.push({
-
-        id: i,
-
-        name:
-        types[(i-1)%4]
-        + " "
-        + names[(i-1)%names.length]
-        + " "
-        + i,
-
-        type:
-        types[(i-1)%4],
-
-        rarity: rarity,
-
-        emoji:
-        emojis[(i-1)%emojis.length],
-
-        attack:
-        15 + (i % 35),
-
-        health:
-        80 + (i % 50),
-
-        special:
-        "Power Strike"
-
-    });
+ cards.push({
+  id:i,
+  name:TYPES[(i-1)%4]+" "+NAMES[(i-1)%NAMES.length]+" "+i,
+  type:TYPES[(i-1)%4],
+  rarity,
+  attack:15+(i%45),
+  health:80+(i%80),
+  special:["Power Strike","Fire Burst","Healing Wave","Thunder Blast"][i%4]
+ });
 
 }
 
+/* 10 secret cards */
 
-/* =========================
-   10 SECRET CARDS
-========================= */
+[
+ ["Void Emperor",100,300],
+ ["Galaxy Dragon",110,320],
+ ["Chrono Titan",120,340],
+ ["Shadow King",130,360],
+ ["Eternal Phoenix",140,380],
+ ["Cosmic Guardian",150,400],
+ ["Infinity Beast",160,420],
+ ["Omega Knight",170,440],
+ ["Celestial Wolf",180,460],
+ ["Ancient Overlord",200,500]
+].forEach((x,i)=>{
 
-const secretCards = [
-
-["Void Emperor","👑",90,220],
-["Galaxy Dragon","🌌",95,230],
-["Chrono Titan","⏳",100,240],
-["Shadow King","👁️",105,250],
-["Eternal Phoenix","🔥",110,260],
-["Cosmic Guardian","🌠",115,270],
-["Infinity Beast","🐲",120,280],
-["Omega Knight","⚔️",125,290],
-["Celestial Wolf","🐺",130,300],
-["Ancient Overlord","☄️",140,320]
-
-];
-
-secretCards.forEach((x,index)=>{
-
-    cards.push({
-
-        id: 491 + index,
-
-        name: x[0],
-
-        type: "Secret",
-
-        rarity: "Secret",
-
-        emoji: x[1],
-
-        attack: x[2],
-
-        health: x[3],
-
-        special: "Secret Ability"
-
-    });
+ cards.push({
+  id:491+i,
+  name:x[0],
+  type:"Secret",
+  rarity:"Secret",
+  attack:x[1],
+  health:x[2],
+  special:"SECRET POWER"
+ });
 
 });
 
 
-/* =========================
-   SAVE DATA
-========================= */
+/* =====================================================
+   SAVE
+===================================================== */
 
-let game = JSON.parse(
-    localStorage.getItem("CardQuestSave")
-);
-
+let game=JSON.parse(localStorage.getItem("CardQuestSave"));
 
 if(!game){
 
-    game = {
-
-        coins: 500,
-
-        gems: 100,
-
-        collection: [1,2,3,4,5],
-
-        deck: [1,2,3],
-
-        wins: 0,
-
-        losses: 0,
-
-        tokens: 0,
-
-        username: "CardQuest Player",
-
-        bio: "Future Champion!",
-
-        eventClaimed: false
-
-    };
-
-}
-
-
-function saveGame(){
-
-    localStorage.setItem(
-        "CardQuestSave",
-        JSON.stringify(game)
-    );
-
-    updateUI();
+ game={
+  coins:500,
+  gems:100,
+  collection:[1,2,3,4,5],
+  deck:[1,2,3],
+  wins:0,
+  losses:0,
+  streak:0,
+  bestStreak:0,
+  level:1,
+  xp:0,
+  passXP:0,
+  tokens:0,
+  username:"CardQuest Player",
+  bio:"Future Champion!",
+  favorite:"",
+  claimedQuests:[],
+  claimedPass:[],
+  daily:false,
+  event:false,
+  bossClaimed:false
+ };
 
 }
 
-
-/* =========================
-   PAGE SYSTEM
-========================= */
-
-function showPage(id){
-
-    document
-    .querySelectorAll(".page")
-    .forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document
-    .getElementById(id)
-    .classList.add("active");
-
-
-    if(id === "deck"){
-        renderDeck();
-    }
-
-    if(id === "cards"){
-        renderCards();
-    }
-
-    if(id === "profile"){
-
-        document.getElementById("username").value =
-        game.username;
-
-        document.getElementById("bio").value =
-        game.bio;
-
-    }
-
+function save(){
+ localStorage.setItem("CardQuestSave",JSON.stringify(game));
+ updateUI();
 }
 
 
-/* =========================
+/* =====================================================
    UI
-========================= */
+===================================================== */
+
+function page(id){
+
+ document.querySelectorAll(".page")
+ .forEach(x=>x.classList.remove("active"));
+
+ document.getElementById(id)
+ .classList.add("active");
+
+ if(id==="deck")renderDeck();
+ if(id==="cards")renderCards();
+ if(id==="profile")loadProfile();
+
+}
 
 function updateUI(){
 
-    document.getElementById("coins").textContent =
-    game.coins;
+ const set=(id,value)=>{
+  const e=document.getElementById(id);
+  if(e)e.textContent=value;
+ };
 
-    document.getElementById("gems").textContent =
-    game.gems;
+ set("coins",game.coins);
+ set("gems",game.gems);
+ set("wins",game.wins);
+ set("losses",game.losses);
+ set("streak",game.streak);
+ set("owned",game.collection.length);
+ set("deckCount",game.deck.length);
+ set("level",game.level);
+ set("tokens",game.tokens);
 
-    document.getElementById("wins").textContent =
-    game.wins;
+ set("xpText",game.xp+" / 100");
 
-    document.getElementById("losses").textContent =
-    game.losses;
+ const xp=document.getElementById("xpBar");
+ if(xp)xp.style.width=Math.min(100,game.xp)+"%";
 
-    document.getElementById("owned").textContent =
-    game.collection.length;
+ set("passXP",game.passXP);
 
-    document.getElementById("deckCount").textContent =
-    game.deck.length;
+ const pb=document.getElementById("passBar");
+ if(pb)pb.style.width=Math.min(100,game.passXP)+"%";
 
-    document.getElementById("deckText").textContent =
-    game.deck.length + "/10";
+ set("deckText",game.deck.length+" / 10");
 
-    document.getElementById("tokens").textContent =
-    game.tokens;
+ let rank="Bronze I";
+
+ if(game.wins>=5)rank="Bronze II";
+ if(game.wins>=10)rank="Silver I";
+ if(game.wins>=20)rank="Silver II";
+ if(game.wins>=35)rank="Gold I";
+ if(game.wins>=50)rank="Gold II";
+ if(game.wins>=75)rank="Platinum";
+ if(game.wins>=100)rank="Diamond";
+ if(game.wins>=200)rank="Master";
+ if(game.wins>=500)rank="Legend";
+
+ set("rank",rank);
 
 }
 
 
-/* =========================
+/* =====================================================
    TOAST
-========================= */
+===================================================== */
 
-function toast(message){
+function toast(text){
 
-    const box =
-    document.getElementById("toast");
+ const t=document.getElementById("toast");
 
-    box.textContent = message;
+ t.textContent=text;
+ t.style.display="block";
 
-    box.style.display = "block";
-
-    setTimeout(()=>{
-        box.style.display = "none";
-    },2200);
+ setTimeout(()=>{
+  t.style.display="none";
+ },2500);
 
 }
 
 
-/* =========================
-   CARD HTML
-========================= */
+/* =====================================================
+   CHARACTER DRAWING
+===================================================== */
 
-function cardHTML(card){
+function character(card,enemy=false){
 
-    return `
+ let color="#4d80ff";
 
-    <div
-        class="card ${card.rarity.toLowerCase()}"
-        onclick="addCard(${card.id})"
-    >
+ if(card.type==="Flame")color="#ff573d";
+ if(card.type==="Aqua")color="#36a9ff";
+ if(card.type==="Nature")color="#39d77a";
+ if(card.type==="Storm")color="#9c66ff";
+ if(card.rarity==="Secret")color="#ff43ed";
 
-        <div class="cardArt">
-            ${card.emoji}
-        </div>
-
-        <h3>
-            ${card.name}
-        </h3>
-
-        <span class="rarity">
-            ${card.rarity}
-        </span>
-
-        <p>
-            ⚔️ ${card.attack} ATK<br>
-            ❤️ ${card.health} HP<br>
-            ✨ ${card.special}
-        </p>
-
-    </div>
-
-    `;
+ return `
+ <div class="character" style="--char:${color}">
+  <div class="head">
+   <div class="eye a"></div>
+   <div class="eye b"></div>
+  </div>
+  <div class="body"></div>
+  <div class="leg a"></div>
+  <div class="leg b"></div>
+  <div class="weapon"></div>
+  ${card.type==="Flame"?'<div class="flame"></div>':""}
+ </div>
+ `;
 
 }
 
 
-/* =========================
-   DECK SYSTEM
-========================= */
+/* =====================================================
+   DECK
+===================================================== */
 
 function renderDeck(){
 
-    const slots =
-    document.getElementById("deckSlots");
+ const slots=document.getElementById("deckSlots");
+ if(!slots)return;
 
-    slots.innerHTML = "";
+ slots.innerHTML="";
 
+ for(let i=0;i<10;i++){
 
-    for(let i=0;i<10;i++){
+  const id=game.deck[i];
 
-        const id = game.deck[i];
+  const slot=document.createElement("div");
+  slot.className="deckSlot";
 
-        const slot =
-        document.createElement("div");
+  if(id){
 
-        slot.className =
-        "deckSlot";
+   const c=cards.find(x=>x.id===id);
 
+   slot.classList.add("filled");
 
-        if(id){
+   slot.innerHTML=`
+    ${character(c)}
+    <b>${c.name}</b>
+    <small>⚔️ ${c.attack} | ❤️ ${c.health}</small>
+    <button onclick="event.stopPropagation();removeCard(${c.id})">
+    ❌ Remove
+    </button>
+   `;
 
-            slot.classList.add("filled");
+  }else{
 
-            const card =
-            cards.find(c=>c.id===id);
+   slot.innerHTML="➕ Empty Slot";
 
+  }
 
-            slot.innerHTML = `
+  slots.appendChild(slot);
 
-                <div style="font-size:40px">
-                    ${card.emoji}
-                </div>
+ }
 
-                <b>
-                    ${card.name}
-                </b>
-
-                <br>
-
-                ⚔️ ${card.attack}
-                ❤️ ${card.health}
-
-                <br><br>
-
-                <button
-                    onclick="event.stopPropagation(); removeCard(${card.id})"
-                >
-                    ❌ Remove
-                </button>
-
-            `;
-
-        }
-        else{
-
-            slot.innerHTML =
-            "➕ Empty Slot";
-
-        }
-
-
-        slots.appendChild(slot);
-
-    }
-
-    renderDeckCollection();
+ renderDeckCollection();
 
 }
 
 
 function renderDeckCollection(){
 
-    const area =
-    document.getElementById("deckCollection");
+ const area=document.getElementById("deckCollection");
+ if(!area)return;
 
-    const search =
-    document
-    .getElementById("deckSearch")
-    .value
-    .toLowerCase();
+ const search=(document.getElementById("deckSearch").value||"").toLowerCase();
 
+ area.innerHTML="";
 
-    area.innerHTML = "";
+ cards
+ .filter(c=>game.collection.includes(c.id))
+ .filter(c=>c.name.toLowerCase().includes(search))
+ .forEach(c=>{
 
+  const d=document.createElement("div");
 
-    cards
-    .filter(card =>
-        game.collection.includes(card.id)
-    )
-    .filter(card =>
-        card.name.toLowerCase().includes(search)
-    )
-    .forEach(card=>{
+  d.innerHTML=`
+   <div class="card ${c.rarity.toLowerCase()}"
+   onclick="addCard(${c.id})">
 
-        const wrapper =
-        document.createElement("div");
+    <div class="cardArt">
+     ${character(c)}
+    </div>
 
-        wrapper.innerHTML =
-        cardHTML(card);
+    <h3>${c.name}</h3>
+    <span class="rarity">${c.rarity}</span>
 
-        area.appendChild(
-            wrapper.firstElementChild
-        );
+    <p>
+    ⚔️ ${c.attack}<br>
+    ❤️ ${c.health}<br>
+    ✨ ${c.special}
+    </p>
 
-    });
+   </div>
+  `;
+
+  area.appendChild(d.firstElementChild);
+
+ });
 
 }
 
 
 function addCard(id){
 
-    if(game.deck.includes(id)){
+ if(game.deck.includes(id)){
+  toast("⚠️ That card is already in your deck!");
+  return;
+ }
 
-        toast("⚠️ Card already in deck!");
+ if(game.deck.length>=10){
+  toast("🛑 Your deck has 10 cards!");
+  return;
+ }
 
-        return;
-
-    }
-
-
-    if(game.deck.length >= 10){
-
-        toast("🛑 Your deck is full!");
-
-        return;
-
-    }
-
-
-    if(!game.collection.includes(id)){
-
-        toast("❌ You don't own this card!");
-
-        return;
-
-    }
-
-
-    game.deck.push(id);
-
-    saveGame();
-
-    renderDeck();
-
-    toast("🃏 Card added to deck!");
+ game.deck.push(id);
+ save();
+ renderDeck();
+ toast("🃏 Card added!");
 
 }
 
 
 function removeCard(id){
 
-    game.deck =
-    game.deck.filter(cardId=>cardId !== id);
+ game.deck=game.deck.filter(x=>x!==id);
 
-    saveGame();
-
-    renderDeck();
-
-    toast("Card removed.");
+ save();
+ renderDeck();
 
 }
 
 
-/* =========================
-   CARD INDEX
-========================= */
+/* =====================================================
+   INDEX
+===================================================== */
 
 function renderCards(){
 
-    const area =
-    document.getElementById("cardsGrid");
+ const area=document.getElementById("cardsGrid");
+ if(!area)return;
 
-    const search =
-    document
-    .getElementById("cardSearch")
-    .value
-    .toLowerCase();
+ const search=(document.getElementById("cardSearch").value||"").toLowerCase();
+ const rarity=document.getElementById("rarityFilter").value;
 
-    const rarity =
-    document
-    .getElementById("rarityFilter")
-    .value;
+ area.innerHTML="";
 
+ cards
+ .filter(c=>rarity==="All"||c.rarity===rarity)
+ .filter(c=>c.name.toLowerCase().includes(search))
+ .forEach(c=>{
 
-    area.innerHTML = "";
+  const owned=game.collection.includes(c.id);
 
+  const d=document.createElement("div");
 
-    cards
-    .filter(card =>
-        rarity === "All" ||
-        card.rarity === rarity
-    )
-    .filter(card =>
-        card.name.toLowerCase().includes(search)
-    )
-    .forEach(card=>{
+  d.innerHTML=`
+   <div class="card ${c.rarity.toLowerCase()}">
 
-        const wrapper =
-        document.createElement("div");
+    <div class="cardArt">
+     ${owned?character(c):"🔒"}
+    </div>
 
+    <h3>${owned?c.name:"???"}</h3>
 
-        if(game.collection.includes(card.id)){
+    <span class="rarity">${c.rarity}</span>
 
-            wrapper.innerHTML =
-            cardHTML(card);
+    <p>
+    ${owned
+      ?"⚔️ "+c.attack+"<br>❤️ "+c.health+"<br>✨ "+c.special
+      :"🔒 Not discovered"}
+    </p>
 
-        }
+   </div>
+  `;
 
-        else{
+  area.appendChild(d.firstElementChild);
 
-            wrapper.innerHTML = `
-
-            <div
-                class="card ${card.rarity.toLowerCase()}"
-                style="opacity:.5"
-            >
-
-                <div class="cardArt">
-                    ❓
-                </div>
-
-                <h3>
-                    ???
-                </h3>
-
-                <span class="rarity">
-                    ${card.rarity}
-                </span>
-
-                <p>
-                    🔒 Locked
-                </p>
-
-            </div>
-
-            `;
-
-        }
-
-
-        area.appendChild(
-            wrapper.firstElementChild
-        );
-
-    });
+ });
 
 }
 
 
-/* =========================
-   CARD PACKS
-========================= */
+/* =====================================================
+   PACKS
+===================================================== */
 
-function openPack(){
+function openPack(type){
 
-    if(game.coins < 50){
+ const prices=[50,100,200,400,800];
+ const names=["Bronze","Silver","Gold","Diamond","Mythic"];
 
-        toast("🪙 Not enough coins!");
+ if(game.coins<prices[type]){
+  toast("🪙 Not enough coins!");
+  return;
+ }
 
-        return;
+ game.coins-=prices[type];
 
-    }
+ let r=Math.random()*100;
+ let rarity;
 
+ if(type===4){
 
-    game.coins -= 50;
+  if(r<0.5)rarity="Secret";
+  else if(r<4)rarity="Legendary";
+  else if(r<15)rarity="Epic";
+  else if(r<40)rarity="Rare";
+  else rarity="Uncommon";
 
+ }else if(type===3){
 
-    const random =
-    Math.random()*100;
+  if(r<0.15)rarity="Secret";
+  else if(r<3)rarity="Legendary";
+  else if(r<15)rarity="Epic";
+  else if(r<45)rarity="Rare";
+  else rarity="Uncommon";
 
+ }else if(type===2){
 
-    let rarity;
+  if(r<2)rarity="Legendary";
+  else if(r<12)rarity="Epic";
+  else if(r<35)rarity="Rare";
+  else rarity="Uncommon";
 
+ }else if(type===1){
 
-    if(random < 0.2){
+  if(r<1)rarity="Legendary";
+  else if(r<7)rarity="Epic";
+  else if(r<28)rarity="Rare";
+  else rarity="Uncommon";
 
-        rarity = "Secret";
+ }else{
 
-    }
+  if(r<1)rarity="Legendary";
+  else if(r<5)rarity="Epic";
+  else if(r<15)rarity="Rare";
+  else if(r<40)rarity="Uncommon";
+  else rarity="Common";
 
-    else if(random < 2){
+ }
 
-        rarity = "Legendary";
+ let possible=cards.filter(c=>c.rarity===rarity);
 
-    }
+ let card=possible[Math.floor(Math.random()*possible.length)];
 
-    else if(random < 7){
+ if(!game.collection.includes(card.id)){
+  game.collection.push(card.id);
+ }
 
-        rarity = "Epic";
+ save();
 
-    }
-
-    else if(random < 17){
-
-        rarity = "Rare";
-
-    }
-
-    else if(random < 40){
-
-        rarity = "Uncommon";
-
-    }
-
-    else{
-
-        rarity = "Common";
-
-    }
-
-
-    const possible =
-    cards.filter(card =>
-        card.rarity === rarity
-    );
-
-
-    const card =
-    possible[
-        Math.floor(
-            Math.random()*possible.length
-        )
-    ];
-
-
-    if(!game.collection.includes(card.id)){
-
-        game.collection.push(card.id);
-
-    }
-
-
-    saveGame();
-
-
-    toast(
-        "🎁 You received " +
-        card.emoji +
-        " " +
-        card.name
-    );
+ toast(
+  "🎁 "+names[type]+" Pack → "+card.name
+ );
 
 }
 
 
-/* =========================
-   AI BATTLE
-========================= */
+/* =====================================================
+   BATTLE SYSTEM
+===================================================== */
 
-let playerHP = 100;
-let enemyHP = 100;
-let battleBusy = false;
+const enemies=[
+ ["Training Bot",100,15,30,"🤖"],
+ ["Battle Bot",125,20,40,"🦾"],
+ ["Flame Bot",150,25,50,"🔥"],
+ ["Frost Bot",175,28,60,"❄️"],
+ ["Storm Bot",200,32,70,"⚡"],
+ ["Shadow Bot",225,36,80,"🌑"],
+ ["Elite Bot",250,40,90,"👾"],
+ ["Destroyer",280,45,110,"☠️"],
+ ["Omega Bot",320,50,140,"👹"],
+ ["FINAL BOSS",450,60,250,"👑"]
+];
+
+let fight=1;
+let enemy=null;
+let enemyHP=0;
+let playerHP=100;
+let busy=false;
+let soundOn=true;
+let audio=null;
 
 
-function newBattle(){
+/* =====================================================
+   SOUND ENGINE
+===================================================== */
 
-    playerHP = 100;
+function sound(freq,duration,type="sine"){
 
-    enemyHP = 100;
+ if(!soundOn)return;
 
-    battleBusy = false;
+ try{
 
-    updateBattle();
+  if(!audio)
+   audio=new(window.AudioContext||window.webkitAudioContext)();
 
-    document.getElementById("battleLog").innerHTML =
-    "⚔️ New battle started!";
+  const osc=audio.createOscillator();
+  const gain=audio.createGain();
+
+  osc.type=type;
+  osc.frequency.value=freq;
+
+  gain.gain.setValueAtTime(.12,audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);
+
+  osc.connect(gain);
+  gain.connect(audio.destination);
+
+  osc.start();
+  osc.stop(audio.currentTime+duration);
+
+ }catch(e){}
+
+}
+
+
+function toggleSound(){
+
+ soundOn=!soundOn;
+
+ toast(soundOn?"🔊 Sound ON":"🔇 Sound OFF");
+
+}
+
+
+/* =====================================================
+   BATTLE START
+===================================================== */
+
+function startRun(){
+
+ fight=1;
+ playerHP=100;
+ busy=false;
+
+ spawnEnemy();
+
+ document.getElementById("battleLog").innerHTML=
+ "⚔️ Battle Run started!";
+
+}
+
+
+function spawnEnemy(){
+
+ const e=enemies[fight-1];
+
+ enemy={
+  name:e[0],
+  maxHP:e[1],
+  attack:e[2],
+  reward:e[3],
+  emoji:e[4]
+ };
+
+ enemyHP=enemy.maxHP;
+
+ document.getElementById("roundText").textContent=
+ "Fight "+fight+" / 10";
+
+ document.getElementById("enemyName").textContent=
+ enemy.name;
+
+ document.getElementById("enemyBattleCard").innerHTML=`
+  <div class="battleArt">
+   <div style="font-size:100px">
+    ${enemy.emoji}
+   </div>
+  </div>
+  <h2>${enemy.name}</h2>
+  <p>⚔️ ${enemy.attack}</p>
+ `;
+
+ updateBattle();
 
 }
 
 
 function updateBattle(){
 
-    const player =
-    cards.find(c =>
-        c.id === game.deck[0]
-    ) || cards[0];
+ const card=
+ cards.find(c=>c.id===game.deck[0])
+ ||cards[0];
 
+ document.getElementById("playerName").textContent=
+ game.username;
 
-    document.getElementById("playerCard").innerHTML = `
+ document.getElementById("playerBattleCard").innerHTML=`
+  <div class="battleArt">
+   ${character(card,true)}
+  </div>
+  <h2>${card.name}</h2>
+  <p>⚔️ ${card.attack} | ✨ ${card.special}</p>
+ `;
 
-        <div class="battleArt">
-            ${player.emoji}
-        </div>
+ document.getElementById("enemyHealth").style.width=
+ Math.max(0,enemyHP/enemy.maxHP*100)+"%";
 
-        <h2>
-            ${player.name}
-        </h2>
+ document.getElementById("playerHealth").style.width=
+ Math.max(0,playerHP)+"%";
 
-        <p>
-            ⚔️ ${player.attack}
-            ❤️ ${player.health}
-        </p>
+ document.getElementById("enemyHP").textContent=
+ enemyHP+" / "+enemy.maxHP+" HP";
 
-    `;
-
-
-    document.getElementById("enemyCard").innerHTML = `
-
-        <div class="battleArt">
-            👹
-        </div>
-
-        <h2>
-            Shadow Bot
-        </h2>
-
-        <p>
-            ⚔️ 25
-            ❤️ 100
-        </p>
-
-    `;
-
-
-    document.getElementById("playerHealth").style.width =
-    playerHP + "%";
-
-    document.getElementById("enemyHealth").style.width =
-    enemyHP + "%";
-
-
-    document.getElementById("playerHP").textContent =
-    playerHP + "/100 HP";
-
-    document.getElementById("enemyHP").textContent =
-    enemyHP + "/100 HP";
+ document.getElementById("playerHP").textContent=
+ playerHP+" / 100 HP";
 
 }
 
 
-function battleMessage(message){
+function log(text){
 
-    const log =
-    document.getElementById("battleLog");
+ const l=document.getElementById("battleLog");
 
-    log.innerHTML +=
-    "<br>" + message;
-
-    log.scrollTop =
-    log.scrollHeight;
+ l.innerHTML+="<br>"+text;
+ l.scrollTop=l.scrollHeight;
 
 }
 
 
-function attack(){
+function damageNumber(amount,enemySide){
 
-    if(battleBusy ||
-       playerHP <= 0 ||
-       enemyHP <= 0){
+ const d=document.createElement("div");
 
-        return;
+ d.className="damage";
 
-    }
+ d.textContent="-"+amount;
 
+ d.style.left=(enemySide?70:25)+"%";
+ d.style.top="45%";
 
-    battleBusy = true;
+ document.body.appendChild(d);
 
-
-    const damage =
-    20 + Math.floor(Math.random()*11);
-
-
-    enemyHP =
-    Math.max(0,enemyHP-damage);
-
-
-    updateBattle();
-
-
-    battleMessage(
-        "⚔️ You dealt " +
-        damage +
-        " damage!"
-    );
-
-
-    if(enemyHP === 0){
-
-        winBattle();
-
-        return;
-
-    }
-
-
-    setTimeout(()=>{
-
-        enemyAttack();
-
-    },700);
+ setTimeout(()=>d.remove(),1000);
 
 }
 
 
-function specialAttack(){
+/* =====================================================
+   ATTACK
+===================================================== */
 
-    if(battleBusy ||
-       playerHP <= 0 ||
-       enemyHP <= 0){
+function playerAttack(){
 
-        return;
+ if(busy||playerHP<=0||enemyHP<=0)return;
 
-    }
+ busy=true;
 
+ const card=
+ cards.find(c=>c.id===game.deck[0])
+ ||cards[0];
 
-    battleBusy = true;
+ let damage=card.attack;
 
+ if(Math.random()<.15){
 
-    const damage =
-    35 + Math.floor(Math.random()*16);
+  damage*=2;
 
+  log("💥 CRITICAL HIT!");
+  sound(700,.25,"square");
 
-    enemyHP =
-    Math.max(0,enemyHP-damage);
+ }else{
 
+  sound(250,.15,"sawtooth");
 
-    updateBattle();
+ }
 
+ damage=Math.floor(damage);
 
-    battleMessage(
-        "✨ SPECIAL ABILITY dealt " +
-        damage +
-        " damage!"
-    );
+ enemyHP=Math.max(0,enemyHP-damage);
 
+ damageNumber(damage,true);
 
-    if(enemyHP === 0){
+ document.getElementById("enemyBattleCard")
+ .classList.add("hit");
 
-        winBattle();
+ setTimeout(()=>{
+  document.getElementById("enemyBattleCard")
+  .classList.remove("hit");
+ },300);
 
-        return;
+ log("⚔️ "+card.name+" dealt "+damage+" damage!");
 
-    }
+ updateBattle();
 
+ if(enemyHP<=0){
 
-    setTimeout(()=>{
+  winFight();
+  return;
 
-        enemyAttack();
+ }
 
-    },700);
+ setTimeout(enemyAttack,700);
 
 }
 
+
+/* =====================================================
+   SPECIAL
+===================================================== */
+
+function playerSpecial(){
+
+ if(busy||playerHP<=0||enemyHP<=0)return;
+
+ busy=true;
+
+ const card=
+ cards.find(c=>c.id===game.deck[0])
+ ||cards[0];
+
+ let damage=Math.floor(card.attack*2.4);
+
+ sound(500,.4,"triangle");
+
+ enemyHP=Math.max(0,enemyHP-damage);
+
+ damageNumber(damage,true);
+
+ log("✨ "+card.special+"!");
+ log("💥 "+damage+" damage!");
+
+ updateBattle();
+
+ if(enemyHP<=0){
+
+  winFight();
+  return;
+
+ }
+
+ setTimeout(enemyAttack,800);
+
+}
+
+
+/* =====================================================
+   ENEMY ATTACK
+===================================================== */
 
 function enemyAttack(){
 
-    const damage =
-    15 + Math.floor(Math.random()*16);
+ if(enemyHP<=0)return;
 
+ let damage=enemy.attack;
 
-    playerHP =
-    Math.max(0,playerHP-damage);
+ if(Math.random()<.1){
 
+  damage=Math.floor(damage*1.5);
 
-    updateBattle();
+  log("💀 Enemy critical hit!");
 
+ }
 
-    battleMessage(
-        "👹 Shadow Bot dealt " +
-        damage +
-        " damage!"
-    );
+ playerHP=Math.max(0,playerHP-damage);
 
+ damageNumber(damage,false);
 
-    if(playerHP === 0){
+ sound(120,.2,"sawtooth");
 
-        game.losses++;
+ log(enemy.emoji+" "+enemy.name+
+ " dealt "+damage+" damage!");
 
-        saveGame();
+ updateBattle();
 
-        toast("💀 You lost!");
+ if(playerHP<=0){
 
-        battleBusy = false;
+  loseRun();
+  return;
 
-        return;
+ }
 
-    }
-
-
-    battleBusy = false;
+ busy=false;
 
 }
 
 
-function winBattle(){
+/* =====================================================
+   WIN FIGHT
+===================================================== */
 
-    game.wins++;
+function winFight(){
 
-    game.coins += 50;
+ game.wins++;
+ game.streak++;
+ game.bestStreak=Math.max(game.bestStreak,game.streak);
 
-    game.tokens += 5;
+ game.coins+=enemy.reward;
+ game.tokens+=5;
 
-    saveGame();
+ game.xp+=20;
+ game.passXP+=20;
 
-    toast("🏆 Victory! +50 Coins");
+ sound(900,.35,"triangle");
 
-    battleMessage(
-        "🏆 YOU WON!"
-    );
+ log("🏆 "+enemy.name+" DEFEATED!");
+ log("🪙 +"+enemy.reward+" Coins");
 
-    battleBusy = false;
+ busy=true;
+
+ levelCheck();
+
+ save();
+
+ if(fight>=10){
+
+  finishRun();
+
+ }else{
+
+  fight++;
+
+  playerHP=100;
+
+  setTimeout(()=>{
+
+   log("🤖 NEXT ENEMY INCOMING!");
+
+   spawnEnemy();
+
+   busy=false;
+
+  },1200);
+
+ }
 
 }
 
 
-/* =========================
+/* =====================================================
+   LOSE
+===================================================== */
+
+function loseRun(){
+
+ game.losses++;
+ game.streak=0;
+
+ sound(80,.5,"sawtooth");
+
+ log("💀 RUN ENDED!");
+
+ toast("💀 You were defeated on Fight "+fight);
+
+ busy=true;
+
+ save();
+
+}
+
+
+/* =====================================================
+   COMPLETE 10 FIGHTS
+===================================================== */
+
+function finishRun(){
+
+ game.coins+=200;
+ game.gems+=10;
+ game.xp+=50;
+ game.passXP+=50;
+
+ log("👑 10 / 10 COMPLETE!");
+ log("🎁 BOSS CHEST!");
+ log("🪙 +200 Coins");
+ log("💎 +10 Gems");
+
+ toast("👑 BATTLE RUN COMPLETE!");
+
+ sound(1000,.7,"triangle");
+
+ save();
+
+}
+
+
+/* =====================================================
+   LEVELS
+===================================================== */
+
+function levelCheck(){
+
+ while(game.xp>=100){
+
+  game.xp-=100;
+  game.level++;
+
+  game.gems+=10;
+
+  toast("🎉 LEVEL "+game.level+"!");
+
+ }
+
+}
+
+
+/* =====================================================
+   DAILY
+===================================================== */
+
+function dailyReward(){
+
+ if(game.daily){
+
+  toast("🎁 Already claimed today!");
+
+  return;
+
+ }
+
+ game.daily=true;
+
+ game.coins+=100;
+ game.gems+=10;
+
+ save();
+
+ toast("🎁 +100 Coins +10 Gems!");
+
+}
+
+
+/* =====================================================
+   QUESTS
+===================================================== */
+
+function claimQuest(id){
+
+ if(game.claimedQuests.includes(id)){
+
+  toast("Already claimed!");
+
+  return;
+
+ }
+
+ const requirements=[
+  game.wins>=1,
+  game.wins>=5,
+  game.wins>=10,
+  game.collection.length>=25,
+  game.collection.some(x=>x>=491)
+ ];
+
+ if(!requirements[id]){
+
+  toast("❌ Quest not completed!");
+
+  return;
+
+ }
+
+ game.claimedQuests.push(id);
+
+ game.coins+=50;
+
+ game.passXP+=20;
+
+ save();
+
+ toast("🏆 Quest reward claimed!");
+
+}
+
+
+/* =====================================================
+   BATTLE PASS
+===================================================== */
+
+function claimPass(level){
+
+ if(game.claimedPass.includes(level)){
+
+  toast("Already claimed!");
+
+  return;
+
+ }
+
+ const needed=level*50;
+
+ if(game.passXP<needed){
+
+  toast("❌ Need "+needed+" Pass XP!");
+
+  return;
+
+ }
+
+ game.claimedPass.push(level);
+
+ if(level%3===0){
+
+  const possible=cards.filter(c=>c.rarity!=="Secret");
+
+  const c=possible[Math.floor(Math.random()*possible.length)];
+
+  if(!game.collection.includes(c.id))
+   game.collection.push(c.id);
+
+  toast("🎁 Battle Pass Card: "+c.name);
+
+ }else if(level%2===0){
+
+  game.gems+=10;
+
+  toast("💎 +10 Gems!");
+
+ }else{
+
+  game.coins+=10;
+
+  toast("🪙 +10 Coins!");
+
+ }
+
+ save();
+
+}
+
+
+/* =====================================================
+   SHOP
+===================================================== */
+
+function buyCoins(){
+
+ if(game.gems<10){
+
+  toast("Not enough Gems!");
+
+  return;
+
+ }
+
+ game.gems-=10;
+ game.coins+=100;
+
+ save();
+
+ toast("🪙 +100 Coins!");
+
+}
+
+
+function mysteryReward(){
+
+ if(game.coins<100){
+
+  toast("Not enough Coins!");
+
+  return;
+
+ }
+
+ game.coins-=100;
+
+ const reward=Math.random();
+
+ if(reward<.1){
+
+  game.gems+=10;
+  toast("💎 +10 Gems!");
+
+ }else{
+
+  game.coins+=50;
+  toast("🪙 +50 Coins!");
+
+ }
+
+ save();
+
+}
+
+
+function buyBoost(){
+
+ if(game.coins<50){
+
+  toast("Not enough Coins!");
+
+  return;
+
+ }
+
+ game.coins-=50;
+ game.passXP+=50;
+
+ save();
+
+ toast("🏆 +50 Battle Pass XP!");
+
+}
+
+
+/* =====================================================
+   EVENTS
+===================================================== */
+
+function eventReward(){
+
+ if(game.tokens<50){
+
+  toast("Need 50 Shadow Tokens!");
+
+  return;
+
+ }
+
+ if(game.event){
+
+  toast("Already claimed!");
+
+  return;
+
+ }
+
+ game.tokens-=50;
+ game.event=true;
+ game.coins+=50;
+
+ save();
+
+ toast("🌑 Shadow Event: +50 Coins!");
+
+}
+
+
+function bossReward(){
+
+ if(game.wins<10){
+
+  toast("Complete 10 wins first!");
+
+  return;
+
+ }
+
+ if(game.bossClaimed){
+
+  toast("Already claimed!");
+
+  return;
+
+ }
+
+ game.bossClaimed=true;
+ game.coins+=50;
+ game.gems+=10;
+
+ save();
+
+ toast("☠️ Boss Reward: +50 Coins +10 Gems!");
+
+}
+
+
+/* =====================================================
    PROFILE
-========================= */
+===================================================== */
+
+function loadProfile(){
+
+ document.getElementById("username").value=game.username;
+ document.getElementById("bio").value=game.bio;
+ document.getElementById("favorite").value=game.favorite;
+
+}
+
 
 function saveProfile(){
 
-    game.username =
-    document.getElementById("username").value ||
-    "CardQuest Player";
+ game.username=
+ document.getElementById("username").value
+ ||"CardQuest Player";
 
+ game.bio=
+ document.getElementById("bio").value
+ ||"Future Champion!";
 
-    game.bio =
-    document.getElementById("bio").value ||
-    "Future Champion!";
+ game.favorite=
+ document.getElementById("favorite").value;
 
+ save();
 
-    saveGame();
-
-    toast("👤 Profile saved!");
-
-}
-
-
-/* =========================
-   EVENT
-========================= */
-
-function claimEventReward(){
-
-    if(game.eventClaimed){
-
-        toast("You already claimed it!");
-
-        return;
-
-    }
-
-
-    if(game.wins < 5){
-
-        toast("You need 5 wins first!");
-
-        return;
-
-    }
-
-
-    game.coins += 50;
-
-    game.eventClaimed = true;
-
-    saveGame();
-
-    toast("🎉 Event reward: +50 Coins!");
+ toast("👤 Profile saved!");
 
 }
 
 
-/* =========================
-   SIMPLE LOCAL MULTIPLAYER
-========================= */
-
-/*
-This creates a room code locally.
-
-For TRUE internet multiplayer,
-connect this section to a backend such as
-Firebase Realtime Database.
-*/
-
-let currentRoom = null;
-
-
-function createRoom(){
-
-    currentRoom =
-    Math.random()
-    .toString(36)
-    .substring(2,7)
-    .toUpperCase();
-
-
-    document
-    .getElementById("roomPanel")
-    .classList.remove("hidden");
-
-
-    document
-    .getElementById("roomCode")
-    .textContent =
-    currentRoom;
-
-
-    document
-    .getElementById("onlineStatus")
-    .textContent =
-    "⏳ Waiting for another player...";
-
-
-    toast(
-        "🌐 Room created!"
-    );
-
-}
-
-
-function joinRoom(){
-
-    const code =
-    document
-    .getElementById("joinCode")
-    .value
-    .trim()
-    .toUpperCase();
-
-
-    if(!code){
-
-        toast("Enter a room code!");
-
-        return;
-
-    }
-
-
-    currentRoom = code;
-
-
-    document
-    .getElementById("roomPanel")
-    .classList.remove("hidden");
-
-
-    document
-    .getElementById("roomCode")
-    .textContent =
-    currentRoom;
-
-
-    document
-    .getElementById("onlineStatus")
-    .textContent =
-    "🟢 Joined room " + currentRoom;
-
-
-    document
-    .getElementById("onlineAttackButton")
-    .disabled = false;
-
-
-    document
-    .getElementById("onlineSpecialButton")
-    .disabled = false;
-
-
-    toast(
-        "🚪 Joined room!"
-    );
-
-}
-
-
-function onlineAttack(){
-
-    onlineLog(
-        "⚔️ " +
-        game.username +
-        " used Attack!"
-    );
-
-}
-
-
-function onlineSpecial(){
-
-    onlineLog(
-        "✨ " +
-        game.username +
-        " used Special Ability!"
-    );
-
-}
-
-
-function onlineLog(message){
-
-    const log =
-    document.getElementById("onlineLog");
-
-    log.innerHTML +=
-    "<br>" + message;
-
-    log.scrollTop =
-    log.scrollHeight;
-
-}
-
-
-/* =========================
-   START GAME
-========================= */
+/* =====================================================
+   START
+===================================================== */
 
 updateUI();
-
-newBattle();
+startRun();
 
 </script>
 
